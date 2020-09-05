@@ -1,0 +1,85 @@
+<?xml version ="1.0"?>
+<dynamic_model filetype="dynamic model" version="4">
+  <model version="1" name="StandardInterfaceTemplate">
+    <simulation>
+      <executable text="StandardInterfaceTemplate"
+                  default_executable_name32="../standard_interface_template/model.exe"
+                  default_executable_name64="..standard_interface_template/model.exe">
+        <declare_parameter>ModelExecutable</declare_parameter>
+      </executable>
+      <simulation_run module_name="standard_interface_template.sit_run" class_name="RunStandardInterfaceTemplate">
+      </simulation_run>
+      <input_files>
+        <input_file>
+          <use_file>model_file</use_file>
+          <export_location>"%s.example", #project_name</export_location>
+          <declare_parameter>ModelFile</declare_parameter>
+        </input_file>
+      </input_files>
+      <output_files>
+        <output_file>
+          <use_file>model_file</use_file>
+          <export_location>"sim.example"</export_location>
+          <declare_parameter>SimSolutionLoad</declare_parameter>
+        </output_file>
+      </output_files>
+      <component_menus unique_name="Sim_Manager" model_name="StandardInterfaceTemplate"/>
+      <takes>
+        <take_component unique_name="Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
+        </take_component>
+        <declare_parameter>mapped_component</declare_parameter>
+      </takes>
+    </simulation>
+    <declare_coverage name="Standard Interface Coverage">
+      <arc_att>
+        <component_menus unique_name="Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </arc_att>
+      <component_menus unique_name="Coverage_Component" model_name="StandardInterfaceTemplate"/>
+    </declare_coverage>
+    <model_checks>
+      <model_check problem_text=""
+                   description_text= ""
+                   fix_text = "">
+        <execute_script script = "sit_model_check.py"/>
+      </model_check>
+    </model_checks>
+    <declare_dialogs></declare_dialogs>
+    <declare_files>
+      <declare_file name ="model_file" read_behavior="create_simulation" file_type="SCRIPT">
+        <comment>!</comment>
+        <identifier>STANDARD INTERFACE TEMPLATE</identifier>
+        <execute_script read="true" script="sit_read_file.py"/>
+        <execute_script write="true" script="sit_write_file.py"/>
+      </declare_file>
+  </model>
+  <component display_name="invisible" unique_name="Sim_Manager" class_name="SimComponent"
+             module_name="standard_interface_template.components.sim_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false">
+    <main_file format="sim_comp.nc" default_name="sim_comp.nc">
+    </main_file>
+    <takes>
+      <take_mesh2d limit = "1" linear = "true">
+        <condition></condition>
+      </take_mesh2d>
+      <declare_parameter>mesh</declare_parameter>
+    </takes>
+    <takes>
+      <take_coverage limit = "1">
+        <use_coverage>Standard Interface Coverage</use_coverage>
+      </take_coverage>
+      <declare_parameter>coverage</declare_parameter>
+    </takes>
+  </component>
+  <component display_name="invisible" unique_name="Coverage_Component" class_name="CoverageComponent"
+             module_name="standard_interface_template.components.coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false" use_display="true">
+    <main_file format="coverage_comp.nc" default_name="coverage_comp.nc">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Mapped_Component" class_name="MappedBcComponent"
+             module_name="standard_interface_template.components.mapped_component" version_info="0.0.l" version="1"
+             import_default="UNLOCKED" edit_module="NONE" use_icon="" sharable="false" use_display="true" user_creatable="false">
+    <main_file format="coverage_display_options.json" default_name="coverage_display_options.json">
+    </main_file>
+  </component>
+</dynamic_model>
