@@ -48,7 +48,13 @@ class CoverageComponent(StandardBaseComponent):
             ('Display Options...', 'open_display_options'),
         ]
         self.arc_commands = [
-            ('Assign Arc', 'open_assign_arc')
+            ('Assign Arc', 'open_assign_arc'),
+        ]
+        self.point_commands = [
+            ('Assign Point', 'open_assign_point'),
+        ]
+        self.polygon_commands = [
+            ('Assign Polygon', 'open_assign_polygon'),
         ]
         self.disp_opts_file = os.path.join(os.path.dirname(self.main_file), 'coverage_display_options.json')
         if not os.path.isfile(self.main_file):
@@ -218,6 +224,142 @@ class CoverageComponent(StandardBaseComponent):
             new_values = []
             for arc_id in arc_ids:
                 self.update_component_id(TargetType.arc, arc_id, new_comp_id)
+                new_values.append([new_comp_id, option, edit])
+                new_comp_id += 1
+            values_dataset = pd.DataFrame(new_values, columns=['comp_id', 'user_option', 'user_text']).to_xarray()
+            self.data.coverage_data = xr.concat([self.data.coverage_data, values_dataset], 'index')
+            self.update_id_files()
+            self.display_option_list.append(
+                XmsDisplayMessage(file=self.disp_opts_file, edit_uuid=self.cov_uuid)
+            )
+            self.data.commit()
+
+        # Delete the id dumped by xms files.
+        shutil.rmtree(os.path.join(os.path.dirname(self.main_file), 'temp'), ignore_errors=True)
+
+        return [], []
+
+    def open_assign_point(self, query, params, win_cont, icon):
+        """Opens the Assign Point dialog and saves component data state on OK.
+
+        Args:
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            params (:obj:`dict'): Generic map of parameters. Contains selection map and component id files.
+            win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+
+        Returns:
+            (:obj:`tuple`): tuple containing:
+                - messages (:obj:`list` of :obj:`tuple` of :obj:`str`): List of tuples with the first element of the
+                  tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
+                  text.
+                - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
+
+        """
+        point_ids = []
+        params = {key.get_as_string(): value for key, value in params[0].items()}
+        if 'selection' in params:
+            point_ids = [point_id.get_as_int() for point_id in params['selection']]
+        num_arcs = len(point_ids)
+        if num_arcs == 0:
+            return [('INFO', 'No points selected. Select one or more points to assign properties.')], []
+
+        # Get the component id map of the selected (if any).
+        comp_id = -1
+        if 'id_files' in params:
+            if params['id_files'] and params['id_files'][0]:
+                files_dict = {
+                    'POINT': (params['id_files'][0].get_as_string(), params['id_files'][1].get_as_string())
+                }
+                self.load_coverage_component_id_map(files_dict)
+                target_type = TargetType.point
+                try:
+                    selected_comp_ids = list(self.comp_to_xms[self.cov_uuid][target_type].keys())
+                    comp_id = selected_comp_ids[0] if selected_comp_ids else -1
+                except KeyError:
+                    comp_id = -1  # No component ids assigned for any of the selected points
+        single_point = self.data.coverage_data.where(self.data.coverage_data.comp_id == comp_id, drop=True)
+        if single_point.user_option.size == 0:
+            # Here we are using component id 0 for default values.
+            single_point = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
+        dialog = Dialog(win_cont, icon, 'Point Dialog', single_point.user_text.item(0),
+                        single_point.user_option.item(0))
+        if dialog.exec():
+            dlg_data = dialog.get_dialog_data_dict()
+            edit = dlg_data['user_edit']
+            option = dlg_data['user_display']
+            new_comp_id = int(self.data.coverage_data.comp_id.max() + 1)
+            new_values = []
+            for point_id in point_ids:
+                self.update_component_id(TargetType.point, point_id, new_comp_id)
+                new_values.append([new_comp_id, option, edit])
+                new_comp_id += 1
+            values_dataset = pd.DataFrame(new_values, columns=['comp_id', 'user_option', 'user_text']).to_xarray()
+            self.data.coverage_data = xr.concat([self.data.coverage_data, values_dataset], 'index')
+            self.update_id_files()
+            self.display_option_list.append(
+                XmsDisplayMessage(file=self.disp_opts_file, edit_uuid=self.cov_uuid)
+            )
+            self.data.commit()
+
+        # Delete the id dumped by xms files.
+        shutil.rmtree(os.path.join(os.path.dirname(self.main_file), 'temp'), ignore_errors=True)
+
+        return [], []
+
+    def open_assign_polygon(self, query, params, win_cont, icon):
+        """Opens the Assign Polygon dialog and saves component data state on OK.
+
+        Args:
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            params (:obj:`dict'): Generic map of parameters. Contains selection map and component id files.
+            win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+
+        Returns:
+            (:obj:`tuple`): tuple containing:
+                - messages (:obj:`list` of :obj:`tuple` of :obj:`str`): List of tuples with the first element of the
+                  tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
+                  text.
+                - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
+
+        """
+        polygon_ids = []
+        params = {key.get_as_string(): value for key, value in params[0].items()}
+        if 'selection' in params:
+            polygon_ids = [polygon_id.get_as_int() for polygon_id in params['selection']]
+        num_arcs = len(polygon_ids)
+        if num_arcs == 0:
+            return [('INFO', 'No polygons selected. Select one or more polygons to assign properties.')], []
+
+        # Get the component id map of the selected (if any).
+        comp_id = -1
+        if 'id_files' in params:
+            if params['id_files'] and params['id_files'][0]:
+                files_dict = {
+                    'POLYGON': (params['id_files'][0].get_as_string(), params['id_files'][1].get_as_string())
+                }
+                self.load_coverage_component_id_map(files_dict)
+                target_type = TargetType.polygon
+                try:
+                    selected_comp_ids = list(self.comp_to_xms[self.cov_uuid][target_type].keys())
+                    comp_id = selected_comp_ids[0] if selected_comp_ids else -1
+                except KeyError:
+                    comp_id = -1  # No component ids assigned for any of the selected polygons
+        single_polygon = self.data.coverage_data.where(self.data.coverage_data.comp_id == comp_id, drop=True)
+        if single_polygon.user_option.size == 0:
+            # Here we are using component id 0 for default values.
+            single_polygon = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
+        dialog = Dialog(win_cont, icon, 'Polygon Dialog', single_polygon.user_text.item(0),
+                        single_polygon.user_option.item(0))
+        if dialog.exec():
+            dlg_data = dialog.get_dialog_data_dict()
+            edit = dlg_data['user_edit']
+            option = dlg_data['user_display']
+            new_comp_id = int(self.data.coverage_data.comp_id.max() + 1)
+            new_values = []
+            for polygon_id in polygon_ids:
+                self.update_component_id(TargetType.polygon, polygon_id, new_comp_id)
                 new_values.append([new_comp_id, option, edit])
                 new_comp_id += 1
             values_dataset = pd.DataFrame(new_values, columns=['comp_id', 'user_option', 'user_text']).to_xarray()
