@@ -51,9 +51,10 @@
         <execute_script read="true" script="sit_read_file.py"/>
         <execute_script write="true" script="sit_write_file.py"/>
       </declare_file>
+    </declare_files>
   </model>
-  <component display_name="invisible" unique_name="Sim_Manager" class_name="SimComponent"
-             module_name="standard_interface_template.components.sim_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+  <component display_name="invisible" unique_name="Sim_Manager" class_name="SimulationComponent"
+             module_name="standard_interface_template.components.simulation_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
              edit_module="NONE" use_icon="" sharable="false">
     <main_file format="sim_comp.nc" default_name="sim_comp.nc">
     </main_file>

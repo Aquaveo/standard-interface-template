@@ -48,7 +48,7 @@ test_requirements.extend([
 
 cython_excludes = [
     '**/__init__.py',
-    'standard-interface-template/__main__.py',
+    'standard_interface_template/__main__.py',
 ]
 
 
@@ -83,18 +83,18 @@ class PydBuilder(build_py):
 
 # Use plain-text XML definition if develop installing. Eliminates need to manually add XML to
 # <path to XMS installation>/DynamicXML/dmi_xml_definitions.txt
-classifier = ['XMS DMI Definition :: DIN :: standard-interface-template/copy-protected.din',
+classifier = ['XMS DMI Definition :: DIN :: standard_interface_template/copy-protected.din',
               ] if packaging else \
-             ['XMS DMI Definition :: XML :: standard-interface-template/StandardInterfaceTemplate.xml',
+             ['XMS DMI Definition :: XML :: standard_interface_template/StandardInterfaceTemplate.xml',
               ]
-cythonize_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'standard-interface-template')
+cythonize_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'standard_interface_template')
 ext_modules_list = cythonize(generate_cython_extensions(cythonize_path, cython_excludes), language_level="3") \
     if packaging else []
 cmdclass = {'build_py': PydBuilder} if packaging else {}
-packages = ['standard-interface-template'] if packaging else find_packages()
+packages = ['standard_interface_template'] if packaging else find_packages()
 
 setup(
-    name='standard-interface-template',
+    name='standard_interface_template',
     version=version,
     packages=packages,
     include_package_data=True,
@@ -113,7 +113,7 @@ setup(
     ext_modules=ext_modules_list,
     cmdclass=cmdclass,
     entry_points={  # Register an entry point so XMS can find the package on startup.
-        'xms.dmi.interfaces': 'StandardInterfaceTemplate = standard-interface-template'
+        'xms.dmi.interfaces': 'StandardInterfaceTemplate = standard_interface_template'
     },
     # Define a classifier pointing to the definition file. Must be relative from import location (usually site-packages)
     classifiers=classifier
