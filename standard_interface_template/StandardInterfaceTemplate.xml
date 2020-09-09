@@ -25,16 +25,30 @@
       </output_files>
       <component_menus unique_name="Sim_Manager" model_name="StandardInterfaceTemplate"/>
       <takes>
-        <take_component unique_name="Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
+        <take_component unique_name="Boundary_Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
         </take_component>
-        <declare_parameter>mapped_component</declare_parameter>
+        <declare_parameter>boundary_mapped_component</declare_parameter>
+      </takes>
+      <takes>
+        <take_component unique_name="Materials_Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
+        </take_component>
+        <declare_parameter>materials_mapped_component</declare_parameter>
       </takes>
     </simulation>
-    <declare_coverage name="Standard Interface Coverage">
+    <declare_coverage name="Boundary Conditions Coverage">
       <arc_att>
-        <component_menus unique_name="Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+        <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
       </arc_att>
-      <component_menus unique_name="Coverage_Component" model_name="StandardInterfaceTemplate"/>
+      <point_att>
+        <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </point_att>
+      <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate"/>
+    </declare_coverage>
+    <declare_coverage name="Materials Coverage">
+      <polygon_att>
+        <component_menus unique_name="Materials_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </polygon_att>
+      <component_menus unique_name="Materials_Coverage_Component" model_name="StandardInterfaceTemplate"/>
     </declare_coverage>
     <model_checks>
       <model_check problem_text=""
@@ -66,21 +80,39 @@
     </takes>
     <takes>
       <take_coverage limit = "1">
-        <use_coverage>Standard Interface Coverage</use_coverage>
+        <use_coverage>Boundary Conditions Coverage</use_coverage>
       </take_coverage>
-      <declare_parameter>coverage</declare_parameter>
+      <declare_parameter>boundary_conditions_coverage</declare_parameter>
+    </takes>
+    <takes>
+      <take_coverage limit = "1">
+        <use_coverage>Materials Coverage</use_coverage>
+      </take_coverage>
+      <declare_parameter>materials_coverage</declare_parameter>
     </takes>
   </component>
-  <component display_name="invisible" unique_name="Coverage_Component" class_name="CoverageComponent"
-             module_name="standard_interface_template.components.coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+  <component display_name="invisible" unique_name="Boundary_Coverage_Component" class_name="BoundaryCoverageComponent"
+             module_name="standard_interface_template.components.boundary_coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
              edit_module="NONE" use_icon="" sharable="false" use_display="true">
-    <main_file format="coverage_comp.nc" default_name="coverage_comp.nc">
+    <main_file format="boundary_coverage_comp.nc" default_name="boundary_coverage_comp.nc">
     </main_file>
   </component>
-  <component display_name="invisible" unique_name="Mapped_Component" class_name="MappedBcComponent"
-             module_name="standard_interface_template.components.mapped_component" version_info="0.0.l" version="1"
+  <component display_name="invisible" unique_name="Materials_Coverage_Component" class_name="MaterialsCoverageComponent"
+             module_name="standard_interface_template.components.materials_coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false" use_display="true">
+    <main_file format="materials_coverage_comp.nc" default_name="materials_coverage_comp.nc">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Boundary_Mapped_Component" class_name="BoundaryMappedComponent"
+             module_name="standard_interface_template.components.boundary_mapped_component" version_info="0.0.l" version="1"
              import_default="UNLOCKED" edit_module="NONE" use_icon="" sharable="false" use_display="true" user_creatable="false">
-    <main_file format="coverage_display_options.json" default_name="coverage_display_options.json">
+    <main_file format="boundary_coverage_display_options.json" default_name="boundary_coverage_display_options.json">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Materials_Mapped_Component" class_name="MaterialsMappedComponent"
+             module_name="standard_interface_template.components.materials_mapped_component" version_info="0.0.l" version="1"
+             import_default="UNLOCKED" edit_module="NONE" use_icon="" sharable="false" use_display="true" user_creatable="false">
+    <main_file format="materials_coverage_display_options.json" default_name="materials_coverage_display_options.json">
     </main_file>
   </component>
 </dynamic_model>

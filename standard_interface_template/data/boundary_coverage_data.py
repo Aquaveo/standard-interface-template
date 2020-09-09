@@ -14,7 +14,7 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class CoverageData(XarrayBase):
+class BoundaryCoverageData(XarrayBase):
     """Manages data file for the hidden coverage component."""
     display_list = ['A', 'B', 'C']
 
