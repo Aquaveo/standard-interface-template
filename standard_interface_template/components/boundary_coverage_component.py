@@ -19,7 +19,7 @@ from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOption
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.boundary_coverage_data import BoundaryCoverageData
-from standard_interface_template.gui.dialog import Dialog
+from standard_interface_template.gui.boundary_dialog import BoundaryDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -213,7 +213,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         if single_arc.user_option.size == 0:
             # Here we are using component id 0 for default values.
             single_arc = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
-        dialog = Dialog(win_cont, icon, 'Arc Dialog', single_arc.user_text.item(0), single_arc.user_option.item(0))
+        dialog = BoundaryDialog(win_cont, icon, 'Arc Dialog', single_arc.user_text.item(0),
+                                single_arc.user_option.item(0))
         if dialog.exec():
             dlg_data = dialog.get_dialog_data_dict()
             edit = dlg_data['user_edit']
@@ -280,8 +281,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         if single_point.user_option.size == 0:
             # Here we are using component id 0 for default values.
             single_point = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
-        dialog = Dialog(win_cont, icon, 'Point Dialog', single_point.user_text.item(0),
-                        single_point.user_option.item(0))
+        dialog = BoundaryDialog(win_cont, icon, 'Point Dialog', single_point.user_text.item(0),
+                                single_point.user_option.item(0))
         if dialog.exec():
             dlg_data = dialog.get_dialog_data_dict()
             edit = dlg_data['user_edit']

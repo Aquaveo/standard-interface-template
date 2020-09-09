@@ -9,7 +9,7 @@ import os
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.simulation_data import SimulationData
-from standard_interface_template.gui.dialog import Dialog
+from standard_interface_template.gui.simulation_dialog import SimulationDialog
 # from standard_interface_template.mapping.coverage_mapper_runner import CoverageMapperRunner
 
 
@@ -55,12 +55,12 @@ class SimulationComponent(StandardBaseComponent):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
 
         """
-        dialog = Dialog(win_cont, icon, 'Model Control', self.data.info.attrs['user_text'],
-                     self.data.info.attrs['user_option'])
+        dialog = SimulationDialog(win_cont, icon, 'Model Control', self.data.info.attrs['user_text'],
+                                  self.data.info.attrs['user_option'])
         if dialog.exec():
             dlg_data = dialog.get_dialog_data_dict()
             self.data.info.attrs['user_text'] = dlg_data['user_edit']
-            self.data.info.attrs['user_option'] = dlg_data['user_display']
+            self.data.info.attrs['user_option'] = dlg_data['user_type']
             self.data.commit()
         return [], []
 

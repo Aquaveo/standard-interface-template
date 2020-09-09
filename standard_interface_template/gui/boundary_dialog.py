@@ -10,14 +10,14 @@ from xmsguipy.dialogs.xms_parent_dlg import XmsDlg
 from xmsguipy.resources import resources_util
 
 # 4. Local modules
-from standard_interface_template.gui.dialog_ui import Ui_Dialog
+from standard_interface_template.gui.boundary_dialog_ui import Ui_BoundaryDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class Dialog(XmsDlg):
+class BoundaryDialog(XmsDlg):
     """A dialog for assigning values."""
 
     def __init__(self, win_cont, icon, title, user_text, user_option):
@@ -30,14 +30,14 @@ class Dialog(XmsDlg):
             user_text (str): The user editable text for the dialog.
             user_option (str): The user editable current option.
         """
-        super().__init__(win_cont, 'standard_interface_template.gui.dialog')
+        super().__init__(win_cont, 'standard_interface_template.gui.boundary_dialog')
         self.help_url = 'https://www.xmswiki.com/wiki/SMS:Display_Options'
 
         # This is how you get a python file from a *.ui file. Run this after every edit to the *.ui file.
         # <path-to-python/Scripts>pyside2-uic <ui-file-name>.ui > <ui-file-name>_ui.py
 
         # If a *.ui file is used, the class created from the *.ui file needs to be setup.
-        self.ui = Ui_Dialog()
+        self.ui = Ui_BoundaryDialog()
         self.ui.setupUi(self)
 
         self.ui.user_display.addItems(['A', 'B', 'C'])

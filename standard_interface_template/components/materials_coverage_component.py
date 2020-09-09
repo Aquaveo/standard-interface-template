@@ -19,7 +19,7 @@ from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOption
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
-from standard_interface_template.gui.dialog import Dialog
+from standard_interface_template.gui.simulation_dialog import SimulationDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -210,8 +210,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         if single_polygon.user_option.size == 0:
             # Here we are using component id 0 for default values.
             single_polygon = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
-        dialog = Dialog(win_cont, icon, 'Polygon Dialog', single_polygon.user_text.item(0),
-                        single_polygon.user_option.item(0))
+        dialog = SimulationDialog(win_cont, icon, 'Polygon Dialog', single_polygon.user_text.item(0),
+                                  single_polygon.user_option.item(0))
         if dialog.exec():
             dlg_data = dialog.get_dialog_data_dict()
             edit = dlg_data['user_edit']
