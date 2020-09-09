@@ -10,6 +10,7 @@ import os
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.simulation_data import SimulationData
 from standard_interface_template.gui.dialog import Dialog
+from standard_interface_template.mapping.coverage_mapper_runner import CoverageMapperRunner
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -67,7 +68,7 @@ class SimulationComponent(StandardBaseComponent):
         """Creates mapped components to display Standard Interface Template data on a mesh.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with GMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
             params (:obj:`dict'): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
             icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
@@ -80,19 +81,19 @@ class SimulationComponent(StandardBaseComponent):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
 
         """
-        # note = ''
-        # worker = CoverageMapperRunner(query)
-        # error_str = 'Error(s) encountered applying coverages to simulation. Review log output for more details.'
-        # warning_str = 'Warning(s) encountered applying coverages to simulation. Review log output for more details.'
-        # display_text = {
-        #     'title': 'Standard Interface Snap Preview',
-        #     'working_prompt': 'Applying coverages to mesh. Please wait...',
-        #     'error_prompt': error_str,
-        #     'warning_prompt': warning_str,
-        #     'success_prompt': 'Successfully created snap preview',
-        #     'note': note,
-        #     'auto_load': 'Close this dialog automatically when exporting is finished.'
-        # }
-        # feedback_dlg = ProcessFeedbackDlg(icon, display_text, 'standard_interface_template', worker, win_cont)
-        # feedback_dlg.exec()
+        note = ''
+        worker = CoverageMapperRunner(query)
+        error_str = 'Error(s) encountered applying coverages to simulation. Review log output for more details.'
+        warning_str = 'Warning(s) encountered applying coverages to simulation. Review log output for more details.'
+        display_text = {
+            'title': 'Standard Interface Snap Preview',
+            'working_prompt': 'Applying coverages to mesh. Please wait...',
+            'error_prompt': error_str,
+            'warning_prompt': warning_str,
+            'success_prompt': 'Successfully created snap preview',
+            'note': note,
+            'auto_load': 'Close this dialog automatically when exporting is finished.'
+        }
+        feedback_dlg = ProcessFeedbackDlg(icon, display_text, 'standard_interface_template', worker, win_cont)
+        feedback_dlg.exec()
         return [], []
