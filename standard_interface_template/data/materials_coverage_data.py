@@ -17,6 +17,15 @@ __license__ = "All rights reserved"
 class MaterialsCoverageData(XarrayBase):
     """Manages data file for the hidden coverage component."""
     display_list = ['A', 'B', 'C']
+    unassigned_mat = 0
+    column_id = 0
+    column_name = 1
+    column_user_option = 2
+    column_user_text = 3
+    column_texture = 4
+    column_red = 5
+    column_green = 6
+    column_blue = 7
 
     def __init__(self, filename):
         """Initializes the data class.
@@ -72,7 +81,8 @@ class MaterialsCoverageData(XarrayBase):
         Returns:
             xarray.Dataset: The coverage dataset
         """
-        default_data = {'comp_id': [0], 'user_option': 'A', 'user_text': 'Hello World!'}
+        default_data = {'material_id': [0], 'name': 'unassigned', 'user_option': 'A', 'user_text': 'Hello World!',
+                        'texture': [1], 'red': [0], 'green': [0], 'blue': [0]}
         return pd.DataFrame(default_data).to_xarray()
 
     def commit(self):

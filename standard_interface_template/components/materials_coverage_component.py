@@ -19,6 +19,7 @@ from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOption
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
+from standard_interface_template.gui.materials_dialog import MaterialDialog
 from standard_interface_template.gui.simulation_dialog import SimulationDialog
 
 
@@ -45,7 +46,7 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         self.module_name = 'standard_interface_template.components.materials_coverage_component'
         #                    [(menu_text, menu_method)...]
         self.tree_commands = [
-            ('Display Options...', 'open_display_options'),
+            ('Materials...', 'open_materials'),
         ]
         self.polygon_commands = [
             ('Assign Polygon', 'open_assign_polygon'),
@@ -235,8 +236,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
 
         return [], []
 
-    def open_display_options(self, query, params, win_cont, icon):
-        """Shows the display options dialog.
+    def open_materials(self, query, params, win_cont, icon):
+        """Shows the materials dialog.
 
         Args:
             query (:obj:'xmsapi.dmi.Query'):
@@ -251,25 +252,19 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
-        categories = CategoryDisplayOptionList()
-        json_dict = read_display_options_from_json(self.disp_opts_file)
-        categories.from_dict(json_dict)
-        categories_list = [categories]
-
-        dlg = CategoryDisplayOptionsDialog(categories_list, win_cont)
-        dlg.setWindowIcon(icon)
-        dlg.setModal(True)
-        if dlg.exec():
+        dlg = MaterialDialog('Materials', win_cont, icon, self.main_file)
+        if dlg.exec_():
             # write files
-            category_lists = dlg.get_category_lists()
-            for category_list in category_lists:
-                write_display_options_to_json(self.disp_opts_file, category_list)
-                self.display_option_list.append(
-                    XmsDisplayMessage(
-                        file=self.disp_opts_file, edit_uuid=self.cov_uuid,
-                    )
-                )
-                break  # only one list
+            pass
+            # category_lists = dlg.get_category_lists()
+            # for category_list in category_lists:
+            #     write_display_options_to_json(self.disp_opts_file, category_list)
+            #     self.display_option_list.append(
+            #         XmsDisplayMessage(
+            #             file=self.disp_opts_file, edit_uuid=self.cov_uuid,
+            #         )
+            #     )
+            #     break  # only one list
         return [], []
 
     def update_id_files(self):
