@@ -259,8 +259,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         params = {key.get_as_string(): value for key, value in params[0].items()}
         if 'selection' in params:
             point_ids = [point_id.get_as_int() for point_id in params['selection']]
-        num_arcs = len(point_ids)
-        if num_arcs == 0:
+        num_points = len(point_ids)
+        if num_points == 0:
             return [('INFO', 'No points selected. Select one or more points to assign properties.')], []
 
         # Get the component id map of the selected (if any).
