@@ -12,7 +12,6 @@ from PySide2.QtWidgets import (QDialog, QDialogButtonBox, QFileDialog, QHBoxLayo
 # 3. Aquaveo modules
 
 # 4. Local modules
-from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
 from standard_interface_template.gui.widgets.material_table_widget import MaterialTableWidget
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -22,15 +21,15 @@ __license__ = "All rights reserved"
 class MaterialDialog(QDialog):
     """A dialog to define materials and their properties."""
 
-    def __init__(self, title, win_cont, icon, filename):
+    def __init__(self, title, win_cont, icon, data):
         """Initializes the material list and properties dialog.
 
         Args:
             title (str): Title of the dialog
-            win_cont (QWidget): Parent Qt dialog
-            icon (QIcon): Window icon
-            filename (str): File path of the file containing material data
-            edit_sediment (bool): flag to allow editing sediment properties
+            win_cont (QWidget): Parent Qt dialog.
+            icon (QIcon): Window icon.
+            data (MaterialsCoverageData): The material data.
+            edit_sediment (bool): flag to allow editing sediment properties.
         """
         super().__init__(win_cont)
         self.parent = win_cont
@@ -38,7 +37,7 @@ class MaterialDialog(QDialog):
         self.help_url = 'https://www.xmswiki.com/wiki/SMS:Display_Options'
         self.widgets = {}
 
-        self.material_data = MaterialsCoverageData(filename)
+        self.material_data = data
 
         # Setup the dialog
         flags = self.windowFlags()
@@ -49,11 +48,11 @@ class MaterialDialog(QDialog):
         self.adjustSize()
 
         # Calculate a reasonable width for the dialog.
-        # self.dlg_width = self.widgets['table_view'].horizontalHeader().length()
-        # self.dlg_width += self.widgets['table_view'].style().pixelMetric(QStyle.PM_ScrollBarExtent)
-        # self.dlg_width += self.widgets['table_view'].frameWidth() * 2
-        # self.dlg_width += 20
-        # self.resize(self.dlg_width, self.size().height())
+        self.dlg_width = self.widgets['table_view'].table_view.horizontalHeader().length()
+        self.dlg_width += self.widgets['table_view'].style().pixelMetric(QStyle.PM_ScrollBarExtent) * 3
+        self.dlg_width += self.widgets['table_view'].table_view.frameWidth() * 2
+        self.dlg_width += 20
+        self.resize(self.dlg_width, self.size().height())
 
     def setup_ui(self):
         """Setup dialog widgets."""
@@ -92,16 +91,6 @@ class MaterialDialog(QDialog):
     def help_requested(self):  # pragma: no cover
         """Called when the Help button is clicked."""
         webbrowser.open(self.help_url)
-
-    def on_btn_import(self):
-        """Imports material properties."""
-        # TODO:  add code to import materials
-        pass
-
-    def on_btn_export(self):
-        """Exports material properties to a file."""
-        # TODO:  add code to export materials
-        pass
 
     def accept(self):
         """Save material properties."""

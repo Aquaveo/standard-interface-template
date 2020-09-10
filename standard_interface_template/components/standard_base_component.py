@@ -308,7 +308,10 @@ class StandardBaseComponent(CoverageComponentBase):
         }
         self.load_coverage_component_id_map(file_dict)
         if cleanup:
-            comp_util.remove_id_files(file_dict)
+            for _, val in file_dict.items():
+                for f in val:
+                    if os.path.exists(f):
+                        os.remove(f)
         query.set_context(start_ctxt)
         return file_dict
 

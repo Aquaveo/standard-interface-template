@@ -5,6 +5,7 @@ import shutil
 
 # 2. Third party modules
 import pandas as pd
+from PySide2.QtGui import QColor
 import xarray as xr
 
 # 3. Aquaveo modules
@@ -12,7 +13,9 @@ from xmsapi.dmi import ActionRequest, DialogModality
 from xmscomponents.display.display_options_io import (read_display_option_ids, read_display_options_from_json,
                                                       write_display_option_ids, write_display_options_to_json)
 from xmscomponents.display.xms_display_message import DrawType, XmsDisplayMessage
+from xmsguipy.data.category_display_option import CategoryDisplayOption
 from xmsguipy.data.category_display_option_list import CategoryDisplayOptionList
+from xmsguipy.data.polygon_texture import PolygonOptions, PolygonTexture
 from xmsguipy.data.target_type import TargetType
 from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOptionsDialog
 
@@ -219,7 +222,7 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         material_index = material_names.index(single_polygon.name[0])
         dialog = AssignPolyMaterialDialog(win_cont, icon, 'Assign Material', multi_label,
                                           material_names, material_index)
-        if dialog.exec():
+        if dialog.exec_():
             new_material_index = dialog.get_selected_material()
             new_material_id = int(material_ids[new_material_index])
             for polygon_id in polygon_ids:
@@ -250,17 +253,91 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
-        dlg = MaterialDialog('Materials', win_cont, icon, self.main_file)
+        ids = list(self.data.coverage_data.material_id.values)
+        dlg = MaterialDialog('Materials', win_cont, icon, self.data)
         if dlg.exec_():
+            new_ids = list(self.data.coverage_data.material_id.values)
+            deleted_ids = [int(x) for x in self.update_display_id_files(ids, new_ids)]
+            self.unassign_materials(query, deleted_ids)
             # write files
-            pass
-            # category_lists = dlg.get_category_lists()
-            # for category_list in category_lists:
-            #     write_display_options_to_json(self.disp_opts_file, category_list)
-            #     self.display_option_list.append(
-            #         XmsDisplayMessage(
-            #             file=self.disp_opts_file, edit_uuid=self.cov_uuid,
-            #         )
-            #     )
-            #     break  # only one list
+            category_list = self._get_category_list()
+            write_display_options_to_json(self.disp_opts_file, category_list)
+            self.display_option_list.append(
+                XmsDisplayMessage(
+                    file=self.disp_opts_file, edit_uuid=self.cov_uuid,
+                )
+            )
         return [], []
+
+    def _get_category_list(self):
+        """Get the category list for the """
+        category_list = CategoryDisplayOptionList()
+        category_list.target_type = TargetType.polygon
+        category_list.comp_uuid = self.uuid
+        category_list.uuid = str(self.data.info.attrs['display_uuid'])
+        texture_list = list(self.data.coverage_data.texture.values)
+        red_list = list(self.data.coverage_data.red.values)
+        green_list = list(self.data.coverage_data.green.values)
+        blue_list = list(self.data.coverage_data.blue.values)
+        name_list = list(self.data.coverage_data.name.values)
+        id_list = list(self.data.coverage_data.material_id.values)
+        for texture, red, green, blue, name, material_id in zip(texture_list, red_list, green_list, blue_list,
+                                                                name_list, id_list):
+            category = CategoryDisplayOption()
+            category.id = int(material_id)
+            category.description = name
+            category.file = f'display_ids/material_{category.id}.matid'
+            options = PolygonOptions()
+            options.texture = PolygonTexture(int(texture))
+            options.color = QColor(int(red), int(green), int(blue), 255)
+            category.options = options
+            # Make unassigned material the default category.
+            if category.id == 0:  # Should always have 0 as "material id"
+                category.is_unassigned_category = True
+            category_list.categories.append(category)
+        return category_list
+
+    def update_display_id_files(self, old_ids, new_ids):
+        """Update the display files.
+
+        Args:
+            old_ids (list): list of ids before editing materials
+            new_ids (list): list of current material ids
+
+        Returns:
+            (list) : deleted ids
+        """
+        deleted_ids = old_ids
+        path = os.path.join(os.path.dirname(self.main_file), 'display_ids')
+        for mat_id in new_ids:
+            if mat_id >= 0:
+                id_file = f'material_{mat_id}.matid'
+                filename = os.path.join(path, id_file)
+                write_display_option_ids(filename, [mat_id])
+            if mat_id in deleted_ids:
+                deleted_ids.remove(mat_id)
+
+        for mat_id in deleted_ids:
+            id_file = f'material_{mat_id}.matid'
+            filename = os.path.join(path, id_file)
+            os.remove(filename)
+        return deleted_ids
+
+    def unassign_materials(self, query, delete_ids):
+        """Get the coverage UUID from XMS and send back the display options list.
+
+        Args:
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            delete_ids (:obj:`list'): List of the deleted material ids.
+
+        Returns:
+            Empty message and ActionRequest lists
+
+        """
+        files_dict = self.query_for_all_component_ids(query, TargetType.polygon)
+        if self.cov_uuid in self.comp_to_xms and TargetType.polygon in self.comp_to_xms[self.cov_uuid]:
+            poly_map = self.comp_to_xms[self.cov_uuid][TargetType.polygon]
+            for mat in delete_ids:
+                if mat in poly_map:
+                    for att_id in poly_map[mat]:
+                        self.update_component_id(TargetType.polygon, att_id, MaterialData.UNASSIGNED_MAT)
