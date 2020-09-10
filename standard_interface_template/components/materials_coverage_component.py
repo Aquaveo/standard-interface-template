@@ -19,8 +19,8 @@ from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOption
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
+from standard_interface_template.gui.assign_poly_material_dialog import AssignPolyMaterialDialog
 from standard_interface_template.gui.materials_dialog import MaterialDialog
-from standard_interface_template.gui.simulation_dialog import SimulationDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -195,6 +195,7 @@ class MaterialsCoverageComponent(StandardBaseComponent):
 
         # Get the component id map of the selected (if any).
         comp_id = -1
+        multi_label = ''
         if 'id_files' in params:
             if params['id_files'] and params['id_files'][0]:
                 files_dict = {
@@ -205,27 +206,24 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                 try:
                     selected_comp_ids = list(self.comp_to_xms[self.cov_uuid][target_type].keys())
                     comp_id = selected_comp_ids[0] if selected_comp_ids else -1
+                    if len(selected_comp_ids) > 1:
+                        multi_label = 'Multiple polygons will be assigned the same material.'
                 except KeyError:
                     comp_id = -1  # No component ids assigned for any of the selected polygons
-        single_polygon = self.data.coverage_data.where(self.data.coverage_data.comp_id == comp_id, drop=True)
+        single_polygon = self.data.coverage_data.where(self.data.coverage_data.material_id == comp_id, drop=True)
+        material_names = list(self.data.coverage_data.name.values)
+        material_ids = list(self.data.coverage_data.material_id.values)
         if single_polygon.user_option.size == 0:
             # Here we are using component id 0 for default values.
-            single_polygon = self.data.coverage_data.where(self.data.coverage_data.comp_id == 0, drop=True)
-        dialog = SimulationDialog(win_cont, icon, 'Polygon Dialog', single_polygon.user_text.item(0),
-                                  single_polygon.user_option.item(0))
+            single_polygon = self.data.coverage_data.where(self.data.coverage_data.material_id == 0, drop=True)
+        material_index = material_names.index(single_polygon.name[0])
+        dialog = AssignPolyMaterialDialog(win_cont, icon, 'Assign Material', multi_label,
+                                          material_names, material_index)
         if dialog.exec():
-            dlg_data = dialog.get_dialog_data_dict()
-            edit = dlg_data['user_edit']
-            option = dlg_data['user_display']
-            new_comp_id = int(self.data.coverage_data.comp_id.max() + 1)
-            new_values = []
+            new_material_index = dialog.get_selected_material()
+            new_material_id = int(material_ids[new_material_index])
             for polygon_id in polygon_ids:
-                self.update_component_id(TargetType.polygon, polygon_id, new_comp_id)
-                new_values.append([new_comp_id, option, edit])
-                new_comp_id += 1
-            values_dataset = pd.DataFrame(new_values, columns=['comp_id', 'user_option', 'user_text']).to_xarray()
-            self.data.coverage_data = xr.concat([self.data.coverage_data, values_dataset], 'index')
-            self.update_id_files()
+                self.update_component_id(TargetType.polygon, polygon_id, new_material_id)
             self.display_option_list.append(
                 XmsDisplayMessage(file=self.disp_opts_file, edit_uuid=self.cov_uuid)
             )
@@ -266,22 +264,3 @@ class MaterialsCoverageComponent(StandardBaseComponent):
             #     )
             #     break  # only one list
         return [], []
-
-    def update_id_files(self):
-        """Writes the display id files."""
-        df = self.data.coverage_data.to_dataframe()
-        disp_names = MaterialsCoverageData.display_list
-        for i in range(len(disp_names)):
-            self._write_id_file(disp_names[i], df)
-
-    def _write_id_file(self, disp_name, df):
-        """Write a single id file.
-
-        Args:
-            disp_name (str):
-            df (DataFrame):
-        """
-        df1 = df.loc[df['user_option'] == disp_name]
-        ids = df1['comp_id'].astype(dtype='i4').to_list()
-        id_file = os.path.join(os.path.dirname(self.main_file), f'display_ids/{disp_name}.display_ids')
-        write_display_option_ids(id_file, ids)
