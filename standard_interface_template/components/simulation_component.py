@@ -81,19 +81,19 @@ class SimulationComponent(StandardBaseComponent):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
 
         """
-        # note = ''
-        # worker = CoverageMapperRunner(query)
-        # error_str = 'Error(s) encountered applying coverages to simulation. Review log output for more details.'
-        # warning_str = 'Warning(s) encountered applying coverages to simulation. Review log output for more details.'
-        # display_text = {
-        #     'title': 'Standard Interface Snap Preview',
-        #     'working_prompt': 'Applying coverages to mesh. Please wait...',
-        #     'error_prompt': error_str,
-        #     'warning_prompt': warning_str,
-        #     'success_prompt': 'Successfully created snap preview',
-        #     'note': note,
-        #     'auto_load': 'Close this dialog automatically when exporting is finished.'
-        # }
-        # feedback_dlg = ProcessFeedbackDlg(icon, display_text, 'standard_interface_template', worker, win_cont)
-        # feedback_dlg.exec()
+        note = ''
+        worker = CoverageMapperRunner(query)
+        error_str = 'Error(s) encountered applying coverages to simulation. Review log output for more details.'
+        warning_str = 'Warning(s) encountered applying coverages to simulation. Review log output for more details.'
+        display_text = {
+            'title': 'Standard Interface Snap Preview',
+            'working_prompt': 'Applying coverages to mesh. Please wait...',
+            'error_prompt': error_str,
+            'warning_prompt': warning_str,
+            'success_prompt': 'Successfully created snap preview',
+            'note': note,
+            'auto_load': 'Close this dialog automatically when exporting is finished.'
+        }
+        feedback_dlg = ProcessFeedbackDlg(icon, display_text, 'standard_interface_template', worker, win_cont)
+        feedback_dlg.exec()
         return [], []
