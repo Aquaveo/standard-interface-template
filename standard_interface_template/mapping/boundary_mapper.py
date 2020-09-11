@@ -34,7 +34,7 @@ class BoundaryMapper:
         self._coverage_comp_xml_str = 'StandardInterfaceTemplate#Boundary_Coverage_Component'
         self._new_comp_unique_name = 'Boundary_Mapped_Component'
         self._bc_coverage = coverage_mapper.bc_coverage
-        self._bc_component = coverage_mapper.bc_component
+        self._bc_component = coverage_mapper.boundary_conditions_component
         self._snap_arc = SnapExteriorArc()
         self._snap_arc.set_grid(grid=self._co_grid, target_cells=False)
         self._comp_main_file = ''

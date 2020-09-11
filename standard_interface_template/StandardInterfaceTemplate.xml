@@ -54,7 +54,7 @@
       <model_check problem_text=""
                    description_text= ""
                    fix_text = "">
-        <execute_script script = "sit_model_check.py"/>
+        <execute_script script = "model_check.py"/>
       </model_check>
     </model_checks>
     <declare_dialogs></declare_dialogs>
