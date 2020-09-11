@@ -5,12 +5,13 @@ import os
 # 2. Third party modules
 
 # 3. Aquaveo modules
+from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.simulation_data import SimulationData
 from standard_interface_template.gui.simulation_dialog import SimulationDialog
-# from standard_interface_template.mapping.coverage_mapper_runner import CoverageMapperRunner
+from standard_interface_template.mapping.coverage_mapper_runner import CoverageMapperRunner
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"

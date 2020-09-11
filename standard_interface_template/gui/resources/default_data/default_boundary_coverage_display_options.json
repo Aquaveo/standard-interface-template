@@ -34,7 +34,7 @@
 			"description": "A",
 			"file": "display_ids/A.display_ids",
 			"id": 0,
-			"is_unassigned_category": 0
+			"is_unassigned_category": 1
 		},
 		{
 			"on": 1,

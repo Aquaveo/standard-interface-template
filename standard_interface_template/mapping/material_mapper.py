@@ -15,7 +15,7 @@ from xmsguipy.data.category_display_option_list import CategoryDisplayOptionList
 from xmsguipy.data.target_type import TargetType
 
 # 4. Local modules
-from standard_interface_template.components.mapped_material_component import MappedMaterialComponent
+from standard_interface_template.components.materials_mapped_component import MaterialsMappedComponent
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
@@ -23,7 +23,7 @@ __license__ = "All rights reserved"
 
 class MaterialMapper:
     """Class for mapping material coverage to a mesh for Standard Interface."""
-    def __init__(self, coverage_mapper, wkt, sediment, generate_snap):
+    def __init__(self, coverage_mapper, wkt, generate_snap):
         """Constructor."""
         self._generate_snap = generate_snap
         self._logger = coverage_mapper._logger
@@ -61,7 +61,7 @@ class MaterialMapper:
             do_comp.set_locked(False)
             do_comp.set_uuid(os.path.basename(os.path.dirname(self._comp_main_file)))
 
-            comp = MappedMaterialComponent(self._comp_main_file)
+            comp = MaterialsMappedComponent(self._comp_main_file)
             return do_comp, comp
 
         return None, None  # pragma: no cover
@@ -82,7 +82,7 @@ class MaterialMapper:
                 locs_list.append(locs_list[2])
                 outer_dict = {'outer': locs_list}
                 poly_list.append(outer_dict)
-            filename = os.path.join(self._comp_path, f'mat_{comp_id}.matid')
+            filename = os.path.join(self._comp_path, f'display_ids/material_{comp_id}.matid')
             write_display_option_polygon_locations(filename, poly_list)
 
     def _get_polygon_cells(self):
@@ -129,9 +129,10 @@ class MaterialMapper:
         if os.path.exists(self._comp_path):
             shutil.rmtree(self._comp_path)  # pragma: no cover
         os.mkdir(self._comp_path)
+        os.mkdir(os.path.join(self._comp_path, 'display_ids'))
 
-        mat_comp_display_file = os.path.join(mat_comp_path, 'material_display_options.json')
-        comp_display_file = os.path.join(self._comp_path, 'material_display_options.json')
+        mat_comp_display_file = os.path.join(mat_comp_path, 'materials_coverage_display_options.json')
+        comp_display_file = os.path.join(self._comp_path, 'materials_coverage_display_options.json')
         if os.path.isfile(mat_comp_display_file):
             shutil.copyfile(mat_comp_display_file, comp_display_file)
             categories = CategoryDisplayOptionList()  # Generates a random UUID key for the display list
@@ -148,4 +149,4 @@ class MaterialMapper:
             write_display_options_to_json(comp_display_file, categories)
             self._comp_main_file = comp_display_file
         else:
-            self._logger.info('Could not find material_display_options.json file')  # pragma: no cover
+            self._logger.info('Could not find materials_coverage_display_options.json file')  # pragma: no cover
