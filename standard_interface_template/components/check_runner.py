@@ -58,8 +58,8 @@ class CheckRunner:
         self._simulation_name = r[0].get_simulation_name()
         self._query.select('StandardInterfaceTemplate#Sim_Manager')
         self._sim_query_helper = SimQueryHelper(self._query)
-        self._sim_query_helper.get_geometry()
-        self._sim_query_helper.get_boundary_condition_coverage()
+        self._sim_query_helper.get_geometry(False)
+        self._sim_query_helper.get_boundary_conditions_coverage()
         self._sim_query_helper.get_materials_coverage()
 
     def _get_data(self):
