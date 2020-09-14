@@ -45,7 +45,7 @@ class SimQueryHelper:
             self.sim_uuid = self._query.get('uuid')['uuid'][0].get_as_string()
             self._query.set_context(self._start_context)
         self._logger = logging.getLogger('standard_interface_template')
-        self.mapped_comps = None  # (list(tuple)): (data objects component, display_options_action, component name)
+        self.mapped_comps = []  # (list(tuple)): (data objects component, display_options_action, component name)
         self.grid_name = ''
         self.grid_units = ''
         self.grid_uuid = ''
@@ -66,7 +66,7 @@ class SimQueryHelper:
         """
         self.get_geometry(warn_if_no_mesh)
         self._get_coverages()
-        self._get_uuids_of_existing_mapped_components()
+        self.get_uuids_of_existing_mapped_components()
         self._get_coverage_comp_ids()
         self._query.set_context(self._start_context)
 
@@ -134,24 +134,26 @@ class SimQueryHelper:
             coverage = result[0]
             component_file = ''
             if component_parameter:
-                self._query.select(f'StandardInterfaceComponent#{component_parameter}')
+                self._query.select(f'StandardInterfaceTemplate#{component_parameter}')
                 component_file = self._query.get('main_file')['main_file'][0].get_as_string()
                 self._query.select('ComponentCoverageIds')
             return coverage, component_file
-        return None
+        return None, None
 
     def get_boundary_conditions_coverage(self):
         """Gets the boundary conditions coverage and filename."""
         self.boundary_conditions_coverage, filename = self._get_coverage('boundary_conditions_coverage',
                                                                          'Boundary_Coverage_Component')
-        self.boundary_conditions_component = BoundaryCoverageComponent(filename)
-        self._get_all_point_and_arc_ids_comp_ids(self.boundary_conditions_component)
+        if self.boundary_conditions_coverage:
+            self.boundary_conditions_component = BoundaryCoverageComponent(filename)
+            self._get_all_point_and_arc_ids_comp_ids(self.boundary_conditions_component)
 
     def get_materials_coverage(self):
         """Gets the materials coverage and filename."""
         self.materials_coverage, filename = self._get_coverage('materials_coverage', 'Materials_Coverage_Component')
-        self.material_component = MaterialsCoverageComponent(filename)
-        self._get_all_feature_ids_comp_ids(self.material_component, TargetType.polygon)
+        if self.materials_coverage:
+            self.material_component = MaterialsCoverageComponent(filename)
+            self._get_all_feature_ids_comp_ids(self.material_component, TargetType.polygon)
 
     def get_geometry(self, warn_if_no_mesh):
         """Gets the mesh associated with a simulation.
@@ -159,6 +161,8 @@ class SimQueryHelper:
         Args:
             warn_if_no_mesh (bool): If True, log warning if no mesh linked to the simulation.
 
+        Returns:
+            bool:  True if a mesh was found, False if not.
         """
         self._logger.info('Getting mesh from simulation.')
         self._query.set_context(self._start_context)
@@ -169,7 +173,7 @@ class SimQueryHelper:
             if warn_if_no_mesh:
                 err_str = 'Simulation must have a link to a mesh to execute this command.'
                 self._logger.warning(err_str)
-            return
+            return False
         self.grid_name = result[0].get_name()
         proj = result[0].get_projection()
         unit_str = proj.get_horizontal_units()
@@ -187,8 +191,9 @@ class SimQueryHelper:
         self.grid_wkt = result[0].get_projection().get_well_known_text()
         self.co_grid = read_grid_from_file(grid_file)
         self._logger.info('Mesh successfully loaded.')
+        return True
 
-    def _get_uuids_of_existing_mapped_components(self):
+    def get_uuids_of_existing_mapped_components(self):
         """Gets the uuids of any existing mapped components."""
         str_uuids = list()
         str_uuids.append(self._get_uuid_of_existing_mapped_component('materials_mapped_component'))
@@ -340,6 +345,25 @@ class SimQueryHelper:
             ctxt.set_place_mark(place_mark)
         self._query.set_context(ctxt)
 
+    def remove_existing_mapped_components(self):
+        """Remove any existing mapped components."""
+        self._logger.info('Removing existing mapped components.')
+        self._query.set_context(self._start_context)
+        self._query.select('Parent')
+        build_vertex = self._query.add_root_vertex_instance('Build')  # Add a build out edge from the simulation
+        add_vertices = [build_vertex]
+        # delete any existing mapped components
+        for str_uuid in self.existing_mapped_component_uuids:
+            add_vertices.extend(self._query.add([{'#description': 'Delete', '': str_uuid}],
+                                                self._query.get_context().get_root_instance()))
+
+        # Set the place marks of the vertices to build
+        ctxt = self._query.get_context()
+        ctxt.clear_place_marks()
+        for place_mark in add_vertices:
+            ctxt.set_place_mark(place_mark)
+        self._query.set_context(ctxt)
+
     @staticmethod
     def _remove_id_files(file_dict):
         """Removes id files from xms that are referenced in the passed in dictionary.
@@ -349,4 +373,5 @@ class SimQueryHelper:
         """
         for _, val in file_dict.items():
             for f in val:
-                os.remove(f)
+                if f:
+                    os.remove(f)

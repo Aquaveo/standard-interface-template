@@ -21,36 +21,34 @@ class CoverageMapper:
         """Constructor.
 
         Args:
-            query_helper (dict): Dictionary of values queried to use in the coverage mapper.
+            query_helper (SimQueryHelper): Values queried to use in the coverage mapper.
             generate_snap (bool): Whether or not snap preview is generated.
         """
         super().__init__()
         self._logger = logging.getLogger('standard_interface_template')
         self._generate_snap = generate_snap
 
-        self.co_grid = query_helper['co_grid']
-        self.grid_uuid = query_helper['grid_uuid']
-        self.grid_wkt = query_helper['grid_wkt']
-        self.component_folder = query_helper['component_folder']
+        self.co_grid = query_helper.co_grid
+        self.grid_uuid = query_helper.grid_uuid
+        self.grid_wkt = query_helper.grid_wkt
+        self.component_folder = query_helper.component_folder
 
-        self.material_coverage = query_helper['materials_coverage']
-        self.material_component_file = query_helper['material_component_file']
-        self.material_component = query_helper['materials_component']
+        self.material_coverage = query_helper.materials_coverage
+        self.material_component = query_helper.material_component
         self.material_comp_id_to_grid_cell_ids = None
         self.material_names = None
         self.mapped_material_uuid = None
         self.mapped_material_display_uuid = None
 
-        self.bc_coverage = query_helper['boundary_condition_coverage']
-        self.bc_component_file = query_helper['bc_component_file']
-        self.bc_component = query_helper['bc_component']
+        self.bc_coverage = query_helper.boundary_conditions_coverage
+        self.bc_component = query_helper.boundary_conditions_component
         self.bc_arc_id_to_grid_ids = None
         self.bc_arc_id_to_comp_id = None
         self.bc_arc_id_to_bc_id = None
         self.bc_mapped_comp_uuid = None
         self.bc_mapped_comp_display_uuid = None
 
-        self.mapped_comps = []
+        self.query_helper = query_helper
 
     def do_map(self):
         """Creates the snap preview of coverages onto the mesh."""
@@ -62,24 +60,24 @@ class CoverageMapper:
 
     def _map_materials(self):
         """Maps the materials from the material coverage to the mesh."""
-        if self.material_coverage is None or not self.material_component_file:
+        if self.material_coverage is None:
             return
         self._logger.info('Mapping materials coverage to mesh.')
         mapper = MaterialMapper(self, wkt=self.grid_wkt, generate_snap=self._generate_snap)
         mapper.mapped_comp_uuid = self.mapped_material_uuid
         mapper.mapped_material_display_uuid = self.mapped_material_display_uuid
         self.material_comp_id_to_grid_cell_ids = mapper._poly_to_cells
-        mat_data = MaterialsCoverageData(self.material_component_file)
+        mat_data = self.material_component.data
         self.material_names = mat_data.coverage_data.to_dataframe()['name'].tolist()
         do_comp, comp = mapper.do_map()
         if do_comp is not None:
-            self.mapped_comps.append((do_comp, [comp.get_display_options_action()],
-                                     'materials_mapped_component'))
+            self.query_helper.mapped_comps.append((do_comp, [comp.get_display_options_action()],
+                                                  'materials_mapped_component'))
         self._logger.info('Finished mapping materials coverage to mesh.')
 
     def _map_boundary_conditions(self):
         """Maps the boundary conditions from the boundary conditions coverage to the mesh."""
-        if self.bc_coverage is None or not self.bc_component_file:
+        if self.bc_coverage is None:
             return
         self._logger.info('Mapping bc coverage to mesh.')
         mapper = BoundaryMapper(self, wkt=self.grid_wkt, generate_snap=self._generate_snap)
@@ -89,6 +87,6 @@ class CoverageMapper:
         self.bc_arc_id_to_comp_id = mapper._arc_id_to_comp_id
         do_comp, comp = mapper.do_map()
         if do_comp is not None:
-            self.mapped_comps.append((do_comp, [comp.get_display_options_action()],
-                                     'boundary_mapped_component'))
+            self.query_helper.mapped_comps.append((do_comp, [comp.get_display_options_action()],
+                                                  'boundary_mapped_component'))
         self._logger.info('Finished mapping boundary conditions coverage to mesh.')

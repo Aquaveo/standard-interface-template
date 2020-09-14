@@ -29,7 +29,7 @@ class MaterialMapper:
         self._logger = coverage_mapper._logger
         self._co_grid = coverage_mapper.co_grid
         self._new_comp_unique_name = 'Materials_Mapped_Component'
-        self._material_component_file = coverage_mapper.material_component_file
+        self._material_component_file = coverage_mapper.material_component.main_file
         self._material_coverage = coverage_mapper.material_coverage
         self._material_component = coverage_mapper.material_component
         self._snap_poly = SnapPolygon()
