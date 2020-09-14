@@ -57,7 +57,7 @@ class SimQueryHelper:
         self.boundary_conditions_component = None
         self.material_component = None
 
-    def get_sim_data(self, warn_if_no_mesh):
+    def get_simulation_data(self, warn_if_no_mesh):
         """Gets the coverages associated with a simulation.
 
         Args:
@@ -65,8 +65,8 @@ class SimQueryHelper:
 
         """
         self.get_geometry(warn_if_no_mesh)
-        self._get_coverages()
-        self.get_uuids_of_existing_mapped_components()
+        self.get_boundary_conditions_coverage()
+        self.get_materials_coverage()
         self._get_coverage_comp_ids()
         self._query.set_context(self._start_context)
 
@@ -204,13 +204,10 @@ class SimQueryHelper:
 
     def _get_coverage_comp_ids(self):
         """Load the component ids for the coverage."""
-        if 'bc_coverage' in self.coverages:
-            self.boundary_conditions_component = BoundaryCoverageComponent(self.coverages['bc_coverage'][1])
-            self._get_all_feature_ids_comp_ids(self.boundary_conditions_component, 'bc_coverage', 'SRH-2D#Bc_Component', TargetType.arc)
-        if 'material_coverage' in self.coverages:
-            self.material_component = MaterialsCoverageComponent(self.coverages['material_coverage'][1])
-            self._get_all_feature_ids_comp_ids(self.material_component, 'material_coverage',
-                                               'SRH-2D#Material_Component', TargetType.polygon)
+        if self.boundary_conditions_coverage:
+            self._get_all_feature_ids_comp_ids(self.boundary_conditions_component, TargetType.arc)
+        if self.materials_coverage:
+            self._get_all_feature_ids_comp_ids(self.material_component, TargetType.polygon)
 
     @staticmethod
     def get_feature_file_dict(query, component, target_type):

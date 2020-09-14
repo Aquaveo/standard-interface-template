@@ -1,5 +1,6 @@
 """Base class for components class."""
 # 1. Standard python modules
+from distutils.dir_util import copy_tree
 import os
 import shutil
 
@@ -69,7 +70,7 @@ class StandardBaseComponent(CoverageComponentBase):
 
         # Check if we are already in the new location
         new_main_file = os.path.join(new_path, os.path.basename(self.main_file))
-        if os.path.samefile(new_main_file, self.main_file):
+        if os.path.normcase(new_main_file) == os.path.normcase(self.main_file):
             return self.main_file, [], []
 
         copy_tree(os.path.dirname(self.main_file), os.path.dirname(new_main_file))
