@@ -23,8 +23,8 @@
       </input_files>
       <output_files>
         <output_file>
-          <use_file>model_file</use_file>
-          <export_location>"sim.example"</export_location>
+          <use_file>solution_file</use_file>
+          <export_location>"solution.example_solution"</export_location>
           <declare_parameter>SimSolutionLoad</declare_parameter>
         </output_file>
       </output_files>
@@ -74,6 +74,11 @@
         <comment>###</comment>
         <identifier>###This is a geometry file for Standard Interface Template.###</identifier>
         <execute_script read="true" script="read_geometry.py" open_as_filter="Standard Interface Template Geometry Files (*.example_geometry)"/>
+      </declare_file>
+      <declare_file name ="solution_file" read_behavior="could_append" file_type="SCRIPT">
+        <comment>###</comment>
+        <identifier>###This is a solution file for Standard Interface Template.###</identifier>
+        <execute_script read="true" script="read_solution.py" open_as_filter="Standard Interface Template Solution Files (*.example_solution)"/>
       </declare_file>
     </declare_files>
   </model>

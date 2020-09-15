@@ -98,10 +98,10 @@ class SimulationRun(RunBase):
         load_sol = self.get_solution_load_actions(sim, query, filelocation)[0]
 
         cmd = ExecutableCommand()
-        cmd.set_executable('SimulationInterfaceTemplate')
-        cmd.set_model('SimulationInterfaceTemplate')
+        cmd.set_executable('StandardInterfaceTemplate')
+        cmd.set_model('StandardInterfaceTemplate')
         cmd.set_executable_order(0)
-        cmd.set_display_name('Simulation Interface Template')
+        cmd.set_display_name('Standard Interface Template')
         cmd.set_run_weight(100)
         cmd.add_commandline_argument(simulation_file)
         cmd.set_progress_script('simulation_progress.py')
