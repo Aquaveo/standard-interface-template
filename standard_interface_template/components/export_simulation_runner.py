@@ -43,7 +43,7 @@ class ExportSimulationRunner(QThread):
         self.files_exported = []
 
     def run(self):
-        """Creates the snap preview of coverages onto the mesh."""
+        """Exports the coverages and the mesh."""
         try:
             self._setup_query()
             self.coverage_mapper.do_map()

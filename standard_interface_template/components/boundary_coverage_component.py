@@ -26,8 +26,8 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-COVERAGE_INITIAL_ATT_ID_FILE = 'initial_coverage.attids'
-COVERAGE_INITIAL_COMP_ID_FILE = 'initial_coverage.compids'
+BC_COVERAGE_INITIAL_ATT_ID_FILE = 'initial_coverage.attids'
+BC_COVERAGE_INITIAL_COMP_ID_FILE = 'initial_coverage.compids'
 
 
 class BoundaryCoverageComponent(StandardBaseComponent):
@@ -152,15 +152,18 @@ class BoundaryCoverageComponent(StandardBaseComponent):
             return [('ERROR', 'Could not get Standard Interface coverage UUID.')], []
         self.cov_uuid = uuid_result[0].get_as_string()
 
-        initial_att_file = os.path.join(os.path.dirname(self.main_file), COVERAGE_INITIAL_ATT_ID_FILE)
+        initial_att_file = os.path.join(os.path.dirname(self.main_file), BC_COVERAGE_INITIAL_ATT_ID_FILE)
         if os.path.isfile(initial_att_file):  # Came from a model native read, initialize the component ids.
             att_ids = read_display_option_ids(initial_att_file)
-            initial_comp_file = os.path.join(os.path.dirname(self.main_file), COVERAGE_INITIAL_COMP_ID_FILE)
+            initial_comp_file = os.path.join(os.path.dirname(self.main_file), BC_COVERAGE_INITIAL_COMP_ID_FILE)
             comp_ids = read_display_option_ids(initial_comp_file)
             os.remove(initial_att_file)
             os.remove(initial_comp_file)
             for att_id, comp_id in zip(att_ids, comp_ids):
                 self.update_component_id(TargetType.arc, att_id, comp_id)
+            id_dir = os.path.join(os.path.dirname(self.main_file), 'display_ids')
+            os.mkdir(id_dir)
+            self.update_id_files()
 
         self.data.info.attrs['cov_uuid'] = self.cov_uuid
         self.data.commit()

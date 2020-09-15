@@ -30,8 +30,8 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-COVERAGE_INITIAL_ATT_ID_FILE = 'initial_coverage.attids'
-COVERAGE_INITIAL_COMP_ID_FILE = 'initial_coverage.compids'
+MAT_COVERAGE_INITIAL_ATT_ID_FILE = 'initial_coverage.attids'
+MAT_COVERAGE_INITIAL_COMP_ID_FILE = 'initial_coverage.compids'
 
 
 class MaterialsCoverageComponent(StandardBaseComponent):
@@ -153,15 +153,20 @@ class MaterialsCoverageComponent(StandardBaseComponent):
             return [('ERROR', 'Could not get Standard Interface coverage UUID.')], []
         self.cov_uuid = uuid_result[0].get_as_string()
 
-        initial_att_file = os.path.join(os.path.dirname(self.main_file), COVERAGE_INITIAL_ATT_ID_FILE)
+        initial_att_file = os.path.join(os.path.dirname(self.main_file), MAT_COVERAGE_INITIAL_ATT_ID_FILE)
         if os.path.isfile(initial_att_file):  # Came from a model native read, initialize the component ids.
             att_ids = read_display_option_ids(initial_att_file)
-            initial_comp_file = os.path.join(os.path.dirname(self.main_file), COVERAGE_INITIAL_COMP_ID_FILE)
+            initial_comp_file = os.path.join(os.path.dirname(self.main_file), MAT_COVERAGE_INITIAL_COMP_ID_FILE)
             comp_ids = read_display_option_ids(initial_comp_file)
             os.remove(initial_att_file)
             os.remove(initial_comp_file)
             for att_id, comp_id in zip(att_ids, comp_ids):
-                self.update_component_id(TargetType.arc, att_id, comp_id)
+                self.update_component_id(TargetType.polygon, att_id, comp_id)
+            id_dir = os.path.join(os.path.dirname(self.main_file), 'display_ids')
+            os.mkdir(id_dir)
+            categories = self._get_category_list()
+            write_display_options_to_json(self.disp_opts_file, categories)
+            self.update_display_id_files([], list(self.data.coverage_data.material_id.values))
 
         self.data.info.attrs['cov_uuid'] = self.cov_uuid
         self.data.commit()
@@ -270,7 +275,7 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def _get_category_list(self):
-        """Get the category list for the """
+        """Get the category list for the materials."""
         category_list = CategoryDisplayOptionList()
         category_list.target_type = TargetType.polygon
         category_list.comp_uuid = self.uuid
