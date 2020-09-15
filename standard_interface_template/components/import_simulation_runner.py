@@ -111,54 +111,63 @@ class ImportSimulationRunner(QThread):
         """Send imported data to SMS."""
         self._logger.info('Preparing to send imported data to SMS...')
 
-        # Add the hidden simulation component
-        arg_list = [{'#description': 'StandardInterfaceTemplate#Sim_Manager', '': self._sim_comp}]
-        place_marks = self._query.add(arg_list, self._root_idx)
-        if place_marks:
-            sim_comp_idx = place_marks[0]
-            self._build_vertices.append(sim_comp_idx)
-        else:
-            raise RuntimeError("Could not create Standard Interface Template simulation.")
+        sim_comp_idx = None
+        if self._sim_comp:
+            # Add the hidden simulation component
+            arg_list = [{'#description': 'StandardInterfaceTemplate#Sim_Manager', '': self._sim_comp}]
+            place_marks = self._query.add(arg_list, self._root_idx)
+            if place_marks:
+                sim_comp_idx = place_marks[0]
+                self._build_vertices.append(sim_comp_idx)
+            else:
+                raise RuntimeError("Could not create Standard Interface Template simulation.")
 
-        # add the mesh to the Query Context
-        mesh_list = [{'#description': 'BuildNoTake', 'Geometry': self._mesh}]
-        self._query.add(mesh_list, self._root_idx)
-        take_list = [{'#description': 'AddTakeUuid', '': self._mesh.get_uuid()}]
-        self._build_vertices.extend(self._query.add(take_list))
+        if self._mesh:
+            # add the mesh to the Query Context
+            mesh_list = [{'#description': 'BuildNoTake', 'Geometry': self._mesh}]
+            self._query.add(mesh_list, self._root_idx)
+            take_list = [{'#description': 'AddTakeUuid', '': self._mesh.get_uuid()}]
+            self._build_vertices.extend(self._query.add(take_list))
 
-        # Add the Boundary Conditions coverage geometry and its hidden component.
-        self._build_vertices.extend(self._query.add([{
-            '#description': 'BuildNoTake',
-            'Coverage': self._bc_cov,
-            'COVERAGE_TYPE': 'StandardInterfaceTemplate#Boundary Conditions Coverage'
-        }], self._root_idx))
-        # Add the Boundary Conditions coverage's hidden component
-        self._build_vertices.extend(
-            self._query.add([{
-                '#description': 'StandardInterfaceTemplate#Boundary_Coverage_Component',
-                '': self._bc_do_comp
-            }], self._build_vertices[-1])
-        )
-        arg_list = [{"": self._bc_cov.get_uuid(), "#description": "AddTakeUuid"}]
-        self._build_vertices.extend(self._query.add(arg_list, sim_comp_idx))
-
-        # Add the materials coverage geometry and its hidden component.
-        if self._mat_cov:
+        if self._bc_cov:
+            # Add the Boundary Conditions coverage geometry and its hidden component.
             self._build_vertices.extend(self._query.add([{
                 '#description': 'BuildNoTake',
-                'Coverage': self._mat_cov,
-                'COVERAGE_TYPE': 'StandardInterfaceTemplate#Materials Coverage'
+                'Coverage': self._bc_cov,
+                'COVERAGE_TYPE': 'StandardInterfaceTemplate#Boundary Conditions Coverage'
             }], self._root_idx))
-            # Add the material coverage's hidden component.
-            self._build_vertices.extend(
-                self._query.add([{
-                    '#description': 'StandardInterfaceTemplate#Materials_Coverage_Component',
-                    '': self._mat_do_comp
-                }], self._build_vertices[-1])
-            )
-            # Link the materials coverage to the simulation
-            arg_list = [{"": self._mat_cov.get_uuid(), "#description": "AddTakeUuid"}]
-            self._build_vertices.extend(self._query.add(arg_list, sim_comp_idx))
+            if self._bc_do_comp:
+                # Add the Boundary Conditions coverage's hidden component
+                self._build_vertices.extend(
+                    self._query.add([{
+                        '#description': 'StandardInterfaceTemplate#Boundary_Coverage_Component',
+                        '': self._bc_do_comp
+                    }], self._build_vertices[-1])
+                )
+            arg_list = [{"": self._bc_cov.get_uuid(), "#description": "AddTakeUuid"}]
+            if sim_comp_idx is not None:
+                self._build_vertices.extend(self._query.add(arg_list, sim_comp_idx))
+
+        if self._mat_cov:
+            # Add the materials coverage geometry and its hidden component.
+            if self._mat_cov:
+                self._build_vertices.extend(self._query.add([{
+                    '#description': 'BuildNoTake',
+                    'Coverage': self._mat_cov,
+                    'COVERAGE_TYPE': 'StandardInterfaceTemplate#Materials Coverage'
+                }], self._root_idx))
+                if self._mat_do_comp:
+                    # Add the material coverage's hidden component.
+                    self._build_vertices.extend(
+                        self._query.add([{
+                            '#description': 'StandardInterfaceTemplate#Materials_Coverage_Component',
+                            '': self._mat_do_comp
+                        }], self._build_vertices[-1])
+                    )
+                # Link the materials coverage to the simulation
+                arg_list = [{"": self._mat_cov.get_uuid(), "#description": "AddTakeUuid"}]
+                if sim_comp_idx is not None:
+                    self._build_vertices.extend(self._query.add(arg_list, sim_comp_idx))
         self.send()
 
     def _read_boundary_conditions(self, filename):
