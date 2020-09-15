@@ -7,7 +7,7 @@
                   default_executable_name64="..standard_interface_template/model.exe">
         <declare_parameter>ModelExecutable</declare_parameter>
       </executable>
-      <simulation_run module_name="standard_interface_template.simulation_run" class_name="SimulationRun">
+      <simulation_run module_name="standard_interface_template.model.simulation_run" class_name="SimulationRun">
       </simulation_run>
       <input_files>
         <input_file>
