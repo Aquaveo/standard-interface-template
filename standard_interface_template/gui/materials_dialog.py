@@ -18,7 +18,7 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class MaterialDialog(QDialog):
+class MaterialsDialog(QDialog):
     """A dialog to define materials and their properties."""
 
     def __init__(self, title, win_cont, icon, data):

@@ -23,7 +23,7 @@ from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOption
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
 from standard_interface_template.gui.assign_poly_material_dialog import AssignPolyMaterialDialog
-from standard_interface_template.gui.materials_dialog import MaterialDialog
+from standard_interface_template.gui.materials_dialog import MaterialsDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -259,7 +259,7 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
         ids = list(self.data.coverage_data.material_id.values)
-        dlg = MaterialDialog('Materials', win_cont, icon, self.data)
+        dlg = MaterialsDialog('Materials', win_cont, icon, self.data)
         if dlg.exec_():
             new_ids = list(self.data.coverage_data.material_id.values)
             deleted_ids = [int(x) for x in self.update_display_id_files(ids, new_ids)]
