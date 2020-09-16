@@ -255,7 +255,7 @@ class SimQueryHelper:
         """Loads the component feature (arc, polygon etc.) ids.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with GMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with SMS
             component: E.g. BcComponent, MaterialComponent.
             target_type (TargetType): The feature type (arc, polygon etc).
         """
@@ -268,7 +268,7 @@ class SimQueryHelper:
         """Loads the component feature ids.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with GMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with SMS
             obs_comp (ObstructionComponent): The ObstructionComponent.
         """
         file_dict_points = SimQueryHelper.get_feature_file_dict(query, obs_comp, TargetType.point)

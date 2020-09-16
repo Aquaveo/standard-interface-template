@@ -22,7 +22,6 @@ class CheckRunner:
         super().__init__()
         self._query = None
         self._start_context = None
-        self._project_name = None
         self._simulation_name = None
         self._sim_query_helper = None
         self.sim_component = None
@@ -52,10 +51,8 @@ class CheckRunner:
         self._query = Query()
         self._query.get_xms_agent().set_retries(1)
         self._root_context = self._query.get_context()
-        r = self._query.get('project_name')
-        self._project_name = r['project_name'][0].get_as_string()
-        r = self._query.get()['none']
-        self._simulation_name = r[0].get_simulation_name()
+        r = self._query.get('simulation_name')
+        self._simulation_name = r['simulation_name'][0].get_as_string()
         self._query.select('StandardInterfaceTemplate#Sim_Manager')
         self._sim_query_helper = SimQueryHelper(self._query)
         self._sim_query_helper.get_geometry(False)

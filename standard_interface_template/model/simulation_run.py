@@ -5,6 +5,7 @@ import os
 import shlex
 import shutil
 import sys
+import uuid
 
 # 2. Third party modules
 import h5py
@@ -33,13 +34,15 @@ class SimulationRun(RunBase):
 
         """
         super().__init__()
-        self.project_name = None
+        self.simulation_name = None
+        self.geom_uuid = ''
+        self.xms_temp_dir = ''
 
     def read_solution(self, query, params, win_cont, icon):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with GMS.
+            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
             params (:obj:`dict`): Generic map of parameters. Contains the structures for various components that
              are required for adding vertices to the Query Context with Add().
             win_cont (QWidget): The parent window
@@ -52,15 +55,17 @@ class SimulationRun(RunBase):
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
-        self.project_name = params[0]['project_name'].get_as_string()
-        file_location = params[0]['filelocation'].get_as_string()
+        self.simulation_name = params[0]['simulation_name'].get_as_string()
+        file_location = params[0]['file_location'].get_as_string()
+        self.geom_uuid = params[0]['geom_uuid'].get_as_string()
+        self.xms_temp_dir = params[0]['temp_dir'].get_as_string()
         return self.read_solution_file(query, file_location)
 
     def read_solution_file(self, query, file_location):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with GMS.
+            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
             file_location (str): The directory of the solution to load.
 
         Returns:
@@ -71,6 +76,38 @@ class SimulationRun(RunBase):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
         messages = []
+        scalar_values = []
+        with open(os.path.join(file_location, self.simulation_name + '.example_solution'), 'r') as file:
+            file.readline()  # Skip the header.
+            for line in file:
+                scalar_values.append(float(line.strip()))
+
+        # create an h5 file from the dat file
+        ds_file_name = os.path.join(self.xms_temp_dir, f'{uuid.uuid4()}.h5')
+        dset_name = 'Example'
+        values = {0.0: scalar_values}
+
+        # make the solution dataset
+        dset_list = []
+        dataset = Dataset(ds_file_name, f'Datasets/{dset_name}', DsetDataMappingType.NODE_MAPPED,
+                          DsetActivityMappingType.ACTIVITY_NULL)
+        dataset.set_name(dset_name)
+        dataset.set_geom_uuid(self.geom_uuid)
+        dataset.set_time_units('Seconds')
+        dataset.set_data(ds_file_name, values, [], f'Datasets/{dset_name}')
+        dset_list.append({'solution_dataset': dataset, '#description': 'BuildNoTake'})
+
+        # make sure the query is able to build
+        verts = []
+        build_vertex = self._ensure_build_edge_exists(query, verts)
+        # Add the Dataset to the Query Context.
+        verts.extend(
+            query.add(dset_list, build_vertex)
+        )
+        ctxt = query.get_context()
+        for vtx in verts:
+            ctxt.set_place_mark(vtx)
+        query.set_context(ctxt)
         return messages, []
 
     def get_executables(self, sim, query, filelocation):
@@ -82,7 +119,7 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with GMS.
+            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
@@ -91,9 +128,9 @@ class SimulationRun(RunBase):
 
         """
         # Get the project name
-        if not self.project_name:
-            self._get_proj_name(query)
-        simulation_file = f'{self.project_name}.example_simulation'
+        if not self.simulation_name:
+            self._get_simulation_name(query)
+        simulation_file = f'{self.simulation_name}.example_simulation'
 
         load_sol = self.get_solution_load_actions(sim, query, filelocation)[0]
 
@@ -124,48 +161,47 @@ class SimulationRun(RunBase):
             (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): The solution load ActionRequests for the simulation
 
         """
-        if not self.project_name:
-            self._get_proj_name(query)
+        if not self.simulation_name:
+            self._get_simulation_name(query)
 
         # Create an ActionRequest to load the solution located in filelocation
         load_sol = ActionRequest()
         load_sol.SetDialogModality(DialogModality.MODAL)
-        load_sol.set_class('SimRunner')
-        load_sol.set_module('standard_interface_template.model.sim_runner')
+        load_sol.set_class('SimulationRun')
+        load_sol.set_module('standard_interface_template.model.simulation_run')
         load_sol.set_main_file('foo')  # Just need a dummy main file for the ActionRequest
         load_sol.set_method_action('read_solution')
-        load_sol.set_action_parameter_items({'project_name': self.project_name, 'filelocation': filelocation})
+        load_sol.set_action_parameter_items({'simulation_name': self.simulation_name, 'file_location': filelocation,
+                                             'geom_uuid': self.geom_uuid, 'temp_dir': self.xms_temp_dir})
         return [load_sol]
 
     @staticmethod
-    def _ensure_build_edge_exists(build_vertex, query, build_vertices):
+    def _ensure_build_edge_exists(query, build_vertices):
         """Make sure a build Context edge has been added to the Query Context.
 
         Build edge needs to be added before the first Query::Add() call
 
         Args:
-            build_vertex: ?
             query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
             build_vertices (list): List of the Context vertices that will be flagged for building. Will append the
                 root build vertex when added.
 
         """
-        if build_vertex is None:
-            build_vertex = query.add_root_vertex_instance('Build')
-            build_vertices.append(build_vertex)
+        build_vertex = query.add_root_vertex_instance('Build')
+        build_vertices.append(build_vertex)
 
         return build_vertex
 
-    def _get_proj_name(self, query):
-        """Gets the project name and the temporary directory for the running XMS process.
+    def _get_simulation_name(self, query):
+        """Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
 
         Args:
             query (Query): A class to communicate with SMS.
         """
-        # Set self.project_name
-        proj_result = query.get("project_name")
-        if proj_result and proj_result["project_name"] and proj_result["project_name"][0]:
-            self.project_name = proj_result["project_name"][0].GetAsString()
+        # Set self.simulation_name
+        proj_result = query.get("simulation_name")
+        if proj_result and proj_result["simulation_name"] and proj_result["simulation_name"][0]:
+            self.simulation_name = proj_result["simulation_name"][0].GetAsString()
 
         # Get temp directory
         start_ctxt = query.get_context()
@@ -176,4 +212,12 @@ class SimulationRun(RunBase):
         delete_dir = temp_dir[0].get_as_string()
         self.xms_temp_dir = os.path.join(os.path.dirname(delete_dir), 'Components')
         shutil.rmtree(delete_dir, ignore_errors=True)
+
+        # get the UUID of the mesh
+        query.select('StandardInterfaceTemplate#Sim_Manager', a_context=start_ctxt)
+        query.select('mesh')
+        query.select('Geometry')
+        mesh_result = query.get("geom_guid")
+        if mesh_result and mesh_result["geom_guid"] and mesh_result["geom_guid"][0]:
+            self.geom_uuid = mesh_result["geom_guid"][0].GetAsString()
         query.set_context(start_ctxt)
