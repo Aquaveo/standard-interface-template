@@ -87,7 +87,7 @@ class ImportSimulationRunner(QThread):
             # Add a new Standard Interface Template simulation
             sim = Simulation()
             sim.set_model_name("StandardInterfaceTemplate")
-            sim.set_simulation_name('Sim')
+            sim.set_simulation_name(os.path.splitext(os.path.basename(self._xms_data['filename']))[0])
             arg_list = [{"none": sim, "#description": "Build"}]
             place_marks = self._query.add(arg_list)
             if place_marks:
