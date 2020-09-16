@@ -1,0 +1,133 @@
+<?xml version ="1.0"?>
+<dynamic_model filetype="dynamic model" version="4">
+  <model version="1" name="StandardInterfaceTemplate">
+    <simulation>
+      <executable text="StandardInterfaceTemplate"
+                  default_executable_name32="../standard_interface_template/model.exe"
+                  default_executable_name64="..standard_interface_template/model.exe">
+        <declare_parameter>ModelExecutable</declare_parameter>
+      </executable>
+      <simulation_run module_name="standard_interface_template.model.simulation_run" class_name="SimulationRun">
+      </simulation_run>
+      <input_files>
+        <input_file>
+          <use_file>simulation_file</use_file>
+          <export_location>"%s.example_simulation", #project_name</export_location>
+          <declare_parameter>SimulationFile</declare_parameter>
+        </input_file>
+        <input_file>
+          <use_file>geometry_file</use_file>
+          <export_location>"%s.example_geometry", #project_name</export_location>
+          <declare_parameter>GeometryFile</declare_parameter>
+        </input_file>
+      </input_files>
+      <output_files>
+        <output_file>
+          <use_file>solution_file</use_file>
+          <export_location>"solution.example_solution"</export_location>
+          <declare_parameter>SimSolutionLoad</declare_parameter>
+        </output_file>
+      </output_files>
+      <component_menus unique_name="Sim_Manager" model_name="StandardInterfaceTemplate"/>
+      <takes>
+        <take_component unique_name="Boundary_Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
+        </take_component>
+        <declare_parameter>boundary_mapped_component</declare_parameter>
+      </takes>
+      <takes>
+        <take_component unique_name="Materials_Mapped_Component" model_name="StandardInterfaceTemplate" limit="1">
+        </take_component>
+        <declare_parameter>materials_mapped_component</declare_parameter>
+      </takes>
+    </simulation>
+    <declare_coverage name="Boundary Conditions Coverage">
+      <arc_att>
+        <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </arc_att>
+      <point_att>
+        <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </point_att>
+      <component_menus unique_name="Boundary_Coverage_Component" model_name="StandardInterfaceTemplate"/>
+    </declare_coverage>
+    <declare_coverage name="Materials Coverage">
+      <polygon_att>
+        <component_menus unique_name="Materials_Coverage_Component" model_name="StandardInterfaceTemplate" double_click="true"/>
+      </polygon_att>
+      <component_menus unique_name="Materials_Coverage_Component" model_name="StandardInterfaceTemplate"/>
+    </declare_coverage>
+    <model_checks>
+      <model_check problem_text=""
+                   description_text= ""
+                   fix_text = "">
+        <execute_script script = "model_check.py"/>
+      </model_check>
+    </model_checks>
+    <declare_dialogs></declare_dialogs>
+    <declare_files>
+      <declare_file name ="simulation_file" read_behavior="create_simulation" file_type="SCRIPT">
+        <comment>###</comment>
+        <identifier>###This is a simulation file for Standard Interface Template.###</identifier>
+        <execute_script read="true" script="read_simulation.py" open_as_filter="Standard Interface Template Simulation Files (*.example_simulation)"/>
+        <execute_script write="true" script="write_simulation.py"/>
+      </declare_file>
+      <declare_file name ="geometry_file" read_behavior="could_append" file_type="SCRIPT">
+        <comment>###</comment>
+        <identifier>###This is a geometry file for Standard Interface Template.###</identifier>
+        <execute_script read="true" script="read_geometry.py" open_as_filter="Standard Interface Template Geometry Files (*.example_geometry)"/>
+      </declare_file>
+      <declare_file name ="solution_file" read_behavior="could_append" file_type="SCRIPT">
+        <comment>###</comment>
+        <identifier>###This is a solution file for Standard Interface Template.###</identifier>
+        <execute_script read="true" script="read_solution.py" open_as_filter="Standard Interface Template Solution Files (*.example_solution)"/>
+      </declare_file>
+    </declare_files>
+  </model>
+  <component display_name="invisible" unique_name="Sim_Manager" class_name="SimulationComponent"
+             module_name="standard_interface_template.components.simulation_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false">
+    <main_file format="sim_comp.nc" default_name="sim_comp.nc">
+    </main_file>
+    <takes>
+      <take_mesh2d limit = "1" linear = "true">
+        <condition></condition>
+      </take_mesh2d>
+      <declare_parameter>mesh</declare_parameter>
+    </takes>
+    <takes>
+      <take_coverage limit = "1">
+        <use_coverage>Boundary Conditions Coverage</use_coverage>
+      </take_coverage>
+      <declare_parameter>boundary_conditions_coverage</declare_parameter>
+    </takes>
+    <takes>
+      <take_coverage limit = "1">
+        <use_coverage>Materials Coverage</use_coverage>
+      </take_coverage>
+      <declare_parameter>materials_coverage</declare_parameter>
+    </takes>
+  </component>
+  <component display_name="invisible" unique_name="Boundary_Coverage_Component" class_name="BoundaryCoverageComponent"
+             module_name="standard_interface_template.components.boundary_coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false" use_display="true">
+    <main_file format="boundary_coverage_comp.nc" default_name="boundary_coverage_comp.nc">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Materials_Coverage_Component" class_name="MaterialsCoverageComponent"
+             module_name="standard_interface_template.components.materials_coverage_component" version_info="0.0.l" version="1" import_default="UNLOCKED"
+             edit_module="NONE" use_icon="" sharable="false" use_display="true">
+    <main_file format="materials_coverage_comp.nc" default_name="materials_coverage_comp.nc">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Boundary_Mapped_Component" class_name="BoundaryMappedComponent"
+             module_name="standard_interface_template.components.boundary_mapped_component" version_info="0.0.l" version="1"
+             import_default="UNLOCKED" edit_module="NONE" use_icon="" sharable="false" use_display="true" user_creatable="false">
+    <main_file format="boundary_coverage_display_options.json" default_name="boundary_coverage_display_options.json">
+    </main_file>
+  </component>
+  <component display_name="invisible" unique_name="Materials_Mapped_Component" class_name="MaterialsMappedComponent"
+             module_name="standard_interface_template.components.materials_mapped_component" version_info="0.0.l" version="1"
+             import_default="UNLOCKED" edit_module="NONE" use_icon="" sharable="false" use_display="true" user_creatable="false">
+    <main_file format="materials_coverage_display_options.json" default_name="materials_coverage_display_options.json">
+    </main_file>
+  </component>
+</dynamic_model>

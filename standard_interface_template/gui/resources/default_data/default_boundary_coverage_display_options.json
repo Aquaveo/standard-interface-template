@@ -1,0 +1,108 @@
+{
+	"target_type": 1,
+	"is_ids": 1,
+	"categories": [
+		{
+			"on": 1,
+			"label_on": 1,
+			"options": {
+				"red": 0,
+				"green": 0,
+				"blue": 255,
+				"alpha": 255,
+				"width": 2,
+				"style": 0,
+				"point_style": 0,
+				"end_point": {
+					"red": 0,
+					"green": 0,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				},
+				"vertex": {
+					"red": 0,
+					"green": 0,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				}
+			},
+			"label_options": "Arial,8,-1,5,50,0,0,0,0,0",
+			"description": "A",
+			"file": "display_ids/A.display_ids",
+			"id": 0,
+			"is_unassigned_category": 1
+		},
+		{
+			"on": 1,
+			"label_on": 1,
+			"options": {
+				"red": 70,
+				"green": 139,
+				"blue": 139,
+				"alpha": 255,
+				"width": 2,
+				"style": 0,
+				"point_style": 0,
+				"end_point": {
+					"red": 170,
+					"green": 0,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				},
+				"vertex": {
+					"red": 170,
+					"green": 0,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				}
+			},
+			"label_options": "Arial,8,-1,5,50,0,0,0,0,0",
+			"description": "B",
+			"file": "display_ids/B.display_ids",
+			"id": 1,
+			"is_unassigned_category": 0
+		},
+		{
+			"on": 1,
+			"label_on": 1,
+			"options": {
+				"red": 0,
+				"green": 64,
+				"blue": 128,
+				"alpha": 255,
+				"width": 2,
+				"style": 0,
+				"point_style": 0,
+				"end_point": {
+					"red": 0,
+					"green": 85,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				},
+				"vertex": {
+					"red": 0,
+					"green": 85,
+					"blue": 0,
+					"alpha": 255,
+					"size": 7,
+					"symbol": 2
+				}
+			},
+			"label_options": "Arial,8,-1,5,50,0,0,0,0,0",
+			"description": "C",
+			"file": "display_ids/C.display_ids",
+			"id": 2,
+			"is_unassigned_category": 0
+		}
+	]
+}
