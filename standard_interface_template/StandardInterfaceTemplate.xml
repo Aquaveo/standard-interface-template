@@ -59,7 +59,7 @@
       <model_check problem_text=""
                    description_text= ""
                    fix_text = "">
-        <execute_script script = "model_check.py"/>
+        <execute_script script = "xml_entry_points/model_check.py"/>
       </model_check>
     </model_checks>
     <declare_dialogs></declare_dialogs>
@@ -67,18 +67,18 @@
       <declare_file name ="simulation_file" read_behavior="create_simulation" file_type="SCRIPT">
         <comment>###</comment>
         <identifier>###This is a simulation file for Standard Interface Template.###</identifier>
-        <execute_script read="true" script="read_simulation.py" open_as_filter="Standard Interface Template Simulation Files (*.example_simulation)"/>
-        <execute_script write="true" script="write_simulation.py"/>
+        <execute_script read="true" script="xml_entry_points/read_simulation.py" open_as_filter="Standard Interface Template Simulation Files (*.example_simulation)"/>
+        <execute_script write="true" script="xml_entry_points/write_simulation.py"/>
       </declare_file>
       <declare_file name ="geometry_file" read_behavior="could_append" file_type="SCRIPT">
         <comment>###</comment>
         <identifier>###This is a geometry file for Standard Interface Template.###</identifier>
-        <execute_script read="true" script="read_geometry.py" open_as_filter="Standard Interface Template Geometry Files (*.example_geometry)"/>
+        <execute_script read="true" script="xml_entry_points/read_geometry.py" open_as_filter="Standard Interface Template Geometry Files (*.example_geometry)"/>
       </declare_file>
       <declare_file name ="solution_file" read_behavior="could_append" file_type="SCRIPT">
         <comment>###</comment>
         <identifier>###This is a solution file for Standard Interface Template.###</identifier>
-        <execute_script read="true" script="read_solution.py" open_as_filter="Standard Interface Template Solution Files (*.example_solution)"/>
+        <execute_script read="true" script="xml_entry_points/read_solution.py" open_as_filter="Standard Interface Template Solution Files (*.example_solution)"/>
       </declare_file>
     </declare_files>
   </model>
