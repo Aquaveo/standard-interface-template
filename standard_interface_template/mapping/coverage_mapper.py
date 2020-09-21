@@ -7,7 +7,6 @@ import logging
 # 3. Aquaveo modules
 
 # 4. Local modules
-from standard_interface_template.data.materials_coverage_data import MaterialsCoverageData
 from standard_interface_template.mapping.boundary_mapper import BoundaryMapper
 from standard_interface_template.mapping.material_mapper import MaterialMapper
 

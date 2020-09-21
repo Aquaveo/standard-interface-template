@@ -24,7 +24,6 @@ class MaterialFilterModel(RenameModel):
     column_user_option = 2
     column_user_text = 3
 
-
     def __init__(self, parent=None):
         """Initializes the filter model.
 
@@ -53,7 +52,7 @@ class MaterialFilterModel(RenameModel):
             ret_flags |= Qt.ItemIsEnabled
         return ret_flags
 
-    def filterAcceptsColumn(self, source_column:int, source_parent:QModelIndex) -> bool:
+    def filterAcceptsColumn(self, source_column: int, source_parent: QModelIndex) -> bool:  # noqa: N802
         """Override for filter accepts column.
 
         Args:
@@ -125,7 +124,7 @@ class MaterialFilterModel(RenameModel):
                 return texture and red and green and blue
         return super().setData(index, value, role)
 
-    def columnCount(self, parent: QModelIndex) -> int:
+    def columnCount(self, parent: QModelIndex) -> int:  # noqa: N802
         """
         Returns the column count.
 
@@ -137,7 +136,7 @@ class MaterialFilterModel(RenameModel):
         """
         return 4
 
-    def mapFromSource(self, source_index: QModelIndex) -> QModelIndex:
+    def mapFromSource(self, source_index: QModelIndex) -> QModelIndex:  # noqa: N802
         """
         Maps from source model to this model's index.
 
@@ -154,7 +153,7 @@ class MaterialFilterModel(RenameModel):
             return self.index(source_index.row(), column_map[source_index.column()], source_index.parent())
         return super().mapFromSource(source_index)
 
-    def mapToSource(self, proxy_index: QModelIndex) -> QModelIndex:
+    def mapToSource(self, proxy_index: QModelIndex) -> QModelIndex:  # noqa: N802
         """
         Maps from this model's index to the source model's index.
 

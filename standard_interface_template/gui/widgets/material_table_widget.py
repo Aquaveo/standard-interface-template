@@ -4,7 +4,6 @@
 
 # 2. Third party modules
 from PySide2.QtCore import QItemSelectionModel, Qt, Signal
-from PySide2.QtGui import QStandardItem, QStandardItemModel
 
 # 3. Aquaveo modules
 from xmsguipy.data.polygon_texture import PolygonOptions

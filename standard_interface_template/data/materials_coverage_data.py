@@ -16,6 +16,7 @@ __license__ = "All rights reserved"
 
 class MaterialsCoverageData(XarrayBase):
     """Manages data file for the hidden coverage component."""
+    unassigned_material_id = -1
     display_list = ['A', 'B', 'C']
     unassigned_mat = 0
     column_id = 0

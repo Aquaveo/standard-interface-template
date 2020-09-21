@@ -8,14 +8,13 @@
 # 4. Local modules
 
 if __name__ == "__main__":
-    import os
     import sys
     from PySide2.QtGui import (QIcon)
     from PySide2.QtWidgets import (QApplication)
-    from standard_interface_template.components.import_geometry_runner import ImportGeometryRunner
+    from standard_interface_template.gui.feedback.import_geometry_thread import ImportGeometryThread
     from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 
-    worker = ImportGeometryRunner()
+    worker = ImportGeometryThread()
     note = ''
     display_text = {
         'title': 'Standard Interface Template Import Geometry',

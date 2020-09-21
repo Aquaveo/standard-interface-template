@@ -4,20 +4,17 @@ import os
 import shutil
 
 # 2. Third party modules
-import pandas as pd
 from PySide2.QtGui import QColor
-import xarray as xr
 
 # 3. Aquaveo modules
 from xmsapi.dmi import ActionRequest, DialogModality
 from xmscomponents.display.display_options_io import (read_display_option_ids, read_display_options_from_json,
                                                       write_display_option_ids, write_display_options_to_json)
-from xmscomponents.display.xms_display_message import DrawType, XmsDisplayMessage
+from xmscomponents.display.xms_display_message import XmsDisplayMessage
 from xmsguipy.data.category_display_option import CategoryDisplayOption
 from xmsguipy.data.category_display_option_list import CategoryDisplayOptionList
 from xmsguipy.data.polygon_texture import PolygonOptions, PolygonTexture
 from xmsguipy.data.target_type import TargetType
-from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOptionsDialog
 
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
@@ -339,10 +336,11 @@ class MaterialsCoverageComponent(StandardBaseComponent):
             Empty message and ActionRequest lists
 
         """
-        files_dict = self.query_for_all_component_ids(query, TargetType.polygon)
+        self.query_for_all_component_ids(query, TargetType.polygon)
         if self.cov_uuid in self.comp_to_xms and TargetType.polygon in self.comp_to_xms[self.cov_uuid]:
             poly_map = self.comp_to_xms[self.cov_uuid][TargetType.polygon]
             for mat in delete_ids:
                 if mat in poly_map:
                     for att_id in poly_map[mat]:
-                        self.update_component_id(TargetType.polygon, att_id, MaterialData.UNASSIGNED_MAT)
+                        self.update_component_id(TargetType.polygon, att_id,
+                                                 MaterialsCoverageData.unassigned_material_id)

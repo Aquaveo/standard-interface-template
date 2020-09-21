@@ -1,7 +1,5 @@
 """Exports Standard Interface Template boundary conditions."""
 # 1. Standard python modules
-import logging
-import os
 
 # 2. Third party modules
 

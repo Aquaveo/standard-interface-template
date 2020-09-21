@@ -7,7 +7,6 @@ from PySide2.QtCore import Qt
 
 # 3. Aquaveo modules
 from xmsguipy.dialogs.xms_parent_dlg import XmsDlg
-from xmsguipy.resources import resources_util
 
 # 4. Local modules
 from standard_interface_template.gui.simulation_dialog_ui import Ui_SimulationDialog

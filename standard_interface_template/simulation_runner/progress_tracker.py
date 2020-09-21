@@ -1,7 +1,5 @@
 """Provide progress feedback when running the Standard Interface Template model in SMS."""
 # 1. Standard python modules
-import os
-import sys
 
 # 2. Third party modules
 
