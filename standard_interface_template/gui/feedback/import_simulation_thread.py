@@ -34,7 +34,7 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class ImportSimulationRunner(QThread):
+class ImportSimulationThread(QThread):
     """Read an Standard Interface Template simulation when a *.example_simulation file is opened in SMS."""
     processing_finished = Signal()
 

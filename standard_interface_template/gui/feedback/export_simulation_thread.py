@@ -21,7 +21,7 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class ExportSimulationRunner(QThread):
+class ExportSimulationThread(QThread):
     """Class for exporting Standard Interface Template."""
     processing_finished = Signal()
 

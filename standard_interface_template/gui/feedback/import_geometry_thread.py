@@ -16,14 +16,14 @@ from xmscomponents.display.display_options_io import write_display_option_ids
 from xmscoverage.grid.grid_cell_to_polygon_coverage_builder import GridCellToPolygonCoverageBuilder
 
 # 4. Local modules
-from standard_interface_template.components.import_simulation_runner import ImportSimulationRunner
+from standard_interface_template.gui.feedback.import_simulation_thread import ImportSimulationThread
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class ImportGeometryRunner(ImportSimulationRunner):
+class ImportGeometryThread(ImportSimulationThread):
     """Read an Standard Interface Template simulation when a *.example_geometry file is opened in SMS."""
     processing_finished = Signal()
 

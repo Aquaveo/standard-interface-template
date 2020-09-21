@@ -16,21 +16,21 @@ __license__ = "All rights reserved"
 class ModelCheck:
     """Model check for Standard Interface Template simulation."""
 
-    def __init__(self, check_runner):
+    def __init__(self, check_thread):
         """Constructor."""
         super().__init__()
         self.errors = []
         self.error_text = ''
         self._model_control = None
         self._sim_comp_dir = ''
-        if check_runner.sim_component:
-            self._model_control = check_runner.sim_component.data
-            self._sim_comp_dir = os.path.dirname(check_runner.sim_component.main_file)
-        self._ugrid = check_runner.ugrid
-        self._grid_units = check_runner.grid_units
-        self._bc_data = check_runner.bc_data
-        self._bc_comp_id_to_arc_id = check_runner.bc_comp_ids_to_arc_ids
-        self._mat_data = check_runner.mat_data
+        if check_thread.sim_component:
+            self._model_control = check_thread.sim_component.data
+            self._sim_comp_dir = os.path.dirname(check_thread.sim_component.main_file)
+        self._ugrid = check_thread.ugrid
+        self._grid_units = check_thread.grid_units
+        self._bc_data = check_thread.bc_data
+        self._bc_comp_id_to_arc_id = check_thread.bc_comp_ids_to_arc_ids
+        self._mat_data = check_thread.mat_data
 
     def run_check(self):
         """Runs model check on the simulation."""

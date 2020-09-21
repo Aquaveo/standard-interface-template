@@ -19,7 +19,7 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class CoverageMapperRunner(QThread):
+class CoverageMapperThread(QThread):
     """Class for mapping material coverage to a mesh for Standard Interface."""
     processing_finished = Signal()
 

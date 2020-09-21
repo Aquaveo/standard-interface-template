@@ -1,4 +1,4 @@
-"""CheckRunner class. Runs the model check."""
+"""CheckThread class. Runs the model check."""
 # 1. Standard python modules
 
 # 2. Third party modules
@@ -7,14 +7,14 @@
 from xmsapi.dmi import Query
 
 # 4. Local modules
-from standard_interface_template.check.model_check import ModelCheck
+from standard_interface_template.check.simulation_check import ModelCheck
 from standard_interface_template.components.sim_query_helper import SimQueryHelper
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class CheckRunner:
+class CheckThread:
     """Writes Standard Interface Template input files."""
 
     def __init__(self):

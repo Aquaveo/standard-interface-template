@@ -11,7 +11,7 @@ from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.simulation_data import SimulationData
 from standard_interface_template.gui.simulation_dialog import SimulationDialog
-from standard_interface_template.mapping.coverage_mapper_runner import CoverageMapperRunner
+from standard_interface_template.gui.feedback.coverage_mapper_thread import CoverageMapperThread
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -83,7 +83,7 @@ class SimulationComponent(StandardBaseComponent):
 
         """
         note = ''
-        worker = CoverageMapperRunner(query)
+        worker = CoverageMapperThread(query)
         error_str = 'Error(s) encountered applying coverages to simulation. Review log output for more details.'
         warning_str = 'Warning(s) encountered applying coverages to simulation. Review log output for more details.'
         display_text = {

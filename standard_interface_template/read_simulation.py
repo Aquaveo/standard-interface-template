@@ -13,10 +13,10 @@ if __name__ == "__main__":
     import sys
     from PySide2.QtGui import (QIcon)
     from PySide2.QtWidgets import (QApplication)
-    from standard_interface_template.components.import_simulation_runner import ImportSimulationRunner
+    from standard_interface_template.gui.feedback.import_simulation_thread import ImportSimulationThread
     from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 
-    worker = ImportSimulationRunner()
+    worker = ImportSimulationThread()
     note = ''
     display_text = {
         'title': 'Standard Interface Template Import Simulation',
