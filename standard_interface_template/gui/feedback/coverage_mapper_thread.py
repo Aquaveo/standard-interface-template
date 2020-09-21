@@ -1,17 +1,13 @@
 """Uses CoverageMapper to map data to a mesh."""
 # 1. Standard python modules
 import logging
-import os
 
 # 2. Third party modules
 from PySide2.QtCore import QThread, Signal
 
 # 3. Aquaveo modules
-from xms.constraint import read_grid_from_file
 
 # 4. Local modules
-from standard_interface_template.components.boundary_coverage_component import BoundaryCoverageComponent
-from standard_interface_template.components.materials_coverage_component import MaterialsCoverageComponent
 from standard_interface_template.components.sim_query_helper import SimQueryHelper
 from standard_interface_template.mapping.coverage_mapper import CoverageMapper
 

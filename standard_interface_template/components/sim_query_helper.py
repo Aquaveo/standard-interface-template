@@ -9,7 +9,6 @@ import os
 from xms.constraint import read_grid_from_file
 import xmsapi.dmi as xmd
 from xmsguipy.data.target_type import TargetType
-from xmsguipy.dialogs import treeitem_selector_datasets
 from xmsguipy.tree import tree_util
 
 # 4. Local modules

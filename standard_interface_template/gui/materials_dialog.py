@@ -1,13 +1,10 @@
 """Dialog for assigning Material coverage properties."""
 # 1. Standard python modules
-import os
-import tempfile
 import webbrowser
 
 # 2. Third party modules
-from PySide2.QtCore import QDir, QItemSelectionModel, Qt
-from PySide2.QtWidgets import (QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout, QHeaderView, QLabel,
-                               QMessageBox, QPushButton, QSplitter, QStyle, QToolBar, QVBoxLayout)
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QDialog, QDialogButtonBox, QHBoxLayout, QStyle, QVBoxLayout
 
 # 3. Aquaveo modules
 

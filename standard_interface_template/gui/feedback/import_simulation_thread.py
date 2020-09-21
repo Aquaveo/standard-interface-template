@@ -10,19 +10,19 @@ import pandas
 from PySide2.QtCore import QThread, Signal
 
 # 3. Aquaveo modules
-from data_objects.parameters import Arc, Component, Coverage, Point, Simulation, UGrid
+from data_objects.parameters import Component, Coverage, Simulation, UGrid
 from xmsapi.dmi import Query
 from xmscomponents.display.display_options_io import write_display_option_ids
 from xmscoverage.grid.grid_cell_to_polygon_coverage_builder import GridCellToPolygonCoverageBuilder
 
 # 4. Local modules
-from standard_interface_template.components.boundary_coverage_component import (BoundaryCoverageComponent,
-                                                                                BC_COVERAGE_INITIAL_ATT_ID_FILE,
-                                                                                BC_COVERAGE_INITIAL_COMP_ID_FILE)
+from standard_interface_template.components.boundary_coverage_component import (BC_COVERAGE_INITIAL_ATT_ID_FILE,
+                                                                                BC_COVERAGE_INITIAL_COMP_ID_FILE,
+                                                                                BoundaryCoverageComponent)
 from standard_interface_template.components.coverage_arc_builder import CoverageArcBuilder
-from standard_interface_template.components.materials_coverage_component import (MaterialsCoverageComponent,
-                                                                                 MAT_COVERAGE_INITIAL_ATT_ID_FILE,
-                                                                                 MAT_COVERAGE_INITIAL_COMP_ID_FILE)
+from standard_interface_template.components.materials_coverage_component import (MAT_COVERAGE_INITIAL_ATT_ID_FILE,
+                                                                                 MAT_COVERAGE_INITIAL_COMP_ID_FILE,
+                                                                                 MaterialsCoverageComponent)
 from standard_interface_template.data.simulation_data import SimulationData
 from standard_interface_template.file_io.boundary_conditions_reader import BoundaryConditionsReader
 from standard_interface_template.file_io.geometry_reader import GeometryReader
@@ -254,7 +254,6 @@ class ImportSimulationThread(QThread):
         cov_name = 'Materials'
         cov_builder = GridCellToPolygonCoverageBuilder(self._geometry_reader.cogrid, cell_materials, None, cov_name)
         new_cov_geom = cov_builder.create_polygons_and_build_coverage()
-        new_cov_uuid = new_cov_geom.get_uuid()
         self._mat_cov = new_cov_geom
 
         comp_uuid = str(uuid.uuid4())
@@ -291,7 +290,7 @@ class ImportSimulationThread(QThread):
         self._bc_cov.set_name('Boundary Conditions')
         self._bc_cov.set_uuid(str(uuid.uuid4()))
         arc_builder = CoverageArcBuilder(self._geometry_reader.cogrid.ugrid.locations)
-        for nodestring_id, nodestring in self._boundary_conditions_reader.arcs.items():
+        for nodestring in self._boundary_conditions_reader.arcs.values():
             arc_builder.add_arc(nodestring[0], nodestring[-1], nodestring[1:-1])
         self._bc_cov.set_arcs(arc_builder.arcs)
         self._bc_cov.complete()

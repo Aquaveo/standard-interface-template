@@ -10,7 +10,7 @@ import unittest
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIcon
 from PySide2.QtTest import QTest
-from PySide2.QtWidgets import QApplication, QCheckBox, QLabel, QLineEdit
+from PySide2.QtWidgets import QApplication
 
 # 3. Aquaveo libraries
 from xmsguipy.testing.gui_test_helper import GuiTestHelper
@@ -48,7 +48,7 @@ class MaterialsDialogGuiTests(unittest.TestCase):
             shutil.rmtree(out_file)
         mat_data = MaterialsCoverageData(out_file)
         icon = QIcon()
-        self.dlg = MaterialsDialog('Material List and Properties', None, icon,  mat_data)
+        self.dlg = MaterialsDialog('Material List and Properties', None, icon, mat_data)
         self.dlg.show()
 
         add_action = self.dlg.widgets['table_view'].btn_actions[self.dlg.widgets['table_view'].add_icon]

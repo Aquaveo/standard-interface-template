@@ -3,11 +3,12 @@
 from distutils.dir_util import copy_tree
 import os
 import shutil
+import uuid
 
 # 2. Third party modules
 
 # 3. Aquaveo modules
-from xmsapi.dmi import ActionRequest, DialogModality, Menu, MenuItem
+from xmsapi.dmi import ActionRequest, DialogModality, MenuItem
 from xmscomponents.bases.coverage_component_base import CoverageComponentBase
 from xmscomponents.display.display_options_io import read_display_options_from_json, write_display_options_to_json
 from xmscomponents.display.xms_display_message import DrawType, XmsDisplayMessage

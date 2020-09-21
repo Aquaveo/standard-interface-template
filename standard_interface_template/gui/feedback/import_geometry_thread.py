@@ -1,19 +1,13 @@
 """Imports a Standard Interface Template simulation."""
 # 1. Standard python modules
-import logging
 import os
 import shutil
-import uuid
 
 # 2. Third party modules
-import pandas
-from PySide2.QtCore import QThread, Signal
+from PySide2.QtCore import Signal
 
 # 3. Aquaveo modules
-from data_objects.parameters import Arc, Component, Coverage, Point, Simulation, UGrid
 from xmsapi.dmi import Query
-from xmscomponents.display.display_options_io import write_display_option_ids
-from xmscoverage.grid.grid_cell_to_polygon_coverage_builder import GridCellToPolygonCoverageBuilder
 
 # 4. Local modules
 from standard_interface_template.gui.feedback.import_simulation_thread import ImportSimulationThread

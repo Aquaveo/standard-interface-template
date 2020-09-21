@@ -1,4 +1,4 @@
-"""Coverage component class."""
+"""Boundary Conditions Coverage component class."""
 # 1. Standard python modules
 import os
 import shutil
@@ -11,7 +11,7 @@ import xarray as xr
 from xmsapi.dmi import ActionRequest, DialogModality
 from xmscomponents.display.display_options_io import (read_display_option_ids, read_display_options_from_json,
                                                       write_display_option_ids, write_display_options_to_json)
-from xmscomponents.display.xms_display_message import DrawType, XmsDisplayMessage
+from xmscomponents.display.xms_display_message import XmsDisplayMessage
 from xmsguipy.data.category_display_option_list import CategoryDisplayOptionList
 from xmsguipy.data.target_type import TargetType
 from xmsguipy.dialogs.category_display_options_list import CategoryDisplayOptionsDialog
@@ -357,8 +357,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         """Write a single id file.
 
         Args:
-            disp_name (str):
-            df (DataFrame):
+            disp_name (str): The display option name.
+            df (DataFrame): The dataframe of user options the display is based off of and the component ids.
         """
         df1 = df.loc[df['user_option'] == disp_name]
         ids = df1['comp_id'].astype(dtype='i4').to_list()

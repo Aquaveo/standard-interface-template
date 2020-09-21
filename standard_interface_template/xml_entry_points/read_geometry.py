@@ -8,7 +8,6 @@
 # 4. Local modules
 
 if __name__ == "__main__":
-    import os
     import sys
     from PySide2.QtGui import (QIcon)
     from PySide2.QtWidgets import (QApplication)

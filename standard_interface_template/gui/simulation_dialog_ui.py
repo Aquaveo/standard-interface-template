@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 
 ################################################################################
 ## Form generated from reading UI file 'simulation_dialog.ui'

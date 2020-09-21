@@ -10,8 +10,8 @@ from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 # 4. Local modules
 from standard_interface_template.components.standard_base_component import StandardBaseComponent
 from standard_interface_template.data.simulation_data import SimulationData
-from standard_interface_template.gui.simulation_dialog import SimulationDialog
 from standard_interface_template.gui.feedback.coverage_mapper_thread import CoverageMapperThread
+from standard_interface_template.gui.simulation_dialog import SimulationDialog
 
 
 __copyright__ = "(C) Copyright Aquaveo 2020"

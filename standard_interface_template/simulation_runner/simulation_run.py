@@ -2,13 +2,10 @@
 
 # 1. Standard python modules
 import os
-import shlex
 import shutil
-import sys
 import uuid
 
 # 2. Third party modules
-import h5py
 
 # 3. Aquaveo modules
 from data_objects.parameters import Dataset, DsetActivityMappingType, DsetDataMappingType

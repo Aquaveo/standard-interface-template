@@ -1,8 +1,6 @@
 """Build or install the standard-interface-template package."""
 # 1. Standard python modules
-import fnmatch
 import os
-import sys
 
 # 2. Third party modules
 from setuptools import find_packages, setup

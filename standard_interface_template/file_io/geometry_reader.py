@@ -34,7 +34,7 @@ class GeometryReader:
         """
         with open(filename) as file:
             file.readline()  # skip the header
-            num_nodes = int(file.readline().split()[-1])
+            file.readline()  # The last number on this line is the number of nodes.
             # This assumes that all nodes and cells are in id order with no gaps.
             for line in file:
                 line_parts = line.split()
