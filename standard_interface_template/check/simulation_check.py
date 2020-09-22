@@ -13,11 +13,15 @@ __copyright__ = "(C) Copyright Aquaveo 2020"
 __license__ = "All rights reserved"
 
 
-class ModelCheck:
+class SimulationCheck:
     """Model check for Standard Interface Template simulation."""
 
     def __init__(self, check_thread):
-        """Constructor."""
+        """Constructor.
+
+        Args:
+            check_thread (CheckThread): A class for holding the data that will be used for checking this simulation.
+        """
         super().__init__()
         self.errors = []
         self.error_text = ''
@@ -46,9 +50,9 @@ class ModelCheck:
         """Adds a model check error.
 
         Args:
-            problem (str): problem explanation
-            description (str): description explanation.
-            fix (str): fix explanation
+            problem (str): An explanation of the problem that has been discovered.
+            description (str): A description of the problem.
+            fix (str): An explanation of how to fix the problem.
         """
         error = ModelCheckError()
         error.set_problem_text(problem)
