@@ -15,7 +15,11 @@ __license__ = "All rights reserved"
 
 
 class BoundaryCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component."""
+    """Manages data file for the hidden coverage component.
+
+    Attributes:
+        display_list (:obj:`list` of str): The list of options the user can choose from.
+    """
     display_list = ['A', 'B', 'C']
 
     def __init__(self, filename):

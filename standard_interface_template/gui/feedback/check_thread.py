@@ -32,7 +32,12 @@ class CheckThread:
         self.mat_data = None
 
     def run(self):
-        """Creates the snap preview of coverages onto the mesh."""
+        """
+        Creates the snap preview of coverages onto the mesh.
+
+        Raises:
+            (RuntimeError): Failed to check the simulation for errors.
+        """
         try:
             self._setup_query()
             self._get_data()

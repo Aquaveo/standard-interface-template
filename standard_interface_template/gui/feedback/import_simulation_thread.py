@@ -108,7 +108,12 @@ class ImportSimulationThread(QThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def _add_xms_data(self):
-        """Send imported data to XMS."""
+        """
+        Send imported data to XMS.
+
+        Raises:
+            (Exception): There was a problem sending the imported data to XMS.
+        """
         self._logger.info('Preparing to send imported data to SMS...')
 
         sim_comp_idx = None
@@ -296,7 +301,12 @@ class ImportSimulationThread(QThread):
         self._bc_cov.complete()
 
     def read(self):
-        """Trigger the read of the Standard Interface Template simulation."""
+        """
+        Trigger the read of the Standard Interface Template simulation.
+
+        Raises:
+            (Exception): There was a problem reading the simulation file.
+        """
         try:
             self._logger.info('Reading the simulation.')
             self._read_simulation()
@@ -323,7 +333,12 @@ class ImportSimulationThread(QThread):
             self._query.send()
 
     def run(self):
-        """Creates coverages, a simulation, and a mesh for XMS."""
+        """
+        Creates coverages, a simulation, and a mesh for XMS.
+
+        Raises:
+            (Exception): There was a problem reading the simulation file.
+        """
         try:
             self.read()
         except Exception as error:

@@ -15,10 +15,22 @@ __license__ = "All rights reserved"
 
 
 class MaterialsCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component."""
+    """Manages data file for the hidden coverage component.
+
+    Attributes:
+        unassigned_material_id (int): The id of the unassigned material.
+        display_list (:obj:`list` of str): The list of options the user can choose from.
+        column_id (int): The column index of the display column in the dataframe.
+        column_name (int): The column index of the name column in the dataframe.
+        column_user_option (int): The column index of the user option column in the dataframe.
+        column_user_text (int): The column index of the user text column in the dataframe.
+        column_texture (int): The column index of the texture column in the dataframe.
+        column_red (int): The column index of the red column in the dataframe.
+        column_green (int): The column index of the green column in the dataframe.
+        column_blue (int): The column index of the blue column in the dataframe.
+    """
     unassigned_material_id = -1
     display_list = ['A', 'B', 'C']
-    unassigned_mat = 0
     column_id = 0
     column_name = 1
     column_user_option = 2

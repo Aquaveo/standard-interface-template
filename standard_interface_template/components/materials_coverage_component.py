@@ -35,7 +35,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -69,7 +70,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
             self.cov_uuid = self.data.info.attrs['cov_uuid']
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
@@ -104,7 +106,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -132,7 +135,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -171,7 +175,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_polygon(self, query, params, win_cont, icon):
-        """Opens the Assign Polygon dialog and saves component data state on OK.
+        """
+        Opens the Assign Polygon dialog and saves component data state on OK.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.  Unused in this case.
@@ -236,7 +241,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_materials(self, query, params, win_cont, icon):
-        """Shows the materials dialog.
+        """
+        Shows the materials dialog.
 
         Args:
             query (:obj:'xmsapi.dmi.Query'): Object for communicating with XMS.
@@ -268,7 +274,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def _get_category_list(self):
-        """Get the category list for the materials.
+        """
+        Get the category list for the materials.
 
         Returns:
             (:obj:`CategoryDisplayOptionList`): Category display option list for the materials.
@@ -300,7 +307,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return category_list
 
     def update_display_id_files(self, old_ids, new_ids):
-        """Update the display files.
+        """
+        Update the display files.
 
         Args:
             old_ids (list): list of ids before editing materials.
@@ -326,7 +334,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return deleted_ids
 
     def unassign_materials(self, query, delete_ids):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.

@@ -43,7 +43,12 @@ class ExportSimulationThread(QThread):
         self.files_exported = []
 
     def run(self):
-        """Exports the coverages and the mesh."""
+        """
+        Exports the coverages and the mesh.
+
+        Raises:
+            (Exception): There was a problem writing the simulation file.
+        """
         try:
             self._setup_query()
             self.coverage_mapper.do_map()
@@ -77,7 +82,12 @@ class ExportSimulationThread(QThread):
         self.export_simulation()
 
     def export_geometry(self):
-        """Exports the Standard Template Interface geometry file."""
+        """
+        Exports the Standard Template Interface geometry file.
+
+        Raises:
+            (Exception): There was no geometry to write to the geometry file.
+        """
         self._logger.info('Writing Standard Interface Template geometry file.')
         co_grid = self.coverage_mapper.co_grid
         if not co_grid:

@@ -158,8 +158,11 @@ class SimQueryHelper:
         Args:
             warn_if_no_mesh (bool): If True, log warning if no mesh linked to the simulation.
 
+        Raises:
+            (RuntimeError): There was a problem getting the projection of the geometry.
+
         Returns:
-            bool:  True if a mesh was found, False if not.
+            (bool):  True if a mesh was found, False if not.
         """
         self._logger.info('Getting mesh from simulation.')
         self._query.set_context(self._start_context)

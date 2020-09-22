@@ -17,7 +17,8 @@ class SimulationCheck:
     """Model check for Standard Interface Template simulation."""
 
     def __init__(self, check_thread):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             check_thread (:obj:`CheckThread`): A class for holding the data that will be used for checking this
@@ -38,7 +39,12 @@ class SimulationCheck:
         self._mat_data = check_thread.mat_data
 
     def run_check(self):
-        """Runs model check on the simulation."""
+        """
+        Runs model check on the simulation.
+
+        Raises:
+            (Exception): There was a problem running checks on the simulation.
+        """
         try:
             self._check_mesh()
             self._check_bcs()
@@ -48,7 +54,8 @@ class SimulationCheck:
         return self.errors
 
     def _add_error(self, problem, description, fix):
-        """Adds a model check error.
+        """
+        Adds a model check error.
 
         Args:
             problem (str): An explanation of the problem that has been discovered.

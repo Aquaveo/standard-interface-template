@@ -61,7 +61,11 @@ class ImportGeometryThread(ImportSimulationThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def read(self):
-        """Trigger the read of the Standard Interface Template geometry."""
+        """Trigger the read of the Standard Interface Template geometry.
+
+        Raises:
+            (Exception): There was a problem reading the geometry file.
+        """
         try:
             self._logger.info('Reading the geometry.')
             self._read_geometry(self._xms_data['filename'])

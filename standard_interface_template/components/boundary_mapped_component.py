@@ -22,7 +22,8 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the base component class.
+        """
+        Initializes the base component class.
 
         Args:
             main_file: The main file associated with this component.
@@ -37,7 +38,8 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
         self.disp_opts_file = os.path.join(os.path.dirname(self.main_file), 'boundary_coverage_display_options.json')
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
@@ -68,7 +70,8 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
         return new_main_file, messages, action_requests
 
     def open_display_options(self, query, params, win_cont, icon):
-        """Shows the display options dialog.
+        """
+        Shows the display options dialog.
 
         Args:
             query (:obj:'xmsapi.dmi.Query'): An object for communicating with XMS. Unused by this method.

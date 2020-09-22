@@ -10,7 +10,8 @@ from xmsapi.dmi import Query
 
 
 class ProgressTracker:
-    """Class that tracks an Standard Interface Template model running in XMS.
+    """
+    Class that tracks an Standard Interface Template model running in XMS.
 
     Attributes:
         query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.

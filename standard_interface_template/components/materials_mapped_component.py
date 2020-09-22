@@ -20,7 +20,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
     """A Dynamic Model Interface (DMI) component for the Standard Interface model snap preview."""
 
     def __init__(self, main_file):
-        """Initializes the base component class.
+        """
+        Initializes the base component class.
 
         Args:
             main_file (str): The main file associated with this component.
@@ -31,7 +32,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
         self.disp_opts_file = os.path.join(os.path.dirname(self.main_file), 'material_display_options.json')
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
@@ -62,7 +64,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -81,7 +84,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -107,7 +111,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return action
 
     def update_display_options(self, new_main_file, json_dict, action_requests):
-        """Update the display options.
+        """
+        Update the display options.
 
         Args:
             new_main_file (str): file name.

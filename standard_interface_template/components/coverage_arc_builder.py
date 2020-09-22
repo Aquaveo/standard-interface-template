@@ -16,7 +16,8 @@ class CoverageArcBuilder:
     """Creates an arc for a coverage."""
 
     def __init__(self, node_locs, next_point_id=1, next_arc_id=1, existing_pts=None):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             node_locs: The node locations used by the arc builder.
@@ -31,7 +32,8 @@ class CoverageArcBuilder:
         self.arcs = []
 
     def _get_point(self, node_id):
-        """Get an existing point or create a new one if it hasn't been added yet.
+        """
+        Get an existing point or create a new one if it hasn't been added yet.
 
         Args:
             node_id (int): Node id from the geometry.
@@ -51,7 +53,8 @@ class CoverageArcBuilder:
         return self._pt_map[node_id]
 
     def add_arc(self, start_node_id, end_node_id, vert_list):
-        """And an arc to the list of coverage arcs we are building up.
+        """
+        Add an arc to the list of coverage arcs we are building up.
 
         Ensures we don't get duplicate points in our coverage.
 

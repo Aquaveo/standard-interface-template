@@ -51,8 +51,9 @@ class MaterialFilterModel(RenameModel):
         ret_flags = super().flags(index)
         row = index.row()
         col = index.column()
+        unassigned_material_row = 0
 
-        if row == MaterialsCoverageData.unassigned_mat and col == MaterialsCoverageData.column_name:
+        if row == unassigned_material_row and col == MaterialsCoverageData.column_name:
             # Disable editing of the unassigned material name
             ret_flags = ret_flags & (~Qt.ItemIsEditable)
         else:

@@ -34,7 +34,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -71,7 +72,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
             self.cov_uuid = self.data.info.attrs['cov_uuid']
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
@@ -107,7 +109,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -135,7 +138,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -177,7 +181,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_arc(self, query, params, win_cont, icon):
-        """Opens the Assign Arc dialog and saves component data state on OK.
+        """
+        Opens the Assign Arc dialog and saves component data state on OK.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -244,7 +249,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_point(self, query, params, win_cont, icon):
-        """Opens the Assign Point dialog and saves component data state on OK.
+        """
+        Opens the Assign Point dialog and saves component data state on OK.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -311,7 +317,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_display_options(self, query, params, win_cont, icon):
-        """Shows the display options dialog.
+        """
+        Shows the display options dialog.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): An object for communicating with XMS. Unused by this method.
@@ -355,7 +362,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
             self._write_id_file(disp_names[i], df)
 
     def _write_id_file(self, disp_name, df):
-        """Write a single id file.
+        """
+        Write a single id file.
 
         Args:
             disp_name (str): The display option name.
