@@ -18,7 +18,7 @@ __license__ = "All rights reserved"
 
 
 class ImportGeometryThread(ImportSimulationThread):
-    """Read an Standard Interface Template simulation when a *.example_geometry file is opened in SMS."""
+    """Read an Standard Interface Template simulation when a *.example_geometry file is opened in XMS."""
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
@@ -46,7 +46,7 @@ class ImportGeometryThread(ImportSimulationThread):
             self._query.get_xms_agent().set_retries(1)
             self._xms_data['filename'] = self._query.get_read_file()
 
-            # Get the SMS temp directory
+            # Get the XMS temp directory
             start_ctxt = self._query.get_context()
             self._query.select('InstallResources')
             temp_dir = self._query.get('Temporary Directory')['Temporary Directory']

@@ -1,4 +1,4 @@
-"""Provide progress feedback when running the Standard Interface Template model in SMS."""
+"""Provide progress feedback when running the Standard Interface Template model in XMS."""
 # 1. Standard python modules
 
 # 2. Third party modules
@@ -10,10 +10,10 @@ from xmsapi.dmi import Query
 
 
 class ProgressTracker:
-    """Class that tracks an Standard Interface Template model running in SMS.
+    """Class that tracks an Standard Interface Template model running in XMS.
 
     Attributes:
-        query (:obj:`xmsapi.dmi.Query`): Object used to communicate with SMS.
+        query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
         progress_loop (:obj:`xmsapi.dmi.ProgressLoop`): Object used to manage when progress is updated.
         echo_file (str): Path to file that is a copy of the command line output.
         echo_pos (int): Position in the echo_file.
@@ -29,7 +29,7 @@ class ProgressTracker:
 
     @staticmethod
     def progress_function():
-        """Calculates the progress and sends it to SMS."""
+        """Calculates the progress and sends it to XMS."""
         # Compute the current progress percent.
         progress_percent = 0
         found_percent = False

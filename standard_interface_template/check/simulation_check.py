@@ -20,7 +20,8 @@ class SimulationCheck:
         """Constructor.
 
         Args:
-            check_thread (CheckThread): A class for holding the data that will be used for checking this simulation.
+            check_thread (:obj:`CheckThread`): A class for holding the data that will be used for checking this
+                                               simulation.
         """
         super().__init__()
         self.errors = []

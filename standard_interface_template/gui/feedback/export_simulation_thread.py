@@ -55,7 +55,7 @@ class ExportSimulationThread(QThread):
             self.processing_finished.emit()
 
     def _setup_query(self):
-        """Queries from SMS to grab the simulation."""
+        """Queries from XMS to grab the simulation."""
         self._logger.info('Establishing communication with SMS.')
         self.query = Query()
         self.query.get_xms_agent().set_retries(1)

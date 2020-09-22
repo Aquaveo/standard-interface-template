@@ -1,4 +1,4 @@
-"""This module allows SMS to run Standard Interface Template and read its solution on completion."""
+"""This module allows XMS to run Standard Interface Template and read its solution on completion."""
 
 # 1. Standard python modules
 import os
@@ -38,7 +38,7 @@ class SimulationRun(RunBase):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             params (:obj:`dict`): Generic map of parameters. Contains the structures for various components that
              are required for adding vertices to the Query Context with Add().
             win_cont (:obj:`QWidget`): The parent window.
@@ -61,7 +61,7 @@ class SimulationRun(RunBase):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             file_location (str): The directory of the solution to load.
 
         Returns:
@@ -115,7 +115,7 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
@@ -149,7 +149,7 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
@@ -176,7 +176,7 @@ class SimulationRun(RunBase):
         Build edge needs to be added before the first Query::Add() call
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             build_vertices (:obj:`list`): List of the Context vertices that will be flagged for building. Will append
                 the root build vertex when added.
         """
@@ -189,7 +189,7 @@ class SimulationRun(RunBase):
         """Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): A class to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
         """
         # Set self.simulation_name
         proj_result = query.get("simulation_name")

@@ -26,7 +26,7 @@ class SimQueryHelper:
         """Constructor.
 
         Args:
-            query (Query): class to communicate with XMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
         """
         self._query = query
         self._start_context = None

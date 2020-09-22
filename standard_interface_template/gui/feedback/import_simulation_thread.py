@@ -35,7 +35,7 @@ __license__ = "All rights reserved"
 
 
 class ImportSimulationThread(QThread):
-    """Read an Standard Interface Template simulation when a *.example_simulation file is opened in SMS."""
+    """Read an Standard Interface Template simulation when a *.example_simulation file is opened in XMS."""
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
@@ -93,7 +93,7 @@ class ImportSimulationThread(QThread):
             if place_marks:
                 self._root_idx = place_marks[0]
 
-            # Get the SMS temp directory
+            # Get the XMS temp directory
             start_ctxt = self._query.get_context()
             self._query.select('InstallResources')
             temp_dir = self._query.get('Temporary Directory')['Temporary Directory']
@@ -108,7 +108,7 @@ class ImportSimulationThread(QThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def _add_xms_data(self):
-        """Send imported data to SMS."""
+        """Send imported data to XMS."""
         self._logger.info('Preparing to send imported data to SMS...')
 
         sim_comp_idx = None
@@ -314,7 +314,7 @@ class ImportSimulationThread(QThread):
             self.processing_finished.emit()
 
     def send(self):
-        """Send imported data to SMS."""
+        """Send imported data to XMS."""
         if self._query:
             ctxt = self._query.get_context()
             for build_vertex in self._build_vertices:
@@ -323,7 +323,7 @@ class ImportSimulationThread(QThread):
             self._query.send()
 
     def run(self):
-        """Creates coverages, a simulation, and a mesh for SMS."""
+        """Creates coverages, a simulation, and a mesh for XMS."""
         try:
             self.read()
         except Exception as error:

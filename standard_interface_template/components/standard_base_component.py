@@ -286,8 +286,8 @@ class StandardBaseComponent(CoverageComponentBase):
         other node with a "ComponentCoverageIds" ContextDefinition out edge).
 
         Args:
-            query (xmsdmi.dmi.Query): Query for communicating with XMS.
-            target_type (xmsguipy.data.target_type.TargetType): Entity type enum.
+            query (:obj:`xmsdmi.dmi.Query`): Query for communicating with XMS.
+            target_type (:obj:`xmsguipy.data.target_type.TargetType`): Entity type enum.
             cleanup (bool): True if id files should be deleted after loading.
 
         Returns:
