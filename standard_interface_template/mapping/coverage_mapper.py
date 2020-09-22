@@ -17,7 +17,8 @@ __license__ = "All rights reserved"
 class CoverageMapper:
     """Class for mapping coverages to a mesh for Standard Interface."""
     def __init__(self, query_helper, generate_snap):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             query_helper (:obj:`SimQueryHelper`): Values queried to use in the coverage mapper.

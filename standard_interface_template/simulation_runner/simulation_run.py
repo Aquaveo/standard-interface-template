@@ -19,12 +19,11 @@ __license__ = "All rights reserved"
 
 
 class SimulationRun(RunBase):
-    """Class that handles running Standard Interface Template.
-
-    """
+    """Class that handles running Standard Interface Template."""
 
     def __init__(self, dummy_mainfile=''):
-        """Initializes the class.
+        """
+        Initializes the class.
 
         Args:
             dummy_mainfile (str): Unused. Just to keep constructor consistent with component classes.
@@ -35,7 +34,8 @@ class SimulationRun(RunBase):
         self.xms_temp_dir = ''
 
     def read_solution(self, query, params, win_cont, icon):
-        """Reads the Standard Interface Template Solution.
+        """
+        Reads the Standard Interface Template Solution.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -58,7 +58,8 @@ class SimulationRun(RunBase):
         return self.read_solution_file(query, file_location)
 
     def read_solution_file(self, query, file_location):
-        """Reads the Standard Interface Template Solution.
+        """
+        Reads the Standard Interface Template Solution.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -107,7 +108,8 @@ class SimulationRun(RunBase):
         return messages, []
 
     def get_executables(self, sim, query, filelocation):
-        """Get the executable commands for any Simulation object given.
+        """
+        Get the executable commands for any Simulation object given.
 
         This function will find the correct information that you need for your Simulation object. This function
         determines the correct executables needed, and the correct import scripts needed to load solutions. This
@@ -142,7 +144,8 @@ class SimulationRun(RunBase):
         return commands
 
     def get_solution_load_actions(self, sim, query, filelocation):
-        """Get the simulation load ActionRequests for any Simulation object given.
+        """
+        Get the simulation load ActionRequests for any Simulation object given.
 
         This method is called when we are loading an existing solution from a previous model run. get_executables is
         called when running or rerunning a simulation.
@@ -171,7 +174,8 @@ class SimulationRun(RunBase):
 
     @staticmethod
     def _ensure_build_edge_exists(query, build_vertices):
-        """Make sure a build Context edge has been added to the Query Context.
+        """
+        Make sure a build Context edge has been added to the Query Context.
 
         Build edge needs to be added before the first Query::Add() call
 
@@ -186,7 +190,8 @@ class SimulationRun(RunBase):
         return build_vertex
 
     def _get_simulation_name(self, query):
-        """Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
+        """
+        Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.

@@ -20,7 +20,8 @@ class AssignPolyMaterialDialog(XmsDlg):
     """A dialog for assigning materials to polygons."""
 
     def __init__(self, win_cont, icon, title, multi_select_lbl, mat_names, current_mat_idx):
-        """Initializes the class, sets up the ui, and loads the simulation.
+        """
+        Initializes the class, sets up the ui, and loads the simulation.
 
         Args:
             win_cont (:obj:`QWidget`): Parent window.
@@ -41,7 +42,8 @@ class AssignPolyMaterialDialog(XmsDlg):
         self.setup_ui(mat_names, current_mat_idx)
 
     def setup_ui(self, mat_names, current_idx):
-        """Setup dialog widgets.
+        """
+        Setup dialog widgets.
 
         Args:
             mat_names (:obj:`list' of str): List of the material names.
@@ -70,7 +72,8 @@ class AssignPolyMaterialDialog(XmsDlg):
         self.setLayout(self.widgets['vert_layout'])
 
     def get_selected_material(self):
-        """Returns the currently selected material.
+        """
+        Returns the currently selected material.
 
         Returns:
             (int): The currently selected material's index in the material list.

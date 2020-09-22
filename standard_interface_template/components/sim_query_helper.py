@@ -23,7 +23,8 @@ class SimQueryHelper:
     """Class used to get data from XMS related to Standard Interface Template."""
 
     def __init__(self, query):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -57,7 +58,8 @@ class SimQueryHelper:
         self.material_component = None
 
     def get_simulation_data(self, warn_if_no_mesh):
-        """Gets the coverages associated with a simulation.
+        """
+        Gets the coverages associated with a simulation.
 
         Args:
             warn_if_no_mesh (bool): If True, log warning if no mesh linked to the simulation.
@@ -69,7 +71,8 @@ class SimQueryHelper:
         self._query.set_context(self._start_context)
 
     def get_solution_data(self):
-        """Get solution datasets for a simulation.
+        """
+        Get solution datasets for a simulation.
 
         Returns:
             (:obj:`list`): List of the solution data_object Dataset dumps for this simulation
@@ -153,7 +156,8 @@ class SimQueryHelper:
             self._get_all_feature_ids_comp_ids(self.material_component, TargetType.polygon)
 
     def get_geometry(self, warn_if_no_mesh):
-        """Gets the mesh associated with a simulation.
+        """
+        Gets the mesh associated with a simulation.
 
         Args:
             warn_if_no_mesh (bool): If True, log warning if no mesh linked to the simulation.
@@ -211,7 +215,8 @@ class SimQueryHelper:
 
     @staticmethod
     def get_feature_file_dict(query, component, target_type):
-        """Returns the file dict for the feature type (point, arc, or polygon).
+        """
+        Returns the file dict for the feature type (point, arc, or polygon).
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -232,7 +237,8 @@ class SimQueryHelper:
         return file_dict
 
     def _get_all_feature_ids_comp_ids(self, component, target_type):
-        """Gets all the xms arc ids and component ids.
+        """
+        Gets all the xms arc ids and component ids.
 
         Args:
             component (:obj:`StandardBaseComponent`): E.g. BoundaryCoverageComponent, MaterialsCoverageComponent.
@@ -242,7 +248,8 @@ class SimQueryHelper:
         self.load_component_feature_ids(self._query, component, target_type)
 
     def _get_all_point_and_arc_ids_comp_ids(self, component):
-        """Gets all the xms point and arc ids and component ids.
+        """
+        Gets all the xms point and arc ids and component ids.
 
         Args:
             component (derived from Component): The Component.
@@ -252,7 +259,8 @@ class SimQueryHelper:
 
     @staticmethod
     def load_component_feature_ids(query, component, target_type):
-        """Loads the component feature (arc, polygon etc.) ids.
+        """
+        Loads the component feature (arc, polygon etc.) ids.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -265,7 +273,8 @@ class SimQueryHelper:
 
     @staticmethod
     def load_component_point_and_arc_ids(query, obs_comp):
-        """Loads the component feature ids.
+        """
+        Loads the component feature ids.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -278,7 +287,8 @@ class SimQueryHelper:
         SimQueryHelper._remove_id_files(file_dict)
 
     def _query_select_component_coverage_ids(self, coverage_xml_str, coverage_comp_xml_str):
-        """Calls select('ComponentCoverageIds') on the query.
+        """
+        Calls select('ComponentCoverageIds') on the query.
 
         Args:
             coverage_xml_str (str): The take name?
@@ -291,7 +301,8 @@ class SimQueryHelper:
         self._query.select('ComponentCoverageIds')
 
     def _get_uuid_of_existing_mapped_component(self, comp_name):
-        """Gets the uuids of any mapped components that are part of this simulation.
+        """
+        Gets the uuids of any mapped components that are part of this simulation.
 
         Args:
             comp_name (str): component parameter name from XML.
@@ -363,7 +374,8 @@ class SimQueryHelper:
 
     @staticmethod
     def _remove_id_files(file_dict):
-        """Removes id files from xms that are referenced in the passed in dictionary.
+        """
+        Removes id files from xms that are referenced in the passed in dictionary.
 
         Args:
             file_dict (dict): dict with key as string and values as tuple of file names.

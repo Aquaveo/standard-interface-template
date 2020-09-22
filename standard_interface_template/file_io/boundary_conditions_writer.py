@@ -14,7 +14,8 @@ __license__ = "All rights reserved"
 class BoundaryConditionsWriter:
     """A class for writing out boundary condition data for the Standard Interface Template."""
     def __init__(self, file_name, arc_to_ids, arc_points, bc_component):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             file_name (str): The name of the file to write.

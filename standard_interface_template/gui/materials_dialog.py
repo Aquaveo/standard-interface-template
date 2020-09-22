@@ -19,7 +19,8 @@ class MaterialsDialog(QDialog):
     """A dialog to define materials and their properties."""
 
     def __init__(self, title, win_cont, icon, data):
-        """Initializes the material list and properties dialog.
+        """
+        Initializes the material list and properties dialog.
 
         Args:
             title (str): Title of the dialog.

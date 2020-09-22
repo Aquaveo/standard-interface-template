@@ -24,7 +24,8 @@ __license__ = "All rights reserved"
 class MaterialMapper:
     """Class for mapping material coverage to a mesh for Standard Interface."""
     def __init__(self, coverage_mapper, wkt, generate_snap):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             coverage_mapper (:obj:`CoverageMapper`): The container for coverages to map.

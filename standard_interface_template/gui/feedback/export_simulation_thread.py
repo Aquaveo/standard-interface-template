@@ -26,7 +26,8 @@ class ExportSimulationThread(QThread):
     processing_finished = Signal()
 
     def __init__(self, out_dir):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             out_dir (str): output directory

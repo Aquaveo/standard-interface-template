@@ -12,7 +12,8 @@ from xmsguipy.data.polygon_texture import PolygonTexture
 
 
 class ColorList:
-    """A list of colors and a way to generate a next color and texture combination.
+    """
+    A list of colors and a way to generate a next color and texture combination.
 
     Attributes:
         colors (:obj:`list`): List of colors used.
@@ -68,7 +69,8 @@ class ColorList:
 
     @classmethod
     def get_next_color_and_texture(cls, new_id, option):
-        """Sets the color and texture for a polygon option.
+        """
+        Sets the color and texture for a polygon option.
 
         Args:
             new_id (int): The new id for the polygon display option.

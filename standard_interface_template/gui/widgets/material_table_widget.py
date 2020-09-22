@@ -19,7 +19,8 @@ from standard_interface_template.gui.widgets.material_filter_model import Materi
 
 
 class MaterialTableWidget(BasicTableWidget):
-    """Material table widget class.
+    """
+    Material table widget class.
 
     Attributes:
         MAT_DISPLAY_COL (int): Column index of the display column.
@@ -33,7 +34,8 @@ class MaterialTableWidget(BasicTableWidget):
     deleted = Signal(list)
 
     def __init__(self, parent, data):
-        """Construct the widget.
+        """
+        Construct the widget.
 
         Args:
             parent (:obj:`QObject`): The parent object.
@@ -104,7 +106,8 @@ class MaterialTableWidget(BasicTableWidget):
         self.deleted.emit(deleted_ids)
 
     def _enable_delete(self, selected, deselected):
-        """Enable/disable delete row button.
+        """
+        Enable/disable delete row button.
 
         Args:
             selected (:obj:`QItemSelection`): Selected indices.
@@ -122,7 +125,8 @@ class MaterialTableWidget(BasicTableWidget):
         self.toolbar.widgetForAction(self.btn_actions[self.delete_icon]).setEnabled(enable_delete)
 
     def _get_new_material_name(self):
-        """Get a unique name for a new material.
+        """
+        Get a unique name for a new material.
 
         Returns:
             (str): A new unique material name, with a prefix of 'new material' followed by a number if 'new material'

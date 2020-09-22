@@ -15,7 +15,8 @@ __license__ = "All rights reserved"
 
 
 class BoundaryCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component.
+    """
+    Manages data file for the hidden coverage component.
 
     Attributes:
         display_list (:obj:`list` of str): The list of options the user can choose from.
@@ -23,7 +24,8 @@ class BoundaryCoverageData(XarrayBase):
     display_list = ['A', 'B', 'C']
 
     def __init__(self, filename):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             filename (str): The name of the main file that data is stored in.
@@ -49,7 +51,8 @@ class BoundaryCoverageData(XarrayBase):
 
     @property
     def coverage_data(self):
-        """Get the coverage dataset.
+        """
+        Get the coverage dataset.
 
         Returns:
             (:obj:`xarray.Dataset`): The cov_data list dataset.
@@ -62,7 +65,8 @@ class BoundaryCoverageData(XarrayBase):
 
     @coverage_data.setter
     def coverage_data(self, value):
-        """Sets the coverage data.
+        """
+        Sets the coverage data.
 
         Args:
             value: The coverage data.
@@ -71,7 +75,8 @@ class BoundaryCoverageData(XarrayBase):
 
     @staticmethod
     def _default_cov_data():
-        """Creates a default coverage data set.
+        """
+        Creates a default coverage data set.
 
         Returns:
             (:obj:`xarray.Dataset`): The coverage dataset.

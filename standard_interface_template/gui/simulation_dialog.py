@@ -20,7 +20,8 @@ class SimulationDialog(XmsDlg):
     """A dialog for assigning values."""
 
     def __init__(self, win_cont, icon, title, user_text, user_option):
-        """Initializes the class, sets up the ui, and writes the values.
+        """
+        Initializes the class, sets up the ui, and writes the values.
 
         Args:
             win_cont (:obj:`QWidget`): Parent window.

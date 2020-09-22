@@ -27,7 +27,8 @@ class GeometryReader:
         self.cogrid = None  # The grid
 
     def read(self, filename):
-        """Reads the file.
+        """
+        Reads the file.
 
         Args:
             filename (str): The name of the file to read.
@@ -45,7 +46,8 @@ class GeometryReader:
         self._build_mesh()
 
     def _get_cell_stream(self):
-        """Returns the cell stream.
+        """
+        Returns the cell stream.
 
         Returns:
             (:obj:`list`): The list containing the cell stream.

@@ -25,7 +25,8 @@ class StandardBaseComponent(CoverageComponentBase):
     """A Dynamic Model Interface (DMI) component base for the Standard Interface Template model."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file (str): The main file associated with this component.
@@ -43,7 +44,8 @@ class StandardBaseComponent(CoverageComponentBase):
         self.cov_uuid = ''
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
@@ -78,7 +80,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return new_main_file, messages, action_requests
 
     def project_open_event(self, new_path):
-        """Called when XMS project is opened.
+        """
+        Called when an XMS project is opened.
 
         Components with display lists should add XmsDisplayMessage(s) to self.display_option_list.
 
@@ -97,7 +100,8 @@ class StandardBaseComponent(CoverageComponentBase):
                 )
 
     def get_project_explorer_menus(self, main_file_list):
-        """This will be called when right-click menus in the project explorer area of XMS are being created.
+        """
+        This will be called when right-click menus in the project explorer area of XMS are being created.
 
         Args:
             main_file_list (:obj:`list` of str): A list of the main files of the selected components of this type.
@@ -127,7 +131,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return menu_list
 
     def get_display_menus(self, selection, lock_state, id_files):
-        """This will be called when right-click menus in the main display area of XMS are being created.
+        """
+        This will be called when right-click menus in the main display area of XMS are being created.
 
         Args:
             selection (dict): A dictionary with the key being a string of the feature entity type (POINT, ARC, POLYGON).
@@ -206,7 +211,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return menu_list
 
     def get_double_click_actions_for_selection(self, selection, lock_state, id_files):
-        """This will be called when a double-click in the main display area of XMS happened.
+        """
+        This will be called when a double-click in the main display area of XMS happened.
 
         Args:
             selection (dict): A dictionary with the key being a string of the feature entity type (POINT, ARC, POLYGON).
@@ -280,7 +286,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return [], actions
 
     def query_for_all_component_ids(self, query, target_type, cleanup=True):
-        """Query XMS for a dump of all the current component ids of the specified entity type.
+        """
+        Query XMS for a dump of all the current component ids of the specified entity type.
 
         Query needs to be at the Component Context level (or any
         other node with a "ComponentCoverageIds" ContextDefinition out edge).
@@ -313,7 +320,8 @@ class StandardBaseComponent(CoverageComponentBase):
 
     @staticmethod
     def duplicate_display_opts(new_path, disp_opts_fname):
-        """Duplicates display options.
+        """
+        Duplicates display options.
 
         Args:
             new_path (str): Path to the new save location.

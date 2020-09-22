@@ -22,7 +22,8 @@ class SimulationComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -40,7 +41,8 @@ class SimulationComponent(StandardBaseComponent):
             self.data.commit()
 
     def open_model_control(self, query, params, win_cont, icon):
-        """Opens the dialog and saves component data state on OK.
+        """
+        Opens the dialog and saves component data state on OK.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
@@ -65,7 +67,8 @@ class SimulationComponent(StandardBaseComponent):
         return [], []
 
     def create_snap_preview(self, query, params, win_cont, icon):
-        """Creates mapped components to display Standard Interface Template data on a mesh.
+        """
+        Creates mapped components to display Standard Interface Template data on a mesh.
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.

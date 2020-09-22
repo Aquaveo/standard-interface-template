@@ -18,7 +18,8 @@ __license__ = "All rights reserved"
 
 
 class MaterialFilterModel(RenameModel):
-    """A model to set enabled/disabled states.
+    """
+    A model to set enabled/disabled states.
 
     Attributes:
         column_display (int): The column index of the display column.
@@ -32,7 +33,8 @@ class MaterialFilterModel(RenameModel):
     column_user_text = 3
 
     def __init__(self, parent=None):
-        """Initializes the filter model.
+        """
+        Initializes the filter model.
 
         Args:
             parent (:obj:`QObject`): The parent object.
@@ -40,7 +42,8 @@ class MaterialFilterModel(RenameModel):
         super().__init__(['', 'Material Name', 'Material Type', 'Material Text'], parent)
 
     def flags(self, index):
-        """Set flags for an item in the model.
+        """
+        Set flags for an item in the model.
 
         Args:
             index (:obj:`QModelIndex`): The item's model index.
@@ -61,7 +64,8 @@ class MaterialFilterModel(RenameModel):
         return ret_flags
 
     def filterAcceptsColumn(self, source_column: int, source_parent: QModelIndex) -> bool:  # noqa: N802
-        """Override for filter accepts column.
+        """
+        Override for filter accepts column.
 
         Args:
             source_column (int): The column from the source model.
@@ -76,7 +80,8 @@ class MaterialFilterModel(RenameModel):
             return True
 
     def data(self, index: QModelIndex, role: int = ...) -> typing.Any:
-        """Gets the data for the model.
+        """
+        Gets the data for the model.
 
         Args:
             index (:obj:`QModelIndex`): The location index in the Qt model.
@@ -105,7 +110,8 @@ class MaterialFilterModel(RenameModel):
         return super().data(index, role)
 
     def setData(self, index: QModelIndex, value: typing.Any, role: int = ...) -> bool:  # noqa: N802
-        """Sets the data for the model.
+        """
+        Sets the data for the model.
 
         Args:
             index (:obj:`QModelIndex`): The location index in the Qt model.

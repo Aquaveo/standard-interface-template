@@ -39,7 +39,8 @@ class ImportSimulationThread(QThread):
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
-        """Construct the Importer.
+        """
+        Construct the Importer.
 
         Args:
             xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
@@ -176,7 +177,8 @@ class ImportSimulationThread(QThread):
         self.send()
 
     def _read_boundary_conditions(self, filename):
-        """Read parameters from a *.example_boundary file.
+        """
+        Read parameters from a *.example_boundary file.
 
         Args:
             filename (str): Filepath of the *.example_geometry file.
@@ -229,7 +231,8 @@ class ImportSimulationThread(QThread):
         self._sim_comp.set_main_file(sim_main_file)
 
     def _read_geometry(self, filename):
-        """Read mesh geometry from a *.example_geometry file.
+        """
+        Read mesh geometry from a *.example_geometry file.
 
         Args:
             filename (str): Filepath of the *.example_geometry file.
@@ -242,7 +245,8 @@ class ImportSimulationThread(QThread):
         self._mesh.set_uuid(str(uuid.uuid4()))
 
     def _read_materials(self, filename):
-        """Read material assignments from a *.example_materials file.
+        """
+        Read material assignments from a *.example_materials file.
 
         Args:
             filename (str): Filepath of the *.example_materials file.

@@ -14,7 +14,8 @@ __license__ = "All rights reserved"
 class MaterialsWriter:
     """A class for writing out material data for the Standard Interface Template."""
     def __init__(self, file_name, mat_grid_cells, mat_component):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             file_name (str): The name of the file to write.

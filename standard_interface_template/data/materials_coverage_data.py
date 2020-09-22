@@ -15,7 +15,8 @@ __license__ = "All rights reserved"
 
 
 class MaterialsCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component.
+    """
+    Manages data file for the hidden coverage component.
 
     Attributes:
         unassigned_material_id (int): The id of the unassigned material.
@@ -41,7 +42,8 @@ class MaterialsCoverageData(XarrayBase):
     column_blue = 7
 
     def __init__(self, filename):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             filename (str): The name of the main file that data is stored in.
@@ -67,7 +69,8 @@ class MaterialsCoverageData(XarrayBase):
 
     @property
     def coverage_data(self):
-        """Get the coverage dataset.
+        """
+        Get the coverage dataset.
 
         Returns:
             (:obj:`xarray.Dataset`): The cov_data list dataset.
@@ -80,7 +83,8 @@ class MaterialsCoverageData(XarrayBase):
 
     @coverage_data.setter
     def coverage_data(self, value):
-        """Sets the coverage data.
+        """
+        Sets the coverage data.
 
         Args:
             value (:obj:): The coverage data.
@@ -89,7 +93,8 @@ class MaterialsCoverageData(XarrayBase):
 
     @staticmethod
     def _default_cov_data():
-        """Creates a default coverage data set.
+        """
+        Creates a default coverage data set.
 
         Returns:
             (:obj:`xarray.Dataset`): The coverage dataset.

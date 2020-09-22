@@ -22,7 +22,8 @@ class ImportGeometryThread(ImportSimulationThread):
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
-        """Construct the Importer.
+        """
+        Construct the Importer.
 
         Args:
             xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
@@ -61,7 +62,8 @@ class ImportGeometryThread(ImportSimulationThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def read(self):
-        """Trigger the read of the Standard Interface Template geometry.
+        """
+        Trigger the read of the Standard Interface Template geometry.
 
         Raises:
             (Exception): There was a problem reading the geometry file.
