@@ -46,7 +46,7 @@ class SimulationComponent(StandardBaseComponent):
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
             icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
@@ -72,7 +72,7 @@ class SimulationComponent(StandardBaseComponent):
 
         Args:
             query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
             icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 

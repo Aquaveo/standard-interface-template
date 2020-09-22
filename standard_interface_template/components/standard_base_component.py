@@ -51,13 +51,13 @@ class StandardBaseComponent(CoverageComponentBase):
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
