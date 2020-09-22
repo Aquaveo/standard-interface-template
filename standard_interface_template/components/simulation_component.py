@@ -43,10 +43,10 @@ class SimulationComponent(StandardBaseComponent):
         """Opens the dialog and saves component data state on OK.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             params (:obj:`dict'): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -54,7 +54,6 @@ class SimulationComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         dialog = SimulationDialog(win_cont, icon, 'Model Control', self.data.info.attrs['user_text'],
                                   self.data.info.attrs['user_option'])
@@ -69,10 +68,10 @@ class SimulationComponent(StandardBaseComponent):
         """Creates mapped components to display Standard Interface Template data on a mesh.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             params (:obj:`dict'): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -80,7 +79,6 @@ class SimulationComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         note = ''
         worker = CoverageMapperThread(query)

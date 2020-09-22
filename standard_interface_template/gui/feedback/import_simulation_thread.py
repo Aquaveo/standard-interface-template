@@ -42,7 +42,7 @@ class ImportSimulationThread(QThread):
         """Construct the Importer.
 
         Args:
-            xms_data (dict): XMS data dictionary. Useful for testing because it will avoid any Query calls.
+            xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
                 {
                     'filename': '',  # Path to the *.example_simulation file to read
                     'comp_dir': '',  # Path to the XMS "Components" temp folder
@@ -174,7 +174,7 @@ class ImportSimulationThread(QThread):
         """Read parameters from a *.example_boundary file.
 
         Args:
-            filename (str): Filepath of the *.example_geometry file
+            filename (str): Filepath of the *.example_geometry file.
         """
         self._boundary_conditions_reader = BoundaryConditionsReader()
         self._boundary_conditions_reader.read(filename)
@@ -227,7 +227,7 @@ class ImportSimulationThread(QThread):
         """Read mesh geometry from a *.example_geometry file.
 
         Args:
-            filename (str): Filepath of the *.example_geometry file
+            filename (str): Filepath of the *.example_geometry file.
         """
         self._geometry_reader = GeometryReader()
         self._geometry_reader.read(filename)

@@ -10,7 +10,14 @@ from xmsapi.dmi import Query
 
 
 class ProgressTracker:
-    """Class that tracks an Standard Interface Template model running in SMS."""
+    """Class that tracks an Standard Interface Template model running in SMS.
+
+    Attributes:
+        query (:obj:`xmsapi.dmi.Query`): Object used to communicate with SMS.
+        progress_loop (:obj:`xmsapi.dmi.ProgressLoop`): Object used to manage when progress is updated.
+        echo_file (str): Path to file that is a copy of the command line output.
+        echo_pos (int): Position in the echo_file.
+    """
     query = None
     progress_loop = None
     echo_file = None

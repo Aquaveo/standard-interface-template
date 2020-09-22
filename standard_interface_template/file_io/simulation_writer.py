@@ -18,8 +18,8 @@ class SimulationWriter:
 
         Args:
             file_name (str): The name of the file to write.
-            simulation_data (SimulationComponent): The simulation to export.
-            other_files (list): The other files that were written for this simulation.
+            simulation_data (:obj:`SimulationComponent`): The simulation to export.
+            other_files (:obj:`list`): The other files that were written for this simulation.
         """
         self._file_name = file_name
         self._data = simulation_data

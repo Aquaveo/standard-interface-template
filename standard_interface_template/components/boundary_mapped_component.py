@@ -26,7 +26,6 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
 
         Args:
             main_file: The main file associated with this component.
-
         """
         super().__init__(main_file)
         self.class_name = 'BoundaryMappedComponent'
@@ -59,7 +58,6 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -73,10 +71,10 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
         """Shows the display options dialog.
 
         Args:
-            query (:obj:'xmsapi.dmi.Query'):
-            params (:obj:'list' of :obj:'str'):
+            query (:obj:'xmsapi.dmi.Query'): An object for communicating with XMS. Unused by this method.
+            params (:obj:'list' of :obj:'str'): A list of parameters add to the ActionRequest. Unused by this method.
             win_cont (:obj:'PySide2.QtWidgets.QWidget'): The window container.
-            icon (:obj:'PySide2.QtGui.QIcon'): Icon to show in the dialog title
+            icon (:obj:'PySide2.QtGui.QIcon'): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:

@@ -58,7 +58,7 @@ class MaterialsCoverageData(XarrayBase):
         """Get the coverage dataset.
 
         Returns:
-            xarray.Dataset: The cov_data list dataset
+            (:obj:`xarray.Dataset`): The cov_data list dataset.
         """
         if self._cov_data is None:
             self._cov_data = self.get_dataset('cov_data', False)
@@ -71,7 +71,7 @@ class MaterialsCoverageData(XarrayBase):
         """Sets the coverage data.
 
         Args:
-            value: The coverage data.
+            value (:obj:): The coverage data.
         """
         self._cov_data = value
 
@@ -80,7 +80,7 @@ class MaterialsCoverageData(XarrayBase):
         """Creates a default coverage data set.
 
         Returns:
-            xarray.Dataset: The coverage dataset
+            (:obj:`xarray.Dataset`): The coverage dataset.
         """
         default_data = {'material_id': [0], 'name': 'unassigned', 'user_option': 'A', 'user_text': 'Hello World!',
                         'texture': [1], 'red': [0], 'green': [0], 'blue': [0]}

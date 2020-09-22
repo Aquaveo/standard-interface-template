@@ -18,7 +18,14 @@ __license__ = "All rights reserved"
 
 
 class MaterialFilterModel(RenameModel):
-    """A model to set enabled/disabled states."""
+    """A model to set enabled/disabled states.
+
+    Attributes:
+        column_display (int): The column index of the display column.
+        column_name (int): The column index of the name column.
+        column_user_option (int): The column index of the user option column.
+        column_user_text (int): The column index of the user text column.
+    """
     column_display = 0
     column_name = 1
     column_user_option = 2
@@ -28,7 +35,7 @@ class MaterialFilterModel(RenameModel):
         """Initializes the filter model.
 
         Args:
-            parent (Something derived from :obj:`QObject`): The parent object.
+            parent (:obj:`QObject`): The parent object.
         """
         super().__init__(['', 'Material Name', 'Material Type', 'Material Text'], parent)
 
@@ -36,10 +43,10 @@ class MaterialFilterModel(RenameModel):
         """Set flags for an item in the model.
 
         Args:
-            index (QModelIndex): The item's model index
+            index (:obj:`QModelIndex`): The item's model index.
 
         Returns:
-            Qt.ItemFlags: Updated flags for the item
+            (:obj:`Qt.ItemFlags`): Updated flags for the item.
         """
         ret_flags = super().flags(index)
         row = index.row()
@@ -57,10 +64,10 @@ class MaterialFilterModel(RenameModel):
 
         Args:
             source_column (int): The column from the source model.
-            source_parent (QModelIndex): The parent from the source model.
+            source_parent (:obj:`QModelIndex`): The parent from the source model.
 
         Returns:
-            bool: True if the column should be displayed.
+            (bool): True if the column should be displayed.
         """
         if source_column in [MaterialsCoverageData.column_id]:
             return False
@@ -71,7 +78,7 @@ class MaterialFilterModel(RenameModel):
         """Gets the data for the model.
 
         Args:
-            index (QModelIndex): The location index in the Qt model.
+            index (:obj:`QModelIndex`): The location index in the Qt model.
             role (int): The role the data represents.
         """
         if index.column() == self.column_display:
@@ -100,12 +107,12 @@ class MaterialFilterModel(RenameModel):
         """Sets the data for the model.
 
         Args:
-            index (QModelIndex): The location index in the Qt model.
-            value (typing.Any): The value to set.
+            index (:obj:`QModelIndex`): The location index in the Qt model.
+            value (:obj:`typing.Any`): The value to set.
             role (int): The role the data represents.
 
         Returns:
-            bool: True if successful.
+            (bool): True if successful.
         """
         if index.column() == self.column_display:
             if role == Qt.UserRole:
@@ -129,10 +136,10 @@ class MaterialFilterModel(RenameModel):
         Returns the column count.
 
         Args:
-            parent (QModelIndex): The parent.
+            parent (:obj:`QModelIndex`): The parent.
 
         Returns:
-            int: The column count.
+            (int): The column count.
         """
         return 4
 
@@ -141,10 +148,10 @@ class MaterialFilterModel(RenameModel):
         Maps from source model to this model's index.
 
         Args:
-            source_index (QModelIndex): The source model index.
+            source_index (:obj:`QModelIndex`): The source model index.
 
         Returns:
-            QModelIndex: This model's index.
+            (:obj:`QModelIndex`): This model's index.
         """
         column_map = {MaterialsCoverageData.column_name: self.column_name,
                       MaterialsCoverageData.column_user_text: self.column_user_text,
@@ -158,10 +165,10 @@ class MaterialFilterModel(RenameModel):
         Maps from this model's index to the source model's index.
 
         Args:
-            proxy_index (QModelIndex): The proxy model index.
+            proxy_index (:obj:`QModelIndex`): The proxy model index.
 
         Returns:
-            QModelIndex: The source model's index.
+            (:obj:`QModelIndex`): The source model's index.
         """
         column_map = {self.column_name: MaterialsCoverageData.column_name,
                       self.column_user_text: MaterialsCoverageData.column_user_text,

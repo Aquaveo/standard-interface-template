@@ -25,7 +25,7 @@ class ImportGeometryThread(ImportSimulationThread):
         """Construct the Importer.
 
         Args:
-            xms_data (dict): XMS data dictionary. Useful for testing because it will avoid any Query calls.
+            xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
                 {
                     'filename': '',  # Path to the *.example_simulation file to read
                     'comp_dir': '',  # Path to the XMS "Components" temp folder

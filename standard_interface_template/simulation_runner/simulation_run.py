@@ -28,7 +28,6 @@ class SimulationRun(RunBase):
 
         Args:
             dummy_mainfile (str): Unused. Just to keep constructor consistent with component classes.
-
         """
         super().__init__()
         self.simulation_name = None
@@ -39,11 +38,11 @@ class SimulationRun(RunBase):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
             params (:obj:`dict`): Generic map of parameters. Contains the structures for various components that
              are required for adding vertices to the Query Context with Add().
-            win_cont (QWidget): The parent window
-            icon (QIcon): Icon for the dialog
+            win_cont (:obj:`QWidget`): The parent window.
+            icon (:obj:`QIcon`): Icon for the dialog.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -62,7 +61,7 @@ class SimulationRun(RunBase):
         """Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
             file_location (str): The directory of the solution to load.
 
         Returns:
@@ -116,13 +115,12 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
             (:obj:`list` of :obj:`xmsapi.dmi.ExecutableCommand`):
                 The executable objects to run and the action requests that go with it.
-
         """
         # Get the project name
         if not self.simulation_name:
@@ -151,12 +149,11 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
-            (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): The solution load ActionRequests for the simulation
-
+            (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): The solution load ActionRequests for the simulation.
         """
         if not self.simulation_name:
             self._get_simulation_name(query)
@@ -179,10 +176,9 @@ class SimulationRun(RunBase):
         Build edge needs to be added before the first Query::Add() call
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
-            build_vertices (list): List of the Context vertices that will be flagged for building. Will append the
-                root build vertex when added.
-
+            query (:obj:`xmsapi.dmi.Query`): a Query object to communicate with SMS.
+            build_vertices (:obj:`list`): List of the Context vertices that will be flagged for building. Will append
+                the root build vertex when added.
         """
         build_vertex = query.add_root_vertex_instance('Build')
         build_vertices.append(build_vertex)
@@ -193,7 +189,7 @@ class SimulationRun(RunBase):
         """Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
 
         Args:
-            query (Query): A class to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): A class to communicate with SMS.
         """
         # Set self.simulation_name
         proj_result = query.get("simulation_name")

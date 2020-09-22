@@ -48,7 +48,7 @@ class BoundaryCoverageData(XarrayBase):
         """Get the coverage dataset.
 
         Returns:
-            xarray.Dataset: The cov_data list dataset
+            (:obj:`xarray.Dataset`): The cov_data list dataset.
         """
         if self._cov_data is None:
             self._cov_data = self.get_dataset('cov_data', False)
@@ -70,7 +70,7 @@ class BoundaryCoverageData(XarrayBase):
         """Creates a default coverage data set.
 
         Returns:
-            xarray.Dataset: The coverage dataset
+            (:obj:`xarray.Dataset`): The coverage dataset.
         """
         default_data = {'comp_id': [0], 'user_option': 'A', 'user_text': 'Hello World!'}
         return pd.DataFrame(default_data).to_xarray()

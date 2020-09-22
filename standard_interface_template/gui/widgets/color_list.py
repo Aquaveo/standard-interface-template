@@ -12,7 +12,11 @@ from xmsguipy.data.polygon_texture import PolygonTexture
 
 
 class ColorList:
-    """A list of colors and a way to generate a next color and texture combination."""
+    """A list of colors and a way to generate a next color and texture combination.
+
+    Attributes:
+        colors (:obj:`list`): List of colors used.
+    """
     colors = [QColor(0, 0, 0),
               QColor(170, 0, 0),
               QColor(0, 85, 0),
@@ -68,7 +72,7 @@ class ColorList:
 
         Args:
             new_id (int): The new id for the polygon display option.
-            option (PolygonOption): The polygon display option to set.
+            option (:obj:`PolygonOption`): The polygon display option to set.
         """
         num_colors = len(cls.colors)
         option.color = cls.colors[new_id % num_colors]

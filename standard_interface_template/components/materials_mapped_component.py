@@ -23,8 +23,7 @@ class MaterialsMappedComponent(StandardBaseComponent):
         """Initializes the base component class.
 
         Args:
-            main_file: The main file associated with this component.
-
+            main_file (str): The main file associated with this component.
         """
         super().__init__(main_file)
         self.class_name = 'MaterialsMappedComponent'
@@ -53,7 +52,6 @@ class MaterialsMappedComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -75,7 +73,6 @@ class MaterialsMappedComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         action = self.get_display_options_action()
 
@@ -87,12 +84,11 @@ class MaterialsMappedComponent(StandardBaseComponent):
         """Get the coverage UUID from XMS and send back the display options list.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             params (:obj:`dict'): Generic map of parameters. Unused in this case.
 
         Returns:
-            Empty message and ActionRequest lists
-
+            Empty message and ActionRequest lists.
         """
         # Send the default display options list to XMS.
         self.display_option_list.append(
@@ -114,10 +110,9 @@ class MaterialsMappedComponent(StandardBaseComponent):
         """Update the display options.
 
         Args:
-            new_main_file (str): file name
-            json_dict (dict): display options dictionary
+            new_main_file (str): file name.
+            json_dict (dict): display options dictionary.
             action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         if 'comp_uuid' in json_dict:
             action = self.get_display_options_action()

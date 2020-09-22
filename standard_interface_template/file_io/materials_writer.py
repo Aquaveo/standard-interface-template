@@ -18,8 +18,8 @@ class MaterialsWriter:
 
         Args:
             file_name (str): The name of the file to write.
-            mat_grid_cells (dict): The material to cell ids of the grid that use that material.
-            mat_component (MaterialsCoverageComponent): The material data to export.
+            mat_grid_cells (:obj:`dict`): The material to cell ids of the grid that use that material.
+            mat_component (:obj:`MaterialsCoverageComponent`): The material data to export.
         """
         self._file_name = file_name
         self._data = mat_component
