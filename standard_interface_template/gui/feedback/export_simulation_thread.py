@@ -105,12 +105,12 @@ class ExportSimulationThread(QThread):
 
     def export_materials(self):
         """Exports the Standard Template Interface material file."""
-        my_dict = self.coverage_mapper.material_comp_id_to_grid_cell_ids
         self._logger.info('Writing Standard Interface Template material file.')
         base_name = f'{self.simulation_name}.example_materials'
         file_name = os.path.join(self.out_dir, base_name)
         self.files_exported.append(f'Materials "{base_name}"')
-        writer = MaterialsWriter(file_name=file_name, mat_grid_cells=my_dict,
+        writer = MaterialsWriter(file_name=file_name,
+                                 mat_grid_cells=self.coverage_mapper.material_comp_id_to_grid_cell_ids,
                                  mat_component=self.sim_query_helper.material_component)
         writer.write()
         self._logger.info('Success writing Standard Interface Template material file.')
