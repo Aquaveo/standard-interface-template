@@ -29,7 +29,7 @@ class MaterialsWriter:
     def write(self):
         """Write the materials file."""
         with open(self._file_name, 'w') as file:
-            file.write('###This is a boundary conditions file for Standard Interface Template.###\n')
+            file.write('###This is a materials file for Standard Interface Template.###\n')
             mat_ids = list(self._data.data.coverage_data.material_id.values)
             names = list(self._data.data.coverage_data.name.values)
             options = list(self._data.data.coverage_data.user_option.values)
