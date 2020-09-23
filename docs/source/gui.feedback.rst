@@ -1,5 +1,5 @@
-standard\_interface\_template.gui.feedback package
-==================================================
+gui.feedback
+============
 
 Submodules
 ----------

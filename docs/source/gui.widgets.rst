@@ -1,5 +1,5 @@
-standard\_interface\_template.gui.widgets package
-=================================================
+gui.widgets
+===========
 
 Submodules
 ----------

@@ -1,5 +1,5 @@
-standard\_interface\_template.xml\_entry\_points package
-========================================================
+xml\_entry\_points
+==================
 
 Submodules
 ----------

@@ -1,5 +1,5 @@
-standard\_interface\_template.gui package
-=========================================
+gui
+===
 
 Subpackages
 -----------
@@ -7,8 +7,8 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   standard_interface_template.gui.feedback
-   standard_interface_template.gui.widgets
+   gui.feedback
+   gui.widgets
 
 Submodules
 ----------

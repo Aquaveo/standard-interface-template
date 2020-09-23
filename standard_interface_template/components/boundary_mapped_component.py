@@ -19,7 +19,7 @@ __license__ = "All rights reserved"
 
 
 class BoundaryMappedComponent(MaterialsMappedComponent):
-    """A hidden Dynamic Model Interface (DMI) component for the Standard Interface model simulation."""
+    """A Dynamic Model Interface (DMI) component for the Standard Interface model snap preview."""
 
     def __init__(self, main_file):
         """

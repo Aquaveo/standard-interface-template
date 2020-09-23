@@ -1,5 +1,5 @@
-standard\_interface\_template.simulation\_runner package
-========================================================
+simulation\_runner
+==================
 
 Submodules
 ----------

@@ -1,5 +1,5 @@
-standard\_interface\_template.file\_io package
-==============================================
+file\_io
+========
 
 Submodules
 ----------

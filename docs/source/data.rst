@@ -1,5 +1,5 @@
-standard\_interface\_template.data package
-==========================================
+data
+====
 
 Submodules
 ----------

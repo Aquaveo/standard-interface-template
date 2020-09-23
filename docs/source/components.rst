@@ -1,5 +1,5 @@
-standard\_interface\_template.components package
-================================================
+components
+==========
 
 Submodules
 ----------

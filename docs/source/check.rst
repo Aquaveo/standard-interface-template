@@ -1,5 +1,5 @@
-standard\_interface\_template.check package
-===========================================
+check
+=====
 
 Submodules
 ----------

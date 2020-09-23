@@ -1,5 +1,5 @@
-standard\_interface\_template.mapping package
-=============================================
+mapping
+=======
 
 Submodules
 ----------
