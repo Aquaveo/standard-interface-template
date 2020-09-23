@@ -181,7 +181,7 @@ class ImportSimulationThread(QThread):
         Read parameters from a *.example_boundary file.
 
         Args:
-            filename (str): Filepath of the *.example_geometry file.
+            filename (str): Filepath of the *.example_boundary file.
         """
         self._boundary_conditions_reader = BoundaryConditionsReader()
         self._boundary_conditions_reader.read(filename)
