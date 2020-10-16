@@ -11,8 +11,8 @@ Welcome to Standard Interface Template's documentation!
    :caption: Contents:
 
 
-Getting started
-===============
+Installing the interface
+========================
 
 Clone the repository. Go to the python area next to your installed SMS/GMS executable and open a command line prompt.
 In the prompt, enter in the following::
@@ -22,6 +22,52 @@ In the prompt, enter in the following::
 This should install a develop version of the model interface. Any code changes you make in the repository
 will immediately affect the interface in XMS. However, sometimes XMS needs to be restarted in order to see
 the changes.
+
+Getting Started
+===============
+
+**Replace the model name**
+
+Rename the XML file to something more appropriate for your model. In the XML file, replace:
+- “standard_interface_template” with your python module sub-folder name.
+- “Standard Interface Template” with the model name that end users will see.
+- “standard-interface-template” with your python module name.
+- "StandardInterfaceTemplate" with the model name (no spaces) that will be used by XMS to identify it.
+
+**Declare files used by your model**
+
+Change the declare_file elements of the XML.
+Change the identifier element in the declare_file element.
+Change the input_files and output_files area to only include any files that you want XMS to be able to recognize and read.
+In the declare_file elements of the XML, reference the scripts that you want to use to read and write your model files.
+Make sure that the name in declare_file is used in the use_file element of either an input_file or an output_file element.
+
+**Export a simulation**
+
+Change simulation_writer.py, geometry_writer.py, boundary_conditions_writer.py, and materials_writer.py.
+These file can be changed, removed, or added to accommodate your model.
+The code in write_simulation.py sets up a progress feedback dialog so the user can see messages during export.
+
+**Import a simulation**
+
+Change simulation_reader.py, geometry_reader.py, boundary_conditions_reader.py, and materials_reader.py.
+These file can be changed, removed, or added to accommodate your model.
+The code in read_simulation.py and read_geometry.py sets up a progress feedback dialog so the user can see messages during import.
+
+**Import a solution**
+
+Change the code in SimulationRun.read_solution_file to read the solution file or files of your model.
+
+**Run a simulation**
+
+Change SimulationRun.get_executables to return the executable commands to run as part of your model.
+For each executable that could be used as part of your model, make sure there is an executable element for it in the XML.
+
+**Access the model control**
+
+The code for opening the model control is in SimulationComponent.open_model_control, which is in simulation_component.py.
+In simulation_dialog.py, simulation_dialog.ui, and simulation_dialog_ui.py is the code
+for the model control. The *.ui files are used by Qt and are editable in QtDesigner.
 
 Purpose of the interface
 ========================

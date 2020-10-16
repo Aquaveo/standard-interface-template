@@ -22,7 +22,8 @@ Query allows a script to query for information from XMS, as well as send data ba
 Components
 ==========
 
-A component in a model interface is an object that can be created by XMS. All components derive
+A component in a model interface is an object that can be created by XMS. Components will hold all of the
+input data for your model, except for geometry. All components derive
 from ComponentBase, or its subclass CoverageComponentBase, in the package xmscomponents.
 If a component is part of a coverage or a simulation, but not visible in the project explorer of
 XMS, then the component is a hidden component.
