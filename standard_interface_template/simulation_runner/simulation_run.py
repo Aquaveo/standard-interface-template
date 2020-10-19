@@ -73,11 +73,7 @@ class SimulationRun(RunBase):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
         messages = []
-        scalar_values = []
-        with open(os.path.join(file_location, self.simulation_name + '.example_solution'), 'r') as file:
-            file.readline()  # Skip the header.
-            for line in file:
-                scalar_values.append(float(line.strip()))
+        scalar_values = self.read_solution_scalar_values(file_location)
 
         # create an h5 file from the dat file
         ds_file_name = os.path.join(self.xms_temp_dir, f'{uuid.uuid4()}.h5')
@@ -106,6 +102,23 @@ class SimulationRun(RunBase):
             ctxt.set_place_mark(vtx)
         query.set_context(ctxt)
         return messages, []
+
+    def read_solution_scalar_values(self, file_location):
+        """
+        Reads the Standard Interface Template Solution.
+
+        Args:
+            file_location (str): The directory of the solution to load.
+
+        Returns:
+            (:obj:`list`): A list of scalar values.
+        """
+        scalar_values = []
+        with open(os.path.join(file_location, self.simulation_name + '.example_solution'), 'r') as file:
+            file.readline()  # Skip the header.
+            for line in file:
+                scalar_values.append(float(line.strip()))
+        return scalar_values
 
     def get_executables(self, sim, query, filelocation):
         """

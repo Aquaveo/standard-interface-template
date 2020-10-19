@@ -3,8 +3,6 @@
 # 1. Standard python libraries
 import filecmp
 import os
-import shutil
-import sys
 import unittest
 
 # 2. Third party libraries
@@ -14,8 +12,8 @@ from xms.constraint import read_grid_from_file
 
 # 4. Local libraries
 from standard_interface_template.components.boundary_coverage_component import BoundaryCoverageComponent
-from standard_interface_template.components.simulation_component import SimulationComponent
 from standard_interface_template.components.materials_coverage_component import MaterialsCoverageComponent
+from standard_interface_template.components.simulation_component import SimulationComponent
 from standard_interface_template.file_io.boundary_conditions_writer import BoundaryConditionsWriter
 from standard_interface_template.file_io.geometry_writer import GeometryWriter
 from standard_interface_template.file_io.materials_writer import MaterialsWriter
