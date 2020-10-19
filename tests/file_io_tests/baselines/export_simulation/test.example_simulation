@@ -1,0 +1,5 @@
+###This is a simulation file for Standard Interface Template.###
+Simulation_Properties: C "For testing!"
+Grid "test.example_geometry"
+Materials "test.example_materials"
+Boundary_Conditions "test.example_boundary"
