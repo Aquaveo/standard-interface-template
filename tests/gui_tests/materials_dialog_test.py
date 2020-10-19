@@ -38,7 +38,7 @@ class MaterialsDialogGuiTests(unittest.TestCase):
             app = QApplication(sys.argv)
 
     def setUp(self):
-        """Create sediment constituents data for use in the tests."""
+        """Create a dialog variable in the tests."""
         self.dlg = None
 
     def test_added_material_default(self):

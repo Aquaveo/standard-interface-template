@@ -20,16 +20,16 @@ class AssignPolyMaterialDialog(XmsDlg):
     """A dialog for assigning materials to polygons."""
 
     def __init__(self, win_cont, icon, title, multi_select_lbl, mat_names, current_mat_idx):
-        """Initializes the class, sets up the ui, and loads the simulation.
+        """
+        Initializes the class, sets up the ui, and loads the simulation.
 
         Args:
-            win_cont (QWidget): Parent window
-            icon (QIcon): Window icon
-            title (str): Window title
-            multi_select_lbl(str): If not empty, will be displayed in a label
-            mat_names (list of str): List of the material names
-            current_mat_idx (int): Material id of the currently selected polygon if previously assigned
-
+            win_cont (:obj:`QWidget`): Parent window.
+            icon (:obj:`QIcon`): Window icon.
+            title (str): Window title.
+            multi_select_lbl (str): If not empty, will be displayed in a label.
+            mat_names (:obj:`list` of str): List of the material names.
+            current_mat_idx (int): Material id of the currently selected polygon if previously assigned.
         """
         super().__init__(win_cont, 'standard_interface_template.gui.assign_poly_material_dialog')
         self.multi_select_lbl = multi_select_lbl
@@ -42,13 +42,13 @@ class AssignPolyMaterialDialog(XmsDlg):
         self.setup_ui(mat_names, current_mat_idx)
 
     def setup_ui(self, mat_names, current_idx):
-        """Setup dialog widgets.
+        """
+        Setup dialog widgets.
 
         Args:
-            mat_names (list of str): List of the material names
+            mat_names (:obj:`list' of str): List of the material names.
             current_idx (int): Index in the material list of the currently selected polygon's material if previously
-                assigned
-
+                assigned.
         """
         self.widgets['vert_layout'] = QVBoxLayout()
         # Add a label to indicate that this assignment applies to multiple polygons
@@ -72,10 +72,10 @@ class AssignPolyMaterialDialog(XmsDlg):
         self.setLayout(self.widgets['vert_layout'])
 
     def get_selected_material(self):
-        """Returns the currently selected material.
+        """
+        Returns the currently selected material.
 
         Returns:
             (int): The currently selected material's index in the material list.
-
         """
         return self.widgets['cbx_type'].currentIndex()

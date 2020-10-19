@@ -10,8 +10,8 @@
 
 if __name__ == "__main__":
     import sys
-    from PySide2.QtGui import (QIcon)
-    from PySide2.QtWidgets import (QApplication)
+    from PySide2.QtGui import QIcon
+    from PySide2.QtWidgets import QApplication
     from standard_interface_template.gui.feedback.import_simulation_thread import ImportSimulationThread
     from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 

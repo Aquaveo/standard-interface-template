@@ -26,7 +26,8 @@ class ExportSimulationThread(QThread):
     processing_finished = Signal()
 
     def __init__(self, out_dir):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             out_dir (str): output directory
@@ -43,18 +44,23 @@ class ExportSimulationThread(QThread):
         self.files_exported = []
 
     def run(self):
-        """Exports the coverages and the mesh."""
+        """
+        Exports the coverages and the mesh.
+
+        Raises:
+            (Exception): There was a problem writing the simulation file.
+        """
         try:
             self._setup_query()
             self.coverage_mapper.do_map()
             self._do_export()
-        except Exception as error:
-            self._logger.exception(f'Error exporting simulation: {str(error)}')
-            raise error
+        except Exception:
+            self._logger.exception('Error exporting simulation:')
         finally:
             self.processing_finished.emit()
 
     def _setup_query(self):
+        """Queries from XMS to grab the simulation."""
         self._logger.info('Establishing communication with SMS.')
         self.query = Query()
         self.query.get_xms_agent().set_retries(1)
@@ -76,7 +82,12 @@ class ExportSimulationThread(QThread):
         self.export_simulation()
 
     def export_geometry(self):
-        """Exports the Standard Template Interface geometry file."""
+        """
+        Exports the Standard Template Interface geometry file.
+
+        Raises:
+            (Exception): There was no geometry to write to the geometry file.
+        """
         self._logger.info('Writing Standard Interface Template geometry file.')
         co_grid = self.coverage_mapper.co_grid
         if not co_grid:
@@ -93,12 +104,12 @@ class ExportSimulationThread(QThread):
 
     def export_materials(self):
         """Exports the Standard Template Interface material file."""
-        my_dict = self.coverage_mapper.material_comp_id_to_grid_cell_ids
         self._logger.info('Writing Standard Interface Template material file.')
         base_name = f'{self.simulation_name}.example_materials'
         file_name = os.path.join(self.out_dir, base_name)
         self.files_exported.append(f'Materials "{base_name}"')
-        writer = MaterialsWriter(file_name=file_name, mat_grid_cells=my_dict,
+        writer = MaterialsWriter(file_name=file_name,
+                                 mat_grid_cells=self.coverage_mapper.material_comp_id_to_grid_cell_ids,
                                  mat_component=self.sim_query_helper.material_component)
         writer.write()
         self._logger.info('Success writing Standard Interface Template material file.')

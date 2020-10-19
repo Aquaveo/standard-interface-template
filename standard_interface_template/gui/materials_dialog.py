@@ -19,14 +19,14 @@ class MaterialsDialog(QDialog):
     """A dialog to define materials and their properties."""
 
     def __init__(self, title, win_cont, icon, data):
-        """Initializes the material list and properties dialog.
+        """
+        Initializes the material list and properties dialog.
 
         Args:
-            title (str): Title of the dialog
-            win_cont (QWidget): Parent Qt dialog.
-            icon (QIcon): Window icon.
-            data (MaterialsCoverageData): The material data.
-            edit_sediment (bool): flag to allow editing sediment properties.
+            title (str): Title of the dialog.
+            win_cont (:obj:`QWidget`): Parent Qt dialog.
+            icon (:obj:`QIcon`): Window icon.
+            data (:obj:`MaterialsCoverageData`): The material data.
         """
         super().__init__(win_cont)
         self.parent = win_cont

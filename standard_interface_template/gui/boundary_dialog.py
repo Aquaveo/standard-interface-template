@@ -20,12 +20,13 @@ class BoundaryDialog(XmsDlg):
     """A dialog for assigning values."""
 
     def __init__(self, win_cont, icon, title, user_text, user_option):
-        """Initializes the class, sets up the ui, and writes the values.
+        """
+        Initializes the class, sets up the ui, and writes the values.
 
         Args:
-            win_cont (QWidget): Parent window
-            icon (QIcon): Window icon
-            title (str): Window title
+            win_cont (:obj:`QWidget`): Parent window.
+            icon (:obj:`QIcon`): Window icon.
+            title (str): Window title.
             user_text (str): The user editable text for the dialog.
             user_option (str): The user editable current option.
         """

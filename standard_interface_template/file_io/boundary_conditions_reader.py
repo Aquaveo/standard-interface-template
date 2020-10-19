@@ -23,7 +23,8 @@ class BoundaryConditionsReader:
         self.nodes = []
 
     def read(self, filename):
-        """Reads the file.
+        """
+        Reads the file.
 
         Args:
             filename (str): The name of the file to read.

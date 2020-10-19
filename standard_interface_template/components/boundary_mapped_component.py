@@ -19,14 +19,14 @@ __license__ = "All rights reserved"
 
 
 class BoundaryMappedComponent(MaterialsMappedComponent):
-    """A hidden Dynamic Model Interface (DMI) component for the Standard Interface model simulation."""
+    """A Dynamic Model Interface (DMI) component for the Standard Interface model snap preview."""
 
     def __init__(self, main_file):
-        """Initializes the base component class.
+        """
+        Initializes the base component class.
 
         Args:
             main_file: The main file associated with this component.
-
         """
         super().__init__(main_file)
         self.class_name = 'BoundaryMappedComponent'
@@ -38,19 +38,20 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
         self.disp_opts_file = os.path.join(os.path.dirname(self.main_file), 'boundary_coverage_display_options.json')
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -59,7 +60,6 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -70,13 +70,14 @@ class BoundaryMappedComponent(MaterialsMappedComponent):
         return new_main_file, messages, action_requests
 
     def open_display_options(self, query, params, win_cont, icon):
-        """Shows the display options dialog.
+        """
+        Shows the display options dialog.
 
         Args:
-            query (:obj:'xmsapi.dmi.Query'):
-            params (:obj:'list' of :obj:'str'):
-            win_cont (:obj:'PySide2.QtWidgets.QWidget'): The window container.
-            icon (:obj:'PySide2.QtGui.QIcon'): Icon to show in the dialog title
+            query (:obj:`xmsapi.dmi.Query`): An object for communicating with XMS. Unused by this method.
+            params (:obj:`list` of :obj:`str`): A list of parameters add to the ActionRequest. Unused by this method.
+            win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:

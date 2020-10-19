@@ -35,14 +35,15 @@ __license__ = "All rights reserved"
 
 
 class ImportSimulationThread(QThread):
-    """Read an Standard Interface Template simulation when a *.example_simulation file is opened in SMS."""
+    """Read an Standard Interface Template simulation when a *.example_simulation file is opened in XMS."""
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
-        """Construct the Importer.
+        """
+        Construct the Importer.
 
         Args:
-            xms_data (dict): XMS data dictionary. Useful for testing because it will avoid any Query calls.
+            xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
                 {
                     'filename': '',  # Path to the *.example_simulation file to read
                     'comp_dir': '',  # Path to the XMS "Components" temp folder
@@ -93,7 +94,7 @@ class ImportSimulationThread(QThread):
             if place_marks:
                 self._root_idx = place_marks[0]
 
-            # Get the SMS temp directory
+            # Get the XMS temp directory
             start_ctxt = self._query.get_context()
             self._query.select('InstallResources')
             temp_dir = self._query.get('Temporary Directory')['Temporary Directory']
@@ -108,7 +109,12 @@ class ImportSimulationThread(QThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def _add_xms_data(self):
-        """Send imported data to SMS."""
+        """
+        Send imported data to XMS.
+
+        Raises:
+            (Exception): There was a problem sending the imported data to XMS.
+        """
         self._logger.info('Preparing to send imported data to SMS...')
 
         sim_comp_idx = None
@@ -171,10 +177,11 @@ class ImportSimulationThread(QThread):
         self.send()
 
     def _read_boundary_conditions(self, filename):
-        """Read parameters from a *.example_boundary file.
+        """
+        Read parameters from a *.example_boundary file.
 
         Args:
-            filename (str): Filepath of the *.example_geometry file
+            filename (str): Filepath of the *.example_boundary file.
         """
         self._boundary_conditions_reader = BoundaryConditionsReader()
         self._boundary_conditions_reader.read(filename)
@@ -224,10 +231,11 @@ class ImportSimulationThread(QThread):
         self._sim_comp.set_main_file(sim_main_file)
 
     def _read_geometry(self, filename):
-        """Read mesh geometry from a *.example_geometry file.
+        """
+        Read mesh geometry from a *.example_geometry file.
 
         Args:
-            filename (str): Filepath of the *.example_geometry file
+            filename (str): Filepath of the *.example_geometry file.
         """
         self._geometry_reader = GeometryReader()
         self._geometry_reader.read(filename)
@@ -237,7 +245,8 @@ class ImportSimulationThread(QThread):
         self._mesh.set_uuid(str(uuid.uuid4()))
 
     def _read_materials(self, filename):
-        """Read material assignments from a *.example_materials file.
+        """
+        Read material assignments from a *.example_materials file.
 
         Args:
             filename (str): Filepath of the *.example_materials file.
@@ -296,7 +305,12 @@ class ImportSimulationThread(QThread):
         self._bc_cov.complete()
 
     def read(self):
-        """Trigger the read of the Standard Interface Template simulation."""
+        """
+        Trigger the read of the Standard Interface Template simulation.
+
+        Raises:
+            (Exception): There was a problem reading the simulation file.
+        """
         try:
             self._logger.info('Reading the simulation.')
             self._read_simulation()
@@ -307,14 +321,13 @@ class ImportSimulationThread(QThread):
 
             if self._query:
                 self._add_xms_data()
-        except Exception as error:
-            self._logger.exception(f'Error importing simulation: {str(error)}')
-            raise error
+        except Exception:
+            self._logger.exception('Error importing simulation:')
         finally:
             self.processing_finished.emit()
 
     def send(self):
-        """Send imported data to SMS."""
+        """Send imported data to XMS."""
         if self._query:
             ctxt = self._query.get_context()
             for build_vertex in self._build_vertices:
@@ -323,7 +336,12 @@ class ImportSimulationThread(QThread):
             self._query.send()
 
     def run(self):
-        """Creates coverages, a simulation, and a mesh for SMS."""
+        """
+        Creates coverages, a simulation, and a mesh for XMS.
+
+        Raises:
+            (Exception): There was a problem reading the simulation file.
+        """
         try:
             self.read()
         except Exception as error:

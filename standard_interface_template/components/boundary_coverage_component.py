@@ -34,7 +34,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -71,19 +72,20 @@ class BoundaryCoverageComponent(StandardBaseComponent):
             self.cov_uuid = self.data.info.attrs['cov_uuid']
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -92,7 +94,6 @@ class BoundaryCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -107,7 +108,8 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -118,7 +120,6 @@ class BoundaryCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         self.data.commit()
         id_dir = os.path.join(os.path.dirname(self.main_file), 'display_ids')
@@ -136,15 +137,20 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
 
         Returns:
-            Empty message and ActionRequest lists
-
+            (:obj:`tuple`): tuple containing:
+                - messages (:obj:`list` of :obj:`tuple` of :obj:`str`): List of tuples with the first element of the
+                  tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
+                  text. For this method this will always be empty.
+                - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
+                  For this method this will always be empty.
         """
         query.select('Parent')  # Go up to the parent coverage.
         uuid_result = query.get('geom_guid')['geom_guid']
@@ -174,13 +180,14 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_arc(self, query, params, win_cont, icon):
-        """Opens the Assign Arc dialog and saves component data state on OK.
+        """
+        Opens the Assign Arc dialog and saves component data state on OK.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Contains selection map and component id files.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Contains selection map and component id files.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -188,7 +195,6 @@ class BoundaryCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         arc_ids = []
         params = {key.get_as_string(): value for key, value in params[0].items()}
@@ -242,13 +248,14 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_point(self, query, params, win_cont, icon):
-        """Opens the Assign Point dialog and saves component data state on OK.
+        """
+        Opens the Assign Point dialog and saves component data state on OK.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Contains selection map and component id files.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Contains selection map and component id files.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -256,7 +263,6 @@ class BoundaryCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         point_ids = []
         params = {key.get_as_string(): value for key, value in params[0].items()}
@@ -310,13 +316,14 @@ class BoundaryCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_display_options(self, query, params, win_cont, icon):
-        """Shows the display options dialog.
+        """
+        Shows the display options dialog.
 
         Args:
-            query (:obj:'xmsapi.dmi.Query'):
-            params (:obj:'list' of :obj:'str'):
-            win_cont (:obj:'PySide2.QtWidgets.QWidget'): The window container.
-            icon (:obj:'PySide2.QtGui.QIcon'): Icon to show in the dialog title
+            query (:obj:`xmsapi.dmi.Query`): An object for communicating with XMS. Unused by this method.
+            params (:obj:`list` of :obj:`str`): A list of parameters add to the ActionRequest. Unused by this method.
+            win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -354,11 +361,13 @@ class BoundaryCoverageComponent(StandardBaseComponent):
             self._write_id_file(disp_names[i], df)
 
     def _write_id_file(self, disp_name, df):
-        """Write a single id file.
+        """
+        Write a single id file.
 
         Args:
             disp_name (str): The display option name.
-            df (DataFrame): The dataframe of user options the display is based off of and the component ids.
+            df (:obj:`pandas.DataFrame`): The dataframe containing user options, to base the display categories off of,
+            and the component ids.
         """
         df1 = df.loc[df['user_option'] == disp_name]
         ids = df1['comp_id'].astype(dtype='i4').to_list()

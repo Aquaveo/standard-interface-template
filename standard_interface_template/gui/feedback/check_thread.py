@@ -7,7 +7,7 @@
 from xmsapi.dmi import Query
 
 # 4. Local modules
-from standard_interface_template.check.simulation_check import ModelCheck
+from standard_interface_template.check.simulation_check import SimulationCheck
 from standard_interface_template.components.sim_query_helper import SimQueryHelper
 
 __copyright__ = "(C) Copyright Aquaveo 2020"
@@ -31,13 +31,18 @@ class CheckThread:
         self.bc_comp_ids_to_arc_ids = None
         self.mat_data = None
 
-    def run_check(self):
-        """Creates the snap preview of coverages onto the mesh."""
+    def run(self):
+        """
+        Creates the snap preview of coverages onto the mesh.
+
+        Raises:
+            (RuntimeError): Failed to check the simulation for errors.
+        """
         try:
             self._setup_query()
             self._get_data()
 
-            checker = ModelCheck(self)
+            checker = SimulationCheck(self)
             errors = checker.run_check()
             if errors:
                 self._query.set_context(self._root_context)

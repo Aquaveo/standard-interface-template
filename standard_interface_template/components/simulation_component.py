@@ -22,7 +22,8 @@ class SimulationComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -40,13 +41,14 @@ class SimulationComponent(StandardBaseComponent):
             self.data.commit()
 
     def open_model_control(self, query, params, win_cont, icon):
-        """Opens the dialog and saves component data state on OK.
+        """
+        Opens the dialog and saves component data state on OK.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -54,7 +56,6 @@ class SimulationComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         dialog = SimulationDialog(win_cont, icon, 'Model Control', self.data.info.attrs['user_text'],
                                   self.data.info.attrs['user_option'])
@@ -66,13 +67,14 @@ class SimulationComponent(StandardBaseComponent):
         return [], []
 
     def create_snap_preview(self, query, params, win_cont, icon):
-        """Creates mapped components to display Standard Interface Template data on a mesh.
+        """
+        Creates mapped components to display Standard Interface Template data on a mesh.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -80,7 +82,6 @@ class SimulationComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         note = ''
         worker = CoverageMapperThread(query)

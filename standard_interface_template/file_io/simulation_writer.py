@@ -14,12 +14,13 @@ __license__ = "All rights reserved"
 class SimulationWriter:
     """A class for writing out simulation data for the Standard Interface Template."""
     def __init__(self, file_name, simulation_data, other_files):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             file_name (str): The name of the file to write.
-            simulation_data (SimulationComponent): The simulation to export.
-            other_files (list): The other files that were written for this simulation.
+            simulation_data (:obj:`SimulationComponent`): The simulation to export.
+            other_files (:obj:`list`): The other files that were written for this simulation.
         """
         self._file_name = file_name
         self._data = simulation_data

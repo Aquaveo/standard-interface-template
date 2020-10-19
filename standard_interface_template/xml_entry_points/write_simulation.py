@@ -7,11 +7,12 @@
 
 # 4. Local modules
 
+
 if __name__ == "__main__":
     import os
     import sys
-    from PySide2.QtGui import (QIcon)
-    from PySide2.QtWidgets import (QApplication)
+    from PySide2.QtGui import QIcon
+    from PySide2.QtWidgets import QApplication
     from standard_interface_template.gui.feedback.export_simulation_thread import ExportSimulationThread
     from xmsguipy.dialogs.process_feedback_dlg import ProcessFeedbackDlg
 

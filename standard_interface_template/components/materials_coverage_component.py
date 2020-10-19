@@ -35,7 +35,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
     """A hidden Dynamic Model Interface (DMI) component for the Standard Interface Template model simulation."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             main_file: The main file associated with this component.
@@ -69,19 +70,20 @@ class MaterialsCoverageComponent(StandardBaseComponent):
             self.cov_uuid = self.data.info.attrs['cov_uuid']
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -90,7 +92,6 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -105,7 +106,8 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -116,7 +118,6 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         self.data.commit()
         id_dir = os.path.join(os.path.dirname(self.main_file), 'display_ids')
@@ -134,15 +135,15 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
 
         Returns:
-            Empty message and ActionRequest lists
-
+            Empty message and ActionRequest lists.
         """
         query.select('Parent')  # Go up to the parent coverage.
         uuid_result = query.get('geom_guid')['geom_guid']
@@ -174,13 +175,14 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_assign_polygon(self, query, params, win_cont, icon):
-        """Opens the Assign Polygon dialog and saves component data state on OK.
+        """
+        Opens the Assign Polygon dialog and saves component data state on OK.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Contains selection map and component id files.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.  Unused in this case.
+            params (:obj:`dict`): Generic map of parameters. Contains selection map and component id files.
             win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
-            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -188,7 +190,6 @@ class MaterialsCoverageComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         polygon_ids = []
         params = {key.get_as_string(): value for key, value in params[0].items()}
@@ -240,13 +241,14 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def open_materials(self, query, params, win_cont, icon):
-        """Shows the materials dialog.
+        """
+        Shows the materials dialog.
 
         Args:
-            query (:obj:'xmsapi.dmi.Query'):
-            params (:obj:'list' of :obj:'str'):
-            win_cont (:obj:'PySide2.QtWidgets.QWidget'): The window container.
-            icon (:obj:'PySide2.QtGui.QIcon'): Icon to show in the dialog title
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`list` of :obj:`str`): List of parameters.  Unused in this case.
+            win_cont (:obj:`PySide2.QtWidgets.QWidget`): The window container.
+            icon (:obj:`PySide2.QtGui.QIcon`): Icon to show in the dialog title.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -272,7 +274,12 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return [], []
 
     def _get_category_list(self):
-        """Get the category list for the materials."""
+        """
+        Get the category list for the materials.
+
+        Returns:
+            (:obj:`CategoryDisplayOptionList`): Category display option list for the materials.
+        """
         category_list = CategoryDisplayOptionList()
         category_list.target_type = TargetType.polygon
         category_list.comp_uuid = self.uuid
@@ -300,14 +307,15 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return category_list
 
     def update_display_id_files(self, old_ids, new_ids):
-        """Update the display files.
+        """
+        Update the display files.
 
         Args:
-            old_ids (list): list of ids before editing materials
-            new_ids (list): list of current material ids
+            old_ids (list): list of ids before editing materials.
+            new_ids (list): list of current material ids.
 
         Returns:
-            (list) : deleted ids
+            (list) : deleted ids.
         """
         deleted_ids = old_ids
         path = os.path.join(os.path.dirname(self.main_file), 'display_ids')
@@ -326,15 +334,15 @@ class MaterialsCoverageComponent(StandardBaseComponent):
         return deleted_ids
 
     def unassign_materials(self, query, delete_ids):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            delete_ids (:obj:`list'): List of the deleted material ids.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            delete_ids (:obj:`list`): List of the deleted material ids.
 
         Returns:
-            Empty message and ActionRequest lists
-
+            Empty message and ActionRequest lists.
         """
         self.query_for_all_component_ids(query, TargetType.polygon)
         if self.cov_uuid in self.comp_to_xms and TargetType.polygon in self.comp_to_xms[self.cov_uuid]:

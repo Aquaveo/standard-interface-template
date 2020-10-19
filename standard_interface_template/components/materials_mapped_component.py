@@ -20,11 +20,11 @@ class MaterialsMappedComponent(StandardBaseComponent):
     """A Dynamic Model Interface (DMI) component for the Standard Interface model snap preview."""
 
     def __init__(self, main_file):
-        """Initializes the base component class.
+        """
+        Initializes the base component class.
 
         Args:
-            main_file: The main file associated with this component.
-
+            main_file (str): The main file associated with this component.
         """
         super().__init__(main_file)
         self.class_name = 'MaterialsMappedComponent'
@@ -32,19 +32,20 @@ class MaterialsMappedComponent(StandardBaseComponent):
         self.disp_opts_file = os.path.join(os.path.dirname(self.main_file), 'material_display_options.json')
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -53,7 +54,6 @@ class MaterialsMappedComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         new_main_file, messages, action_requests = super().save_to_location(new_path, save_type)
 
@@ -64,7 +64,8 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return new_main_file, messages, action_requests
 
     def create_event(self, lock_state):
-        """This will be called when the component is created from nothing.
+        """
+        This will be called when the component is created from nothing.
 
         Args:
             lock_state (bool): True if the the component is locked for editing. Do not change the files if locked.
@@ -75,7 +76,6 @@ class MaterialsMappedComponent(StandardBaseComponent):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         action = self.get_display_options_action()
 
@@ -84,15 +84,15 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return messages, action_requests
 
     def get_initial_display_options(self, query, params):
-        """Get the coverage UUID from XMS and send back the display options list.
+        """
+        Get the coverage UUID from XMS and send back the display options list.
 
         Args:
-            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS
-            params (:obj:`dict'): Generic map of parameters. Unused in this case.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            params (:obj:`dict`): Generic map of parameters. Unused in this case.
 
         Returns:
-            Empty message and ActionRequest lists
-
+            Empty message and ActionRequest lists.
         """
         # Send the default display options list to XMS.
         self.display_option_list.append(
@@ -111,13 +111,13 @@ class MaterialsMappedComponent(StandardBaseComponent):
         return action
 
     def update_display_options(self, new_main_file, json_dict, action_requests):
-        """Update the display options.
+        """
+        Update the display options.
 
         Args:
-            new_main_file (str): file name
-            json_dict (dict): display options dictionary
+            new_main_file (str): file name.
+            json_dict (dict): display options dictionary.
             action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         if 'comp_uuid' in json_dict:
             action = self.get_display_options_action()

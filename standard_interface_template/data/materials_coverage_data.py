@@ -15,10 +15,23 @@ __license__ = "All rights reserved"
 
 
 class MaterialsCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component."""
+    """
+    Manages data file for the hidden coverage component.
+
+    Attributes:
+        unassigned_material_id (int): The id of the unassigned material.
+        display_list (:obj:`list` of str): The list of options the user can choose from.
+        column_id (int): The column index of the display column in the dataframe.
+        column_name (int): The column index of the name column in the dataframe.
+        column_user_option (int): The column index of the user option column in the dataframe.
+        column_user_text (int): The column index of the user text column in the dataframe.
+        column_texture (int): The column index of the texture column in the dataframe.
+        column_red (int): The column index of the red column in the dataframe.
+        column_green (int): The column index of the green column in the dataframe.
+        column_blue (int): The column index of the blue column in the dataframe.
+    """
     unassigned_material_id = -1
     display_list = ['A', 'B', 'C']
-    unassigned_mat = 0
     column_id = 0
     column_name = 1
     column_user_option = 2
@@ -29,7 +42,8 @@ class MaterialsCoverageData(XarrayBase):
     column_blue = 7
 
     def __init__(self, filename):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             filename (str): The name of the main file that data is stored in.
@@ -55,10 +69,11 @@ class MaterialsCoverageData(XarrayBase):
 
     @property
     def coverage_data(self):
-        """Get the coverage dataset.
+        """
+        Get the coverage dataset.
 
         Returns:
-            xarray.Dataset: The cov_data list dataset
+            (:obj:`xarray.Dataset`): The cov_data list dataset.
         """
         if self._cov_data is None:
             self._cov_data = self.get_dataset('cov_data', False)
@@ -68,19 +83,21 @@ class MaterialsCoverageData(XarrayBase):
 
     @coverage_data.setter
     def coverage_data(self, value):
-        """Sets the coverage data.
+        """
+        Sets the coverage data.
 
         Args:
-            value: The coverage data.
+            value (:obj:): The coverage data.
         """
         self._cov_data = value
 
     @staticmethod
     def _default_cov_data():
-        """Creates a default coverage data set.
+        """
+        Creates a default coverage data set.
 
         Returns:
-            xarray.Dataset: The coverage dataset
+            (:obj:`xarray.Dataset`): The coverage dataset.
         """
         default_data = {'material_id': [0], 'name': 'unassigned', 'user_option': 'A', 'user_text': 'Hello World!',
                         'texture': [1], 'red': [0], 'green': [0], 'blue': [0]}

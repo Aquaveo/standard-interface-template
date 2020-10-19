@@ -1,0 +1,3 @@
+###This is a boundary conditions file for Standard Interface Template.###
+BC 1 C "Hello World!"
+Points: 19 20 21

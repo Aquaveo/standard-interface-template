@@ -1,4 +1,4 @@
-"""This module allows SMS to run Standard Interface Template and read its solution on completion."""
+"""This module allows XMS to run Standard Interface Template and read its solution on completion."""
 
 # 1. Standard python modules
 import os
@@ -19,16 +19,14 @@ __license__ = "All rights reserved"
 
 
 class SimulationRun(RunBase):
-    """Class that handles running Standard Interface Template.
-
-    """
+    """Class that handles running Standard Interface Template."""
 
     def __init__(self, dummy_mainfile=''):
-        """Initializes the class.
+        """
+        Initializes the class.
 
         Args:
             dummy_mainfile (str): Unused. Just to keep constructor consistent with component classes.
-
         """
         super().__init__()
         self.simulation_name = None
@@ -36,14 +34,15 @@ class SimulationRun(RunBase):
         self.xms_temp_dir = ''
 
     def read_solution(self, query, params, win_cont, icon):
-        """Reads the Standard Interface Template Solution.
+        """
+        Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             params (:obj:`dict`): Generic map of parameters. Contains the structures for various components that
              are required for adding vertices to the Query Context with Add().
-            win_cont (QWidget): The parent window
-            icon (QIcon): Icon for the dialog
+            win_cont (:obj:`QWidget`): The parent window.
+            icon (:obj:`QIcon`): Icon for the dialog.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -59,10 +58,11 @@ class SimulationRun(RunBase):
         return self.read_solution_file(query, file_location)
 
     def read_solution_file(self, query, file_location):
-        """Reads the Standard Interface Template Solution.
+        """
+        Reads the Standard Interface Template Solution.
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             file_location (str): The directory of the solution to load.
 
         Returns:
@@ -73,11 +73,7 @@ class SimulationRun(RunBase):
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
         """
         messages = []
-        scalar_values = []
-        with open(os.path.join(file_location, self.simulation_name + '.example_solution'), 'r') as file:
-            file.readline()  # Skip the header.
-            for line in file:
-                scalar_values.append(float(line.strip()))
+        scalar_values = self.read_solution_scalar_values(file_location)
 
         # create an h5 file from the dat file
         ds_file_name = os.path.join(self.xms_temp_dir, f'{uuid.uuid4()}.h5')
@@ -107,8 +103,26 @@ class SimulationRun(RunBase):
         query.set_context(ctxt)
         return messages, []
 
+    def read_solution_scalar_values(self, file_location):
+        """
+        Reads the Standard Interface Template Solution.
+
+        Args:
+            file_location (str): The directory of the solution to load.
+
+        Returns:
+            (:obj:`list`): A list of scalar values.
+        """
+        scalar_values = []
+        with open(os.path.join(file_location, self.simulation_name + '.example_solution'), 'r') as file:
+            file.readline()  # Skip the header.
+            for line in file:
+                scalar_values.append(float(line.strip()))
+        return scalar_values
+
     def get_executables(self, sim, query, filelocation):
-        """Get the executable commands for any Simulation object given.
+        """
+        Get the executable commands for any Simulation object given.
 
         This function will find the correct information that you need for your Simulation object. This function
         determines the correct executables needed, and the correct import scripts needed to load solutions. This
@@ -116,13 +130,12 @@ class SimulationRun(RunBase):
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
             (:obj:`list` of :obj:`xmsapi.dmi.ExecutableCommand`):
                 The executable objects to run and the action requests that go with it.
-
         """
         # Get the project name
         if not self.simulation_name:
@@ -138,25 +151,25 @@ class SimulationRun(RunBase):
         cmd.set_display_name('Standard Interface Template')
         cmd.set_run_weight(100)
         cmd.add_commandline_argument(simulation_file)
-        cmd.set_progress_script('simulation_progress.py')
+        cmd.set_progress_script('xml_entry_points/simulation_progress.py')
         cmd.add_solution_file(load_sol)
         commands = [cmd]
         return commands
 
     def get_solution_load_actions(self, sim, query, filelocation):
-        """Get the simulation load ActionRequests for any Simulation object given.
+        """
+        Get the simulation load ActionRequests for any Simulation object given.
 
         This method is called when we are loading an existing solution from a previous model run. get_executables is
         called when running or rerunning a simulation.
 
         Args:
             sim (:obj:`data_objects.parameters.Simulation`): The Simulation you want to load the solution for.
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
             filelocation (str): The location of input files for the simulation.
 
         Returns:
-            (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): The solution load ActionRequests for the simulation
-
+            (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): The solution load ActionRequests for the simulation.
         """
         if not self.simulation_name:
             self._get_simulation_name(query)
@@ -165,7 +178,7 @@ class SimulationRun(RunBase):
         load_sol = ActionRequest()
         load_sol.SetDialogModality(DialogModality.MODAL)
         load_sol.set_class('SimulationRun')
-        load_sol.set_module('standard_interface_template.model.simulation_run')
+        load_sol.set_module('standard_interface_template.simulation_runner.simulation_run')
         load_sol.set_main_file('foo')  # Just need a dummy main file for the ActionRequest
         load_sol.set_method_action('read_solution')
         load_sol.set_action_parameter_items({'simulation_name': self.simulation_name, 'file_location': filelocation,
@@ -174,15 +187,15 @@ class SimulationRun(RunBase):
 
     @staticmethod
     def _ensure_build_edge_exists(query, build_vertices):
-        """Make sure a build Context edge has been added to the Query Context.
+        """
+        Make sure a build Context edge has been added to the Query Context.
 
         Build edge needs to be added before the first Query::Add() call
 
         Args:
-            query (:obj:`data_objects.parameters.Query`): a Query object to communicate with SMS.
-            build_vertices (list): List of the Context vertices that will be flagged for building. Will append the
-                root build vertex when added.
-
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+            build_vertices (:obj:`list`): List of the Context vertices that will be flagged for building. Will append
+                the root build vertex when added.
         """
         build_vertex = query.add_root_vertex_instance('Build')
         build_vertices.append(build_vertex)
@@ -190,10 +203,11 @@ class SimulationRun(RunBase):
         return build_vertex
 
     def _get_simulation_name(self, query):
-        """Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
+        """
+        Gets the project name, the temporary directory, and mesh UUID for the running XMS process.
 
         Args:
-            query (Query): A class to communicate with SMS.
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
         """
         # Set self.simulation_name
         proj_result = query.get("simulation_name")

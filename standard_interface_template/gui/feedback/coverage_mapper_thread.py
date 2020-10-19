@@ -20,7 +20,12 @@ class CoverageMapperThread(QThread):
     processing_finished = Signal()
 
     def __init__(self, query):
-        """Constructor."""
+        """
+        Constructor.
+
+        Args:
+            query (:obj:`xmsapi.dmi.Query`): Object for communicating with XMS.
+        """
         super().__init__()
         self._query = query
         self._logger = logging.getLogger('standard_interface_template')
@@ -49,6 +54,6 @@ class CoverageMapperThread(QThread):
             query_helper.add_mapped_components_to_xms()
 
         except:  # noqa
-            self._logger.exception('Error generating snap.')
+            self._logger.exception('Error generating snap:')
         finally:
             self.processing_finished.emit()

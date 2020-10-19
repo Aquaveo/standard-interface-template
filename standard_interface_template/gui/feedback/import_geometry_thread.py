@@ -18,14 +18,15 @@ __license__ = "All rights reserved"
 
 
 class ImportGeometryThread(ImportSimulationThread):
-    """Read an Standard Interface Template simulation when a *.example_geometry file is opened in SMS."""
+    """Read an Standard Interface Template simulation when a *.example_geometry file is opened in XMS."""
     processing_finished = Signal()
 
     def __init__(self, xms_data=None):
-        """Construct the Importer.
+        """
+        Construct the Importer.
 
         Args:
-            xms_data (dict): XMS data dictionary. Useful for testing because it will avoid any Query calls.
+            xms_data (:obj:`dict`): XMS data dictionary. Useful for testing because it will avoid any Query calls.
                 {
                     'filename': '',  # Path to the *.example_simulation file to read
                     'comp_dir': '',  # Path to the XMS "Components" temp folder
@@ -46,7 +47,7 @@ class ImportGeometryThread(ImportSimulationThread):
             self._query.get_xms_agent().set_retries(1)
             self._xms_data['filename'] = self._query.get_read_file()
 
-            # Get the SMS temp directory
+            # Get the XMS temp directory
             start_ctxt = self._query.get_context()
             self._query.select('InstallResources')
             temp_dir = self._query.get('Temporary Directory')['Temporary Directory']
@@ -61,15 +62,19 @@ class ImportGeometryThread(ImportSimulationThread):
                 'Unable to retrieve data from SMS needed to import Standard Interface Template simulation')
 
     def read(self):
-        """Trigger the read of the Standard Interface Template geometry."""
+        """
+        Trigger the read of the Standard Interface Template geometry.
+
+        Raises:
+            (Exception): There was a problem reading the geometry file.
+        """
         try:
             self._logger.info('Reading the geometry.')
             self._read_geometry(self._xms_data['filename'])
 
             if self._query:
                 self._add_xms_data()
-        except Exception as error:
-            self._logger.exception(f'Error importing geometry: {str(error)}')
-            raise error
+        except Exception:
+            self._logger.exception('Error importing geometry:')
         finally:
             self.processing_finished.emit()

@@ -17,7 +17,8 @@ class SimulationData(XarrayBase):
     """Manages data file for the hidden simulation component."""
 
     def __init__(self, filename):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             filename (str): The name of the main file that data is stored in.

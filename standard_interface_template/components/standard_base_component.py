@@ -25,10 +25,11 @@ class StandardBaseComponent(CoverageComponentBase):
     """A Dynamic Model Interface (DMI) component base for the Standard Interface Template model."""
 
     def __init__(self, main_file):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
-            main_file: The main file associated with this component.
+            main_file (str): The main file associated with this component.
         """
         super().__init__(main_file.strip('"\''))
         self.data = None
@@ -43,19 +44,20 @@ class StandardBaseComponent(CoverageComponentBase):
         self.cov_uuid = ''
 
     def save_to_location(self, new_path, save_type):
-        """Save component files to a new location.
+        """
+        Save component files to a new location.
 
         Args:
             new_path (str): Path to the new save location.
             save_type (str): One of DUPLICATE, PACKAGE, SAVE, SAVE_AS, LOCK.
                 DUPLICATE happens when the tree item owner is duplicated. The new component will always be unlocked to
-                    start with.
+                start with.
                 PACKAGE happens when the project is being saved as a package. As such, all data must be copied and all
-                    data must use relative file paths.
+                data must use relative file paths.
                 SAVE happens when re-saving this project.
                 SAVE_AS happens when saving a project in a new location. This happens the first time we save a project.
                 UNLOCK happens when the component is about to be changed and it does not have a matching uuid folder in
-                    the temp area. May happen on project read if the XML specifies to unlock by default.
+                the temp area. May happen on project read if the XML specifies to unlock by default.
 
         Returns:
             (:obj:`tuple`): tuple containing:
@@ -64,7 +66,6 @@ class StandardBaseComponent(CoverageComponentBase):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         messages = []
         action_requests = []
@@ -79,13 +80,13 @@ class StandardBaseComponent(CoverageComponentBase):
         return new_main_file, messages, action_requests
 
     def project_open_event(self, new_path):
-        """Called when XMS project is opened.
+        """
+        Called when an XMS project is opened.
 
-        Components with display lists should add XmsDisplayMessage(s) to self.display_option_list
+        Components with display lists should add XmsDisplayMessage(s) to self.display_option_list.
 
         Args:
             new_path (str): Path to the new save location.
-
         """
         if self.disp_opts_file:  # Component has a display list
             new_disp_opts = os.path.join(new_path, os.path.basename(self.disp_opts_file))
@@ -99,7 +100,8 @@ class StandardBaseComponent(CoverageComponentBase):
                 )
 
     def get_project_explorer_menus(self, main_file_list):
-        """This will be called when right-click menus in the project explorer area of XMS are being created.
+        """
+        This will be called when right-click menus in the project explorer area of XMS are being created.
 
         Args:
             main_file_list (:obj:`list` of str): A list of the main files of the selected components of this type.
@@ -108,7 +110,6 @@ class StandardBaseComponent(CoverageComponentBase):
             menu_items (:obj:`list` of :obj:`xmsapi.dmi.MenuItem`): A list of menus and menu items to be shown. Note
                 that this list can have objects of type xmsapi.dmi.Menu as well as xmsapi.dmi.MenuItem. "None" may be
                 added to the list to indicate a separator.
-
         """
         if len(main_file_list) > 1 or not main_file_list or not self.tree_commands:
             return []  # Multi-select, nothing selected, or no project explorer menu commands for this component
@@ -130,7 +131,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return menu_list
 
     def get_display_menus(self, selection, lock_state, id_files):
-        """This will be called when right-click menus in the main display area of XMS are being created.
+        """
+        This will be called when right-click menus in the main display area of XMS are being created.
 
         Args:
             selection (dict): A dictionary with the key being a string of the feature entity type (POINT, ARC, POLYGON).
@@ -145,7 +147,6 @@ class StandardBaseComponent(CoverageComponentBase):
             menu_items (:obj:`list` of :obj:`xmsapi.dmi.MenuItem`): A list of menus and menu items to be shown. Note
                 that this list can have objects of type xmsapi.dmi.Menu as well as xmsapi.dmi.MenuItem. "None" may be
                 added to the list to indicate a separator.
-
         """
         menu_list = [None]  # None == spacer
         # Copy all the id files to a temporary location. XMS will delete them once this method returns.
@@ -210,7 +211,8 @@ class StandardBaseComponent(CoverageComponentBase):
         return menu_list
 
     def get_double_click_actions_for_selection(self, selection, lock_state, id_files):
-        """This will be called when a double-click in the main display area of XMS happened.
+        """
+        This will be called when a double-click in the main display area of XMS happened.
 
         Args:
             selection (dict): A dictionary with the key being a string of the feature entity type (POINT, ARC, POLYGON).
@@ -227,7 +229,6 @@ class StandardBaseComponent(CoverageComponentBase):
                   tuple being the message level (DEBUG, ERROR, WARNING, INFO) and the second element being the message
                   text.
                 - action_requests (:obj:`list` of :obj:`xmsapi.dmi.ActionRequest`): List of actions for XMS to perform.
-
         """
         # Copy all the id files to a temporary location. XMS will delete them once this method returns.
         temp_dir = os.path.join(os.path.dirname(self.main_file), 'temp')
@@ -285,19 +286,19 @@ class StandardBaseComponent(CoverageComponentBase):
         return [], actions
 
     def query_for_all_component_ids(self, query, target_type, cleanup=True):
-        """Query XMS for a dump of all the current component ids of the specified entity type.
+        """
+        Query XMS for a dump of all the current component ids of the specified entity type.
 
         Query needs to be at the Component Context level (or any
         other node with a "ComponentCoverageIds" ContextDefinition out edge).
 
         Args:
-            query (xmsdmi.dmi.Query): Query for communicating with XMS.
-            target_type (xmsguipy.data.target_type.TargetType): Entity type enum
-            cleanup (bool): True if id files should be deleted after loading
+            query (:obj:`xmsdmi.dmi.Query`): Query for communicating with XMS.
+            target_type (:obj:`xmsguipy.data.target_type.TargetType`): Entity type enum.
+            cleanup (bool): True if id files should be deleted after loading.
 
         Returns:
             (dict): Key is stringified entity type and value is tuple of xms and component id files.
-
         """
         start_ctxt = query.get_context()
         query.select('ComponentCoverageIds')
@@ -319,15 +320,15 @@ class StandardBaseComponent(CoverageComponentBase):
 
     @staticmethod
     def duplicate_display_opts(new_path, disp_opts_fname):
-        """Duplicates display options.
+        """
+        Duplicates display options.
 
         Args:
             new_path (str): Path to the new save location.
-            disp_opts_fname (str): The filename (no path) of the display options JSON file
+            disp_opts_fname (str): The filename (no path) of the display options JSON file.
 
         Returns:
-            (json_dict): dict containing the display options
-
+            (json_dict): dict containing the display options.
         """
         fname = os.path.join(new_path, disp_opts_fname)
         json_dict = read_display_options_from_json(fname)

@@ -14,11 +14,12 @@ __license__ = "All rights reserved"
 class GeometryWriter:
     """A class for writing out geometry for the Standard Interface Template."""
     def __init__(self, file_name, grid):
-        """Constructor.
+        """
+        Constructor.
 
         Args:
             file_name (str): The name of the file to write.
-            grid (xms.grid.ugrid.UGrid): The geometry to export.
+            grid (:obj:`xms.grid.ugrid.UGrid`): The geometry to export.
         """
         self._file_name = file_name
         self._grid = grid

@@ -15,11 +15,17 @@ __license__ = "All rights reserved"
 
 
 class BoundaryCoverageData(XarrayBase):
-    """Manages data file for the hidden coverage component."""
+    """
+    Manages data file for the hidden coverage component.
+
+    Attributes:
+        display_list (:obj:`list` of str): The list of options the user can choose from.
+    """
     display_list = ['A', 'B', 'C']
 
     def __init__(self, filename):
-        """Initializes the data class.
+        """
+        Initializes the data class.
 
         Args:
             filename (str): The name of the main file that data is stored in.
@@ -45,10 +51,11 @@ class BoundaryCoverageData(XarrayBase):
 
     @property
     def coverage_data(self):
-        """Get the coverage dataset.
+        """
+        Get the coverage dataset.
 
         Returns:
-            xarray.Dataset: The cov_data list dataset
+            (:obj:`xarray.Dataset`): The cov_data list dataset.
         """
         if self._cov_data is None:
             self._cov_data = self.get_dataset('cov_data', False)
@@ -58,7 +65,8 @@ class BoundaryCoverageData(XarrayBase):
 
     @coverage_data.setter
     def coverage_data(self, value):
-        """Sets the coverage data.
+        """
+        Sets the coverage data.
 
         Args:
             value: The coverage data.
@@ -67,10 +75,11 @@ class BoundaryCoverageData(XarrayBase):
 
     @staticmethod
     def _default_cov_data():
-        """Creates a default coverage data set.
+        """
+        Creates a default coverage data set.
 
         Returns:
-            xarray.Dataset: The coverage dataset
+            (:obj:`xarray.Dataset`): The coverage dataset.
         """
         default_data = {'comp_id': [0], 'user_option': 'A', 'user_text': 'Hello World!'}
         return pd.DataFrame(default_data).to_xarray()
