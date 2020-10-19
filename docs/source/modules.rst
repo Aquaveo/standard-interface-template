@@ -7,3 +7,4 @@ standard_interface_template
    standard_interface_template
    dmi_terms
    best_practices
+   debug

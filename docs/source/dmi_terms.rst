@@ -6,7 +6,7 @@ XML and scripts
 
 The model interfaces in XMS are made up of an XML file and multiple scripts that are loaded into
 XMS on startup.
-The XML file tells XMS which scripts to use for different tasks, as well a information about
+The XML file tells XMS which scripts to use for different tasks, as well information about
 the model being interfaced with.
 The model interface needs to be in a python package, with a registered entry point, that is
 installed in the python area for the XMS program.

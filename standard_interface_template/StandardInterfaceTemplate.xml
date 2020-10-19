@@ -3,11 +3,11 @@
   <model version="1" name="StandardInterfaceTemplate">
     <simulation>
       <executable text="StandardInterfaceTemplate"
-                  default_executable_name32="../standard_interface_template/model.exe"
-                  default_executable_name64="..standard_interface_template/model.exe">
+                  default_executable_name32="./sit_model.bat"
+                  default_executable_name64="./sit_model.bat">
         <declare_parameter>ModelExecutable</declare_parameter>
       </executable>
-      <simulation_run module_name="standard_interface_template.model.simulation_run" class_name="SimulationRun">
+      <simulation_run module_name="standard_interface_template.simulation_runner.simulation_run" class_name="SimulationRun">
       </simulation_run>
       <input_files>
         <input_file>

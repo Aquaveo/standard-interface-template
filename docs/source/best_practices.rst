@@ -6,7 +6,7 @@ Docstrings
 
 We recommend having docstrings on all classes, modules, public methods and functions, and
 on most private methods and functions.
-Even if you don't plan on release the documentation to the public,
+Even if you don't plan on releasing the documentation to the public,
 we find that it helps in navigating the code later when new features are added and
 bugs are being fixed.
 We use Google style docstrings in this example.

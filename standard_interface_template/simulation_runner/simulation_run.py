@@ -138,7 +138,7 @@ class SimulationRun(RunBase):
         cmd.set_display_name('Standard Interface Template')
         cmd.set_run_weight(100)
         cmd.add_commandline_argument(simulation_file)
-        cmd.set_progress_script('simulation_progress.py')
+        cmd.set_progress_script('xml_entry_points/simulation_progress.py')
         cmd.add_solution_file(load_sol)
         commands = [cmd]
         return commands
@@ -165,7 +165,7 @@ class SimulationRun(RunBase):
         load_sol = ActionRequest()
         load_sol.SetDialogModality(DialogModality.MODAL)
         load_sol.set_class('SimulationRun')
-        load_sol.set_module('standard_interface_template.model.simulation_run')
+        load_sol.set_module('standard_interface_template.simulation_runner.simulation_run')
         load_sol.set_main_file('foo')  # Just need a dummy main file for the ActionRequest
         load_sol.set_method_action('read_solution')
         load_sol.set_action_parameter_items({'simulation_name': self.simulation_name, 'file_location': filelocation,
