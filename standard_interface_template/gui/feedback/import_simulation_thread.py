@@ -321,9 +321,8 @@ class ImportSimulationThread(QThread):
 
             if self._query:
                 self._add_xms_data()
-        except Exception as error:
-            self._logger.exception(f'Error importing simulation: {str(error)}')
-            raise error
+        except Exception as _:
+            self._logger.exception(f'Error importing simulation:')
         finally:
             self.processing_finished.emit()
 

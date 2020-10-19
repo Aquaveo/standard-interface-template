@@ -54,9 +54,8 @@ class ExportSimulationThread(QThread):
             self._setup_query()
             self.coverage_mapper.do_map()
             self._do_export()
-        except Exception as error:
-            self._logger.exception(f'Error exporting simulation: {str(error)}')
-            raise error
+        except Exception as _:
+            self._logger.exception(f'Error exporting simulation:')
         finally:
             self.processing_finished.emit()
 

@@ -74,8 +74,7 @@ class ImportGeometryThread(ImportSimulationThread):
 
             if self._query:
                 self._add_xms_data()
-        except Exception as error:
-            self._logger.exception(f'Error importing geometry: {str(error)}')
-            raise error
+        except Exception as _:
+            self._logger.exception(f'Error importing geometry:')
         finally:
             self.processing_finished.emit()
