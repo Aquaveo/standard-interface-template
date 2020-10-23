@@ -1,5 +1,4 @@
 global-exclude *.c
-global-exclude _[a-zA-Z]*.py
-global-exclude [a-zA-Z]*.py
-global-include *__init__.py
+global-exclude *.ui
+global-include *.py
 include StandardInterfaceTemplate.xml
