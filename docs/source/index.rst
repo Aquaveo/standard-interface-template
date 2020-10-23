@@ -28,7 +28,9 @@ Getting Started
 
 **Replace the model name**
 
-Rename the XML file to something more appropriate for your model. In the XML file, replace:
+Rename the XML file to something more appropriate for your model.
+Change the MANIFEST.in file to include your XML file name.
+In the XML file, replace:
 
 - “standard_interface_template” with your python module sub-folder name.
 - “Standard Interface Template” with the model name that end users will see.
